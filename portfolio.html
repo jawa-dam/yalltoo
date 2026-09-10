@@ -26,67 +26,67 @@
     height:100%;
     overflow:hidden;
     background:var(--surface);
-    font-family:'Inter',system-ui,sans-serif;
     color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
   }
 
   .stage{
     height:100%;
     width:100%;
     display:flex;
+    align-items:stretch;
     justify-content:center;
-    background:var(--surface);
   }
+
   .phone{
-    width:min(430px,100%);
+    width:min(430px,100vw);
     height:100%;
+    background:var(--surface);
     position:relative;
     overflow:hidden;
     display:flex;
     flex-direction:column;
-    background:var(--surface);
-  }
-  .screen{
-    flex:1;
-    min-height:0;
-    display:flex;
-    flex-direction:column;
-    overflow:hidden;
   }
 
   .banner{
     flex:0 0 auto;
     background:linear-gradient(135deg,var(--indigo) 0%, var(--cyan) 100%);
-    color:var(--paper);
-    padding:clamp(8px,1.8vh,14px) clamp(16px,5vw,24px) clamp(10px,2vh,14px);
+    color:#fff;
+    padding:clamp(10px,2vh,16px) clamp(18px,5vw,28px) clamp(12px,2.2vh,18px);
   }
   .back-row{
     display:flex;align-items:center;gap:8px;
-    font-size:.82rem;font-weight:600;
-    margin-bottom:8px;
-    text-decoration:none;
-    color:var(--paper);
+    font-size:.85rem;font-weight:600;
+    margin-bottom:clamp(6px,1.2vh,10px);
+    cursor:pointer;
     width:fit-content;
+    text-decoration:none;
+    color:#fff;
   }
-  .back-row svg{width:16px;height:16px;stroke:currentColor;}
+  .back-row svg{width:16px;height:16px;stroke:#fff;}
 
   .logo-wrap{
-    width:clamp(44px,10vw,56px);
-    height:clamp(44px,10vw,56px);
-    margin-bottom:6px;
+    width:clamp(48px,12vw,64px);
+    height:clamp(48px,12vw,64px);
+    margin-bottom:clamp(6px,1vh,10px);
   }
-  .logo-img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 4px 10px rgba(0,0,0,.25));}
+  .logo-img{
+    width:100%;height:100%;
+    object-fit:contain;
+    filter:drop-shadow(0 4px 10px rgba(0,0,0,.25));
+    display:block;
+  }
 
   .headline{
     font-family:'Space Grotesk',sans-serif;
     font-weight:700;
-    font-size:clamp(1.25rem,5vw,1.55rem);
+    font-size:clamp(1.35rem,5.5vw,1.85rem);
     line-height:1.08;
-    margin:0 0 4px;
+    margin:0 0 6px;
   }
   .subhead{
     font-size:.78rem;
-    line-height:1.35;
+    line-height:1.4;
     opacity:.92;
     margin:0;
     display:-webkit-box;
@@ -95,110 +95,147 @@
     overflow:hidden;
   }
 
-  .acc-body{
+  .body{
     flex:1 1 auto;
     min-height:0;
     overflow:hidden;
     display:flex;
     flex-direction:column;
-    padding:0 4px 0 0;
-  }
-  .accordion{
-    flex:1;
-    min-height:0;
-    display:flex;
-    flex-direction:column;
+    padding:clamp(8px,1.5vh,12px) clamp(14px,4vw,22px) clamp(8px,1.2vh,12px);
   }
 
-  .acc-item{
-    flex:0 0 auto;
-    border-bottom:1px solid var(--line);
-    display:flex;
-    flex-direction:column;
-    min-height:0;
-  }
-  .acc-item.open{
+  /* Scroll lives ONLY inside the accordion — page/frame never scrolls */
+  .accordion{
     flex:1 1 auto;
     min-height:0;
+    overflow-x:hidden;
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    border:1px solid var(--line);
+    border-radius:16px;
+    background:var(--surface);
   }
+  .accordion::-webkit-scrollbar{width:3px;}
+  .accordion::-webkit-scrollbar-thumb{background:#d0d4e0;border-radius:99px;}
 
-  .acc-head{
+  .acc-item{
+    border-bottom:1px solid var(--line);
+    background:var(--surface);
+  }
+  .acc-item:last-child{border-bottom:none;}
+
+  .acc-trigger{
     width:100%;
     display:flex;
-    align-items:center;
+    align-items:flex-start;
     gap:10px;
-    padding:10px 14px 10px 16px;
+    padding:12px 14px;
     background:none;
-    border:0;
+    border:none;
     text-align:left;
     cursor:pointer;
-    font-family:'Inter',sans-serif;
+    font-family:'Inter',system-ui,sans-serif;
     color:var(--ink);
-    flex:0 0 auto;
   }
-  .acc-head:active{background:rgba(61,61,234,.06);}
-  .acc-num{
+  .acc-item.is-open .acc-trigger{
+    background:rgba(61,61,234,.05);
+    padding-bottom:8px;
+  }
+  .acc-trigger:active{background:rgba(61,61,234,.06);}
+
+  .acc-index{
     flex:0 0 auto;
-    width:26px;height:26px;border-radius:8px;
+    width:28px;height:28px;
+    margin-top:1px;
+    border-radius:8px;
     background:linear-gradient(135deg,var(--indigo),var(--cyan));
-    color:var(--paper);
+    color:#fff;
     display:flex;align-items:center;justify-content:center;
     font-family:'Space Grotesk',sans-serif;
     font-weight:700;
-    font-size:.68rem;
+    font-size:.72rem;
   }
+
   .acc-title{
-    flex:1;
+    flex:1 1 auto;
+    min-width:0;
     font-family:'Space Grotesk',sans-serif;
     font-weight:700;
-    font-size:.82rem;
-    line-height:1.25;
-    display:-webkit-box;
-    -webkit-line-clamp:2;
-    -webkit-box-orient:vertical;
-    overflow:hidden;
+    font-size:.84rem;
+    line-height:1.3;
+    padding-top:4px;
   }
-  .acc-item.open .acc-title{-webkit-line-clamp:3;}
-  .chev{
+
+  .acc-chev{
     flex:0 0 auto;
     width:16px;height:16px;
+    margin-top:6px;
     stroke:var(--grey);
-    transition:transform .22s ease;
+    transition:transform .2s ease;
   }
-  .acc-item.open .chev{transform:rotate(90deg);stroke:var(--indigo);}
+  .acc-item.is-open .acc-chev{
+    transform:rotate(90deg);
+    stroke:var(--indigo);
+  }
 
+  /* Panel: hidden when closed, full natural height when open */
   .acc-panel{
-    display:none;
-    padding:0 16px 12px 52px;
-    min-height:0;
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    transition:max-height .28s ease, opacity .2s ease, padding .2s ease;
+    padding:0 14px 0 52px;
   }
-  .acc-item.open .acc-panel{display:block;}
+  .acc-item.is-open .acc-panel{
+    max-height:280px; /* enough for summary + button */
+    opacity:1;
+    padding:0 14px 14px 52px;
+    overflow:visible;
+  }
 
   .paper-summary{
     font-size:.8rem;
     line-height:1.45;
     color:#3a3d4a;
-    margin:0 0 10px;
+    margin:0 0 12px;
   }
+
   .paper-meta{
-    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
   }
   .source-tag{
-    font-size:.65rem;font-weight:600;letter-spacing:.04em;
+    font-size:.66rem;
+    font-weight:600;
+    letter-spacing:.03em;
     color:var(--grey);
     text-transform:uppercase;
   }
   .read-link{
-    display:inline-flex;align-items:center;gap:6px;
-    font-size:.78rem;font-weight:600;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:.78rem;
+    font-weight:600;
     color:#fff;
     background:linear-gradient(135deg,var(--indigo),var(--cyan));
-    padding:7px 12px;
+    padding:8px 13px;
     border-radius:999px;
     text-decoration:none;
-    white-space:nowrap;
   }
   .read-link svg{width:12px;height:12px;stroke:#fff;}
+
+  .note{
+    flex:0 0 auto;
+    font-size:.72rem;
+    color:var(--grey);
+    text-align:center;
+    margin-top:8px;
+  }
 
   .nav{
     flex:0 0 auto;
@@ -224,263 +261,289 @@
 </style>
 </head>
 <body>
+
 <div class="stage">
   <div class="phone">
-    <div class="screen">
 
-      <div class="banner">
-        <a class="back-row" href="index.html" target="_top">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-          Dashboard
-        </a>
-        <div class="logo-wrap">
-          <img class="logo-img" src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yalltoo-beaver-p8oCrzuwdz7fwcXd.png" alt="Yall Too logo">
-        </div>
-        <h1 class="headline">Portfolio</h1>
-        <p class="subhead">Genesis 1 as an antediluvian hydraulic and mechanical blueprint.</p>
+    <div class="banner">
+      <a class="back-row" href="index.html" target="_top">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        Dashboard
+      </a>
+      <div class="logo-wrap">
+        <img class="logo-img" src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yalltoo-beaver-p8oCrzuwdz7fwcXd.png" alt="Yall Too logo">
       </div>
-
-      <div class="acc-body">
-        <div class="accordion" id="accordion">
-
-          <div class="acc-item">
-            <button class="acc-head" type="button" aria-expanded="false" onclick="toggleAcc(this)">
-              <span class="acc-num">01</span>
-              <span class="acc-title">Decoding the Creation Story as an Antediluvian Hydraulic Blueprint</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-            <div class="acc-panel">
-              <p class="paper-summary">Reads Genesis 1 as a technical record of a pre-Flood hydraulic system, mapping its verses onto dam, sluice, and reservoir engineering rather than a purely theological account.</p>
-              <div class="paper-meta">
-                <span class="source-tag">SSRN</span>
-                <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5622371" target="_blank" rel="noopener noreferrer">
-                  Read paper
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="acc-item">
-            <button class="acc-head" type="button" aria-expanded="false" onclick="toggleAcc(this)">
-              <span class="acc-num">02</span>
-              <span class="acc-title">Decoding Genesis through Literary Mechanics</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-            <div class="acc-panel">
-              <p class="paper-summary">Applies a literary-mechanical reading method to Genesis 1, treating its structure, repetition, and word choice as engineering notation rather than poetry.</p>
-              <div class="paper-meta">
-                <span class="source-tag">SSRN</span>
-                <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5792302" target="_blank" rel="noopener noreferrer">
-                  Read paper
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="acc-item">
-            <button class="acc-head" type="button" aria-expanded="false" onclick="toggleAcc(this)">
-              <span class="acc-num">03</span>
-              <span class="acc-title">A Methodological Framework for Decoding Ancient Sacred Texts as Technical Manuals</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-            <div class="acc-panel">
-              <p class="paper-summary">Proposes a repeatable method for reading ancient scripture as disguised technical documentation, using Genesis 1 as the primary test case.</p>
-              <div class="paper-meta">
-                <span class="source-tag">SSRN</span>
-                <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789382" target="_blank" rel="noopener noreferrer">
-                  Read paper
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="acc-item">
-            <button class="acc-head" type="button" aria-expanded="false" onclick="toggleAcc(this)">
-              <span class="acc-num">04</span>
-              <span class="acc-title">Reconstructing an Antediluvian Mill and Power-Generation System from Genesis 1 Symbolism</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-            <div class="acc-panel">
-              <p class="paper-summary">Works through the imagery of Genesis 1 to reconstruct a plausible pre-Flood mill and power-generation system implied by the text.</p>
-              <div class="paper-meta">
-                <span class="source-tag">SSRN</span>
-                <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789342" target="_blank" rel="noopener noreferrer">
-                  Read paper
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="acc-item">
-            <button class="acc-head" type="button" aria-expanded="false" onclick="toggleAcc(this)">
-              <span class="acc-num">05</span>
-              <span class="acc-title">Symbolic Hydrology: Reclassifying Biblical Characters as Natural and Mechanical Elements</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-            <div class="acc-panel">
-              <p class="paper-summary">Re-reads biblical figures as symbolic stand-ins for natural forces and mechanical components within the proposed hydraulic system.</p>
-              <div class="paper-meta">
-                <span class="source-tag">SSRN</span>
-                <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789322" target="_blank" rel="noopener noreferrer">
-                  Read paper
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="acc-item">
-            <button class="acc-head" type="button" aria-expanded="false" onclick="toggleAcc(this)">
-              <span class="acc-num">06</span>
-              <span class="acc-title">The Semicolon in Genesis 1:1–2: A Linguistic Marker of Hydraulic Sequencing</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-            <div class="acc-panel">
-              <p class="paper-summary">Focuses on the punctuation and sequencing of Genesis 1:1–2, arguing it marks ordered steps in a hydraulic process rather than a stylistic pause.</p>
-              <div class="paper-meta">
-                <span class="source-tag">SSRN</span>
-                <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789263" target="_blank" rel="noopener noreferrer">
-                  Read paper
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="acc-item">
-            <button class="acc-head" type="button" aria-expanded="false" onclick="toggleAcc(this)">
-              <span class="acc-num">07</span>
-              <span class="acc-title">The Firmament as a Hydraulic Partition Wall: Genesis 1:6–8</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-            <div class="acc-panel">
-              <p class="paper-summary">Reinterprets the “firmament” of Genesis 1:6–8 as a literal partition wall separating two managed bodies of water.</p>
-              <div class="paper-meta">
-                <span class="source-tag">SSRN</span>
-                <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789102" target="_blank" rel="noopener noreferrer">
-                  Read paper
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="acc-item">
-            <button class="acc-head" type="button" aria-expanded="false" onclick="toggleAcc(this)">
-              <span class="acc-num">08</span>
-              <span class="acc-title">“Badal,” “Raqia,” and “Miqveh”: Water Control Terminology in Genesis 1</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-            <div class="acc-panel">
-              <p class="paper-summary">Traces three key Hebrew terms through Genesis 1 to argue they function as technical water-control vocabulary rather than general description.</p>
-              <div class="paper-meta">
-                <span class="source-tag">SSRN</span>
-                <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6077590" target="_blank" rel="noopener noreferrer">
-                  Read paper
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="acc-item">
-            <button class="acc-head" type="button" aria-expanded="false" onclick="toggleAcc(this)">
-              <span class="acc-num">09</span>
-              <span class="acc-title">A Systems-Oriented Interpretation of Water, Storage, and Flow Terminology in Genesis 1</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-            <div class="acc-panel">
-              <p class="paper-summary">Applies a systems-engineering lens to the water, storage, and flow language used throughout Genesis 1, framing it as a coherent technical vocabulary.</p>
-              <div class="paper-meta">
-                <span class="source-tag">Zenodo</span>
-                <a class="read-link" href="https://zenodo.org/records/18269802" target="_blank" rel="noopener noreferrer">
-                  Read paper
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="acc-item">
-            <button class="acc-head" type="button" aria-expanded="false" onclick="toggleAcc(this)">
-              <span class="acc-num">10</span>
-              <span class="acc-title">Genesis Engineered — The Dam and Mill Blueprint Revealed</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-            <div class="acc-panel">
-              <p class="paper-summary">Zenodo edition of the core GEI thesis, documenting Genesis 1 as the design record of an antediluvian dam-and-mill complex.</p>
-              <div class="paper-meta">
-                <span class="source-tag">Zenodo</span>
-                <a class="read-link" href="https://zenodo.org/records/17316846" target="_blank" rel="noopener noreferrer">
-                  Read paper
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="acc-item">
-            <button class="acc-head" type="button" aria-expanded="false" onclick="toggleAcc(this)">
-              <span class="acc-num">11</span>
-              <span class="acc-title">Yalltoo.com</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-            <div class="acc-panel">
-              <p class="paper-summary">Home base for the Genesis Engineered Interpretations project — the Dam Academy, the D.A.M. framework, and all published research in one place.</p>
-              <div class="paper-meta">
-                <span class="source-tag">Website</span>
-                <a class="read-link" href="https://www.yalltoo.com/" target="_blank" rel="noopener noreferrer">
-                  Visit site
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <nav class="nav">
-        <a href="index.html" target="_top">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 3v18M20 3v18M4 3h16M4 12h16"/></svg>
-          Dashboard
-        </a>
-        <a class="active" href="#" aria-current="page">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/></svg>
-          Portfolio
-        </a>
-        <a href="https://yalltoo.com/support" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Support
-        </a>
-        <a href="index.html" target="_top">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-          Menu
-        </a>
-      </nav>
-
+      <h1 class="headline">Portfolio</h1>
+      <p class="subhead">Published research from Genesis Engineered Interpretations — Genesis 1 as an antediluvian hydraulic blueprint.</p>
     </div>
+
+    <div class="body">
+      <div class="accordion" id="accordion" role="list">
+
+        <div class="acc-item is-open" data-acc>
+          <button class="acc-trigger" type="button" aria-expanded="true">
+            <span class="acc-index">01</span>
+            <span class="acc-title">Decoding the Creation Story as an Antediluvian Hydraulic Blueprint</span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <div class="acc-panel">
+            <p class="paper-summary">Reads Genesis 1 as a technical record of a pre-Flood hydraulic system, mapping its verses onto dam, sluice, and reservoir engineering rather than a purely theological account.</p>
+            <div class="paper-meta">
+              <span class="source-tag">SSRN</span>
+              <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5622371" target="_blank" rel="noopener noreferrer">
+                Read paper
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-acc>
+          <button class="acc-trigger" type="button" aria-expanded="false">
+            <span class="acc-index">02</span>
+            <span class="acc-title">Decoding Genesis through Literary Mechanics</span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <div class="acc-panel">
+            <p class="paper-summary">Applies a literary-mechanical reading method to Genesis 1, treating its structure, repetition, and word choice as engineering notation rather than poetry.</p>
+            <div class="paper-meta">
+              <span class="source-tag">SSRN</span>
+              <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5792302" target="_blank" rel="noopener noreferrer">
+                Read paper
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-acc>
+          <button class="acc-trigger" type="button" aria-expanded="false">
+            <span class="acc-index">03</span>
+            <span class="acc-title">A Methodological Framework for Decoding Ancient Sacred Texts as Technical Manuals</span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <div class="acc-panel">
+            <p class="paper-summary">Proposes a repeatable method for reading ancient scripture as disguised technical documentation, using Genesis 1 as the primary test case.</p>
+            <div class="paper-meta">
+              <span class="source-tag">SSRN</span>
+              <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789382" target="_blank" rel="noopener noreferrer">
+                Read paper
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-acc>
+          <button class="acc-trigger" type="button" aria-expanded="false">
+            <span class="acc-index">04</span>
+            <span class="acc-title">Reconstructing an Antediluvian Mill and Power-Generation System from Genesis 1</span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <div class="acc-panel">
+            <p class="paper-summary">Works through the imagery of Genesis 1 to reconstruct a plausible pre-Flood mill and power-generation system implied by the text.</p>
+            <div class="paper-meta">
+              <span class="source-tag">SSRN</span>
+              <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789342" target="_blank" rel="noopener noreferrer">
+                Read paper
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-acc>
+          <button class="acc-trigger" type="button" aria-expanded="false">
+            <span class="acc-index">05</span>
+            <span class="acc-title">Symbolic Hydrology: Biblical Characters as Natural and Mechanical Elements</span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <div class="acc-panel">
+            <p class="paper-summary">Re-reads biblical figures as symbolic stand-ins for natural forces and mechanical components within the proposed hydraulic system.</p>
+            <div class="paper-meta">
+              <span class="source-tag">SSRN</span>
+              <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789322" target="_blank" rel="noopener noreferrer">
+                Read paper
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-acc>
+          <button class="acc-trigger" type="button" aria-expanded="false">
+            <span class="acc-index">06</span>
+            <span class="acc-title">The Semicolon in Genesis 1:1–2: Hydraulic Sequencing Marker</span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <div class="acc-panel">
+            <p class="paper-summary">Focuses on the punctuation and sequencing of Genesis 1:1–2, arguing it marks ordered steps in a hydraulic process rather than a stylistic pause.</p>
+            <div class="paper-meta">
+              <span class="source-tag">SSRN</span>
+              <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789263" target="_blank" rel="noopener noreferrer">
+                Read paper
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-acc>
+          <button class="acc-trigger" type="button" aria-expanded="false">
+            <span class="acc-index">07</span>
+            <span class="acc-title">The Firmament as a Hydraulic Partition Wall (Genesis 1:6–8)</span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <div class="acc-panel">
+            <p class="paper-summary">Reinterprets the “firmament” of Genesis 1:6–8 as a literal partition wall separating two managed bodies of water.</p>
+            <div class="paper-meta">
+              <span class="source-tag">SSRN</span>
+              <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789102" target="_blank" rel="noopener noreferrer">
+                Read paper
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-acc>
+          <button class="acc-trigger" type="button" aria-expanded="false">
+            <span class="acc-index">08</span>
+            <span class="acc-title">“Badal,” “Raqia,” and “Miqveh”: Water Control Terminology</span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <div class="acc-panel">
+            <p class="paper-summary">Traces three key Hebrew terms through Genesis 1 to argue they function as technical water-control vocabulary rather than general description.</p>
+            <div class="paper-meta">
+              <span class="source-tag">SSRN</span>
+              <a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6077590" target="_blank" rel="noopener noreferrer">
+                Read paper
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-acc>
+          <button class="acc-trigger" type="button" aria-expanded="false">
+            <span class="acc-index">09</span>
+            <span class="acc-title">Systems-Oriented Interpretation of Water, Storage, and Flow</span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <div class="acc-panel">
+            <p class="paper-summary">Applies a systems-engineering lens to the water, storage, and flow language used throughout Genesis 1, framing it as a coherent technical vocabulary.</p>
+            <div class="paper-meta">
+              <span class="source-tag">Zenodo</span>
+              <a class="read-link" href="https://zenodo.org/records/18269802" target="_blank" rel="noopener noreferrer">
+                Read paper
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-acc>
+          <button class="acc-trigger" type="button" aria-expanded="false">
+            <span class="acc-index">10</span>
+            <span class="acc-title">Genesis Engineered — The Dam and Mill Blueprint Revealed</span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <div class="acc-panel">
+            <p class="paper-summary">Zenodo edition of the core GEI thesis, documenting Genesis 1 as the design record of an antediluvian dam-and-mill complex.</p>
+            <div class="paper-meta">
+              <span class="source-tag">Zenodo</span>
+              <a class="read-link" href="https://zenodo.org/records/17316846" target="_blank" rel="noopener noreferrer">
+                Read paper
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-acc>
+          <button class="acc-trigger" type="button" aria-expanded="false">
+            <span class="acc-index">11</span>
+            <span class="acc-title">Yalltoo.com — Project Home Base</span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <div class="acc-panel">
+            <p class="paper-summary">Home base for the Genesis Engineered Interpretations project — the Dam Academy, the D.A.M. framework, and all published research in one place.</p>
+            <div class="paper-meta">
+              <span class="source-tag">Website</span>
+              <a class="read-link" href="https://www.yalltoo.com/" target="_blank" rel="noopener noreferrer">
+                Visit site
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="note">One paper open at a time · tap a row to expand</p>
+    </div>
+
+    <nav class="nav">
+      <a href="index.html" target="_top">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 3v18M20 3v18M4 3h16M4 12h16"/></svg>
+        Dashboard
+      </a>
+      <button class="active" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/></svg>
+        Portfolio
+      </button>
+      <a href="https://yalltoo.com/support" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Support
+      </a>
+      <a href="index.html" target="_top">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        Menu
+      </a>
+    </nav>
+
   </div>
 </div>
 
 <script>
-  function toggleAcc(btn){
-    const item = btn.closest('.acc-item');
-    const wasOpen = item.classList.contains('open');
-    document.querySelectorAll('.acc-item').forEach(el=>{
-      el.classList.remove('open');
-      const h = el.querySelector('.acc-head');
-      if(h) h.setAttribute('aria-expanded','false');
-    });
-    if(!wasOpen){
-      item.classList.add('open');
-      btn.setAttribute('aria-expanded','true');
+  (function(){
+    const accordion = document.getElementById('accordion');
+    const items = Array.from(document.querySelectorAll('[data-acc]'));
+
+    function openOnly(target){
+      items.forEach(item=>{
+        const on = item === target;
+        item.classList.toggle('is-open', on);
+        const btn = item.querySelector('.acc-trigger');
+        if(btn) btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+      });
+
+      // After expand, keep the opened row fully visible inside the frame
+      requestAnimationFrame(()=>{
+        const panel = target.querySelector('.acc-panel');
+        const top = target.offsetTop;
+        const bottom = top + target.offsetHeight;
+        const viewTop = accordion.scrollTop;
+        const viewBottom = viewTop + accordion.clientHeight;
+
+        if(top < viewTop){
+          accordion.scrollTo({ top: top, behavior: 'smooth' });
+        } else if(bottom > viewBottom){
+          accordion.scrollTo({ top: bottom - accordion.clientHeight, behavior: 'smooth' });
+        }
+      });
     }
-  }
+
+    items.forEach(item=>{
+      const btn = item.querySelector('.acc-trigger');
+      if(!btn) return;
+      btn.addEventListener('click', ()=>{
+        if(item.classList.contains('is-open')) return; // keep exactly one open
+        openOnly(item);
+      });
+    });
+  })();
 </script>
+
 </body>
 </html>

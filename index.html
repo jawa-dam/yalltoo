@@ -1,3 +1,6 @@
+Done. Made the logo noticeably larger on both screens, tweaked the ripples so they scale with it, and fixed the bottom nav links on the Menu screen (Portfolio was pointing to the SSRN homepage, Support was going to email instead of the page).
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,7 +102,7 @@
 
   .status-row{
     display:flex;justify-content:space-between;align-items:center;
-    font-size:.7rem;font-weight:600;opacity:.85;margin-bottom:clamp(6px,2vh,12px);
+    font-size:.7rem;font-weight:600;opacity:.85;margin-bottom:clamp(6px,2vh,10px);
   }
 
   .skin-toggle{display:flex;gap:7px;}
@@ -145,9 +148,9 @@
   /* ---------- logo mark ---------- */
   .logo-wrap{
     position:relative;
-    width:clamp(46px,12vw,64px);
-    height:clamp(46px,12vw,64px);
-    margin-bottom:10px;
+    width:clamp(90px,22vw,130px);
+    height:clamp(90px,22vw,130px);
+    margin-bottom:clamp(6px,1.5vh,14px);
   }
   .logo-wrap.centered{margin-left:auto;margin-right:auto;}
   .ripple{
@@ -159,8 +162,8 @@
   .ripple.r2{animation-delay:1s;}
   .ripple.r3{animation-delay:2s;}
   @keyframes ripple{
-    0%{transform:scale(.75);opacity:.75;}
-    100%{transform:scale(1.9);opacity:0;}
+    0%{transform:scale(.7);opacity:.8;}
+    100%{transform:scale(2.2);opacity:0;}
   }
   .logo-img{
     position:relative;
@@ -168,7 +171,7 @@
     object-fit:contain;
     background:transparent;
     display:block;
-    filter:drop-shadow(0 4px 10px rgba(0,0,0,.25));
+    filter:drop-shadow(0 6px 14px rgba(0,0,0,.28));
     animation:logoFloat 3.2s ease-in-out infinite;
   }
   @keyframes logoFloat{
@@ -314,11 +317,18 @@
     display:flex;align-items:center;gap:8px;
     color:var(--paper);
     font-size:.85rem;font-weight:600;
-    margin-bottom:10px;
+    margin-bottom:clamp(6px,1.5vh,12px);
     cursor:pointer;
     width:fit-content;
   }
   .back-row svg{width:16px;height:16px;stroke:var(--paper);}
+
+  .menu-logo-wrap{
+    position:relative;
+    width:clamp(72px,18vw,100px);
+    height:clamp(72px,18vw,100px);
+    margin-bottom:clamp(6px,1.5vh,10px);
+  }
 </style>
 </head>
 <body>
@@ -336,7 +346,7 @@
             <button class="skin-dot hotpink" data-theme="hotpink" title="Hot pink mode" aria-label="Hot pink mode" onclick="setTheme('hotpink')"></button>
             <button class="skin-dot babyblue" data-theme="babyblue" title="Baby blue mode" aria-label="Baby blue mode" onclick="setTheme('babyblue')"></button>
           </div>
-          <a class="cart-link" href="https://www.yalltoo.com/gei-discovery-guide-" target="_blank" rel="noopener" aria-label="Get the GEI Discovery Guide">
+          <a class="cart-link" href="https://www.yalltoo.com/gei-discovery-guide-" target="_blank" rel="noopener noreferrer" aria-label="Get the GEI Discovery Guide">
             <svg class="cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M3 4h2l2.4 12.2a1.8 1.8 0 0 0 1.8 1.4h8.3a1.8 1.8 0 0 0 1.75-1.36L21 9H6"/></svg>
           </a>
         </div>
@@ -409,11 +419,11 @@
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 3v18M20 3v18M4 3h16M4 12h16"/></svg>
           Dashboard
         </button>
-        <a class="nav-link" href="https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=8659420/" target="_blank" rel="noopener">
+        <a class="nav-link" href="https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=8659420" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/></svg>
           Portfolio
         </a>
-        <a class="nav-link" href="https://yalltoo.com/support">
+        <a class="nav-link" href="https://yalltoo.com/support" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           Support
         </a>
@@ -431,7 +441,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
           Dashboard
         </div>
-        <div class="logo-wrap" style="width:40px;height:40px;margin-bottom:8px;">
+        <div class="menu-logo-wrap">
           <div class="ripple r1"></div>
           <div class="ripple r2"></div>
           <div class="ripple r3"></div>
@@ -445,42 +455,42 @@
       <div class="menu-body">
         <p class="section-label">Genesis Days</p>
 
-        <a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-1" target="_top">
+        <a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-1" target="_top" rel="noopener">
           <span class="day-left"><span class="day-chip">D1</span>
             <span class="day-text"><b>Day 1 — Chaos → Motion</b><span>Light divided from darkness</span></span>
           </span>
           <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </a>
 
-        <a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-2-firmament-dam-wall" target="_top">
+        <a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-2-firmament-dam-wall" target="_top" rel="noopener">
           <span class="day-left"><span class="day-chip">D2</span>
             <span class="day-text"><b>Day 2 — Separation</b><span>Waters divided above &amp; below</span></span>
           </span>
           <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </a>
 
-        <a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-3-waters-land" target="_top">
+        <a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-3-waters-land" target="_top" rel="noopener">
           <span class="day-left"><span class="day-chip">D3</span>
             <span class="day-text"><b>Day 3 — Assign</b><span>Dry land &amp; vegetation named</span></span>
           </span>
           <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </a>
 
-        <a class="day-row" href="https://www.yalltoo.com/day-4-mill-of-the-dam" target="_top">
+        <a class="day-row" href="https://www.yalltoo.com/day-4-mill-of-the-dam" target="_top" rel="noopener">
           <span class="day-left"><span class="day-chip">D4</span>
             <span class="day-text"><b>Day 4 — Activation</b><span>Sun, moon &amp; stars set in motion</span></span>
           </span>
           <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </a>
 
-        <a class="day-row" href="https://www.yalltoo.com/day-5-mill-activation" target="_top">
+        <a class="day-row" href="https://www.yalltoo.com/day-5-mill-activation" target="_top" rel="noopener">
           <span class="day-left"><span class="day-chip">D5</span>
             <span class="day-text"><b>Day 5 — Manage</b><span>Sea &amp; sky life released</span></span>
           </span>
           <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </a>
 
-        <a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-6-final-operator" target="_top">
+        <a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-6-final-operator" target="_top" rel="noopener">
           <span class="day-left"><span class="day-chip">D6</span>
             <span class="day-text"><b>Day 6 — Naming</b><span>Land creatures &amp; dominion given</span></span>
           </span>
@@ -493,11 +503,11 @@
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 3v18M20 3v18M4 3h16M4 12h16"/></svg>
           Dashboard
         </button>
-        <a class="nav-link" href="https://www.ssrn.com/" target="_blank" rel="noopener">
+        <a class="nav-link" href="https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=8659420" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/></svg>
           Portfolio
         </a>
-        <a class="nav-link" href="mailto:contact@yalltoo.com">
+        <a class="nav-link" href="https://yalltoo.com/support" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           Support
         </a>
@@ -529,8 +539,6 @@
   document.getElementById('member-since-menu').textContent = label;
 
   // ---- light up wheel paddles for completed days ----
-  // Set this to however many of the 6 days are finished (0-6).
-  // Swap this for a real value pulled from your progress data whenever that's wired in.
   const completedDays = 0;
   for(let i = 1; i <= completedDays && i <= 6; i++){
     const p = document.getElementById('paddle-' + i);
@@ -571,3 +579,4 @@
 
 </body>
 </html>
+```

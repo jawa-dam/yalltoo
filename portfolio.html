@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Genesis Engineered Interpretations</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap');
+
+  :root{
+    --cyan:#2fd2ff;
+    --indigo:#3d3dea;
+    --magenta:#f310ba;
+    --pink:#ff9df2;
+    --ink:#06070d;
+    --surface:#ffffff;
+    --line:#e6e8f0;
+    --grey:#7a7f92;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    background:var(--surface);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+  }
+
+  .banner{
+    background:linear-gradient(135deg,var(--indigo) 0%, var(--cyan) 100%);
+    color:#fff;
+    padding:clamp(20px,5vh,32px) clamp(18px,6vw,40px) clamp(24px,5vh,36px);
+  }
+  .back-row{
+    display:flex;align-items:center;gap:8px;
+    font-size:.85rem;font-weight:600;
+    margin-bottom:16px;
+    cursor:pointer;
+    width:fit-content;
+    text-decoration:none;
+    color:#fff;
+  }
+  .back-row svg{width:16px;height:16px;stroke:#fff;}
+
+  .logo-wrap{width:56px;height:56px;margin-bottom:14px;}
+  .logo-img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,.25));}
+
+  .headline{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(1.6rem,6vw,2.3rem);
+    line-height:1.08;
+    margin:0 0 8px;
+  }
+  .subhead{font-size:.92rem;opacity:.9;max-width:520px;margin:0;}
+
+  .wrap{max-width:720px;margin:0 auto;padding:clamp(18px,4vh,28px) clamp(18px,6vw,40px) 60px;}
+
+  .paper{
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:18px 20px;
+    margin-bottom:16px;
+  }
+  .paper-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:1.02rem;
+    line-height:1.3;
+    margin:0 0 8px;
+  }
+  .paper-summary{
+    font-size:.88rem;
+    line-height:1.5;
+    color:#3a3d4a;
+    margin:0 0 14px;
+  }
+  .paper-meta{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+  .source-tag{
+    font-size:.68rem;font-weight:600;letter-spacing:.03em;
+    color:var(--grey);
+    text-transform:uppercase;
+  }
+  .read-link{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:.82rem;font-weight:600;
+    color:#fff;
+    background:linear-gradient(135deg,var(--indigo),var(--cyan));
+    padding:8px 14px;
+    border-radius:999px;
+    text-decoration:none;
+  }
+  .read-link svg{width:13px;height:13px;stroke:#fff;}
+  .pending-tag{
+    display:inline-flex;align-items:center;
+    font-size:.78rem;font-weight:600;
+    color:var(--grey);
+    background:var(--line);
+    padding:7px 13px;
+    border-radius:999px;
+  }
+
+  .note{
+    font-size:.8rem;
+    color:var(--grey);
+    text-align:center;
+    margin-top:8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <a class="back-row" href="index.html" target="_top">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    Dashboard
+  </a>
+  <div class="logo-wrap">
+    <img class="logo-img" src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yall-too-logo-vq2GKHxbTzr7g8bO.png" alt="Yall Too logo">
+  </div>
+  <h1 class="headline">Portfolio</h1>
+  <p class="subhead">Published research from Genesis Engineered Interpretations — reading Genesis 1 as an antediluvian hydraulic and mechanical blueprint.</p>
+</div>
+
+<div class="wrap">
+
+  <div class="paper">
+    <p class="paper-title">Decoding the Creation Story as an Antediluvian Hydraulic Blueprint</p>
+    <p class="paper-summary">Reads Genesis 1 as a technical record of a pre-Flood hydraulic system, mapping its verses onto dam, sluice, and reservoir engineering rather than a purely theological account.</p>
+    <div class="paper-meta">
+      <span class="source-tag">SSRN</span>
+      <span class="pending-tag">Link coming soon</span>
+    </div>
+  </div>
+
+  <div class="paper">
+    <p class="paper-title">Genesis Engineered — The Dam and Mill Blueprint Revealed</p>
+    <p class="paper-summary">Lays out the core GEI thesis: Genesis 1 encodes the design of an antediluvian dam-and-mill complex, with each day of creation corresponding to a stage of construction.</p>
+    <div class="paper-meta">
+      <span class="source-tag">SSRN</span>
+      <span class="pending-tag">Link coming soon</span>
+    </div>
+  </div>
+
+  <div class="paper">
+    <p class="paper-title">Decoding Genesis through Literary Mechanics</p>
+    <p class="paper-summary">Applies a literary-mechanical reading method to Genesis 1, treating its structure, repetition, and word choice as engineering notation rather than poetry.</p>
+    <div class="paper-meta">
+      <span class="source-tag">SSRN</span>
+      <span class="pending-tag">Link coming soon</span>
+    </div>
+  </div>
+
+  <div class="paper">
+    <p class="paper-title">A Methodological Framework for Decoding Ancient Sacred Texts as Technical Manuals</p>
+    <p class="paper-summary">Proposes a repeatable method for reading ancient scripture as disguised technical documentation, using Genesis 1 as the primary test case.</p>
+    <div class="paper-meta">
+      <span class="source-tag">SSRN</span>
+      <span class="pending-tag">Link coming soon</span>
+    </div>
+  </div>
+
+  <div class="paper">
+    <p class="paper-title">Reconstructing an Antediluvian Mill and Power-Generation System from Genesis 1 Symbolism</p>
+    <p class="paper-summary">Works through the imagery of Genesis 1 to reconstruct a plausible pre-Flood mill and power-generation system implied by the text.</p>
+    <div class="paper-meta">
+      <span class="source-tag">SSRN</span>
+      <span class="pending-tag">Link coming soon</span>
+    </div>
+  </div>
+
+  <div class="paper">
+    <p class="paper-title">Symbolic Hydrology: Reclassifying Biblical Characters as Natural and Mechanical Elements in a Proto-Engineering System</p>
+    <p class="paper-summary">Re-reads biblical figures as symbolic stand-ins for natural forces and mechanical components within the proposed hydraulic system.</p>
+    <div class="paper-meta">
+      <span class="source-tag">SSRN</span>
+      <span class="pending-tag">Link coming soon</span>
+    </div>
+  </div>
+
+  <div class="paper">
+    <p class="paper-title">The Semicolon in Genesis 1:1–2: A Linguistic Marker of Hydraulic Sequencing in Ancient Symbolic Notation</p>
+    <p class="paper-summary">Focuses on the punctuation and sequencing of Genesis 1:1–2, arguing it marks ordered steps in a hydraulic process rather than a stylistic pause.</p>
+    <div class="paper-meta">
+      <span class="source-tag">SSRN</span>
+      <span class="pending-tag">Link coming soon</span>
+    </div>
+  </div>
+
+  <div class="paper">
+    <p class="paper-title">The Firmament as a Hydraulic Partition Wall: Reinterpreting Genesis 1:6–8 Through Antediluvian Water Engineering</p>
+    <p class="paper-summary">Reinterprets the "firmament" of Genesis 1:6–8 as a literal partition wall separating two managed bodies of water.</p>
+    <div class="paper-meta">
+      <span class="source-tag">SSRN</span>
+      <span class="pending-tag">Link coming soon</span>
+    </div>
+  </div>
+
+  <div class="paper">
+    <p class="paper-title">"Badal," "Raqia," and "Miqveh": Water Control Terminology in the Hebrew of Genesis 1</p>
+    <p class="paper-summary">Traces three key Hebrew terms through Genesis 1 to argue they function as technical water-control vocabulary rather than general description.</p>
+    <div class="paper-meta">
+      <span class="source-tag">SSRN</span>
+      <span class="pending-tag">Link coming soon</span>
+    </div>
+  </div>
+
+  <div class="paper">
+    <p class="paper-title">A Systems-Oriented Interpretation of Water, Storage, and Flow Terminology in Genesis 1</p>
+    <p class="paper-summary">Applies a systems-engineering lens to the water, storage, and flow language used throughout Genesis 1, framing it as a coherent technical vocabulary.</p>
+    <div class="paper-meta">
+      <span class="source-tag">Zenodo</span>
+      <a class="read-link" href="https://zenodo.org/records/18269802" target="_blank" rel="noopener">
+        Read paper
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="paper">
+    <p class="paper-title">Genesis Engineered — The Dam and Mill Blueprint Revealed</p>
+    <p class="paper-summary">Zenodo edition of the core GEI thesis, documenting Genesis 1 as the design record of an antediluvian dam-and-mill complex.</p>
+    <div class="paper-meta">
+      <span class="source-tag">Zenodo</span>
+      <a class="read-link" href="https://zenodo.org/records/17316846" target="_blank" rel="noopener">
+        Read paper
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="paper">
+    <p class="paper-title">Yalltoo.com</p>
+    <p class="paper-summary">Home base for the Genesis Engineered Interpretations project — the Dam Academy, the D.A.M. framework, and all published research in one place.</p>
+    <div class="paper-meta">
+      <span class="source-tag">Website</span>
+      <a class="read-link" href="https://www.yalltoo.com/" target="_blank" rel="noopener">
+        Visit site
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <p class="note">Send over the SSRN links for the tagged papers above and they'll be wired in.</p>
+</div>
+
+</body>
+</html>

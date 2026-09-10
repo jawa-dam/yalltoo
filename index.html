@@ -1,6 +1,3 @@
-Done. Made the logo noticeably larger on both screens, tweaked the ripples so they scale with it, and fixed the bottom nav links on the Menu screen (Portfolio was pointing to the SSRN homepage, Support was going to email instead of the page).
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +15,6 @@ Done. Made the logo noticeably larger on both screens, tweaked the ripples so th
     --ink:#06070d;
     --paper:#ffffff;
     --surface:#ffffff;
-    --stage-bg:#06070d;
     --mist:#f4f6fb;
     --line:#e6e8f0;
     --grey:#7a7f92;
@@ -56,21 +52,22 @@ Done. Made the logo noticeably larger on both screens, tweaked the ripples so th
     padding:0;
     height:100%;
     overflow:hidden;
-    background:var(--stage-bg);
+    background:var(--surface);
     font-family:'Inter',system-ui,sans-serif;
     color:var(--ink);
   }
 
   .stage{
     height:100%;
+    width:100%;
     display:flex;
-    align-items:center;
+    align-items:stretch;
     justify-content:center;
   }
 
   .phone{
     width:min(430px,100vw);
-    height:min(900px,100vh);
+    height:100%;
     background:var(--surface);
     position:relative;
     overflow:hidden;
@@ -93,7 +90,7 @@ Done. Made the logo noticeably larger on both screens, tweaked the ripples so th
   /* ---------- shared banner ---------- */
   .banner{
     flex:0 0 auto;
-    padding:clamp(10px,3vh,18px) clamp(18px,5vw,28px) clamp(12px,2.5vh,16px);
+    padding:clamp(8px,1.8vh,14px) clamp(18px,5vw,28px) clamp(10px,2vh,14px);
     color:var(--paper);
     position:relative;
   }
@@ -102,7 +99,7 @@ Done. Made the logo noticeably larger on both screens, tweaked the ripples so th
 
   .status-row{
     display:flex;justify-content:space-between;align-items:center;
-    font-size:.7rem;font-weight:600;opacity:.85;margin-bottom:clamp(6px,2vh,10px);
+    font-size:.7rem;font-weight:600;opacity:.85;margin-bottom:clamp(4px,1vh,8px);
   }
 
   .skin-toggle{display:flex;gap:7px;}
@@ -148,9 +145,9 @@ Done. Made the logo noticeably larger on both screens, tweaked the ripples so th
   /* ---------- logo mark ---------- */
   .logo-wrap{
     position:relative;
-    width:clamp(90px,22vw,130px);
-    height:clamp(90px,22vw,130px);
-    margin-bottom:clamp(6px,1.5vh,14px);
+    width:clamp(120px,32vw,180px);
+    height:clamp(120px,32vw,180px);
+    margin-bottom:clamp(4px,1vh,10px);
   }
   .logo-wrap.centered{margin-left:auto;margin-right:auto;}
   .ripple{
@@ -163,7 +160,7 @@ Done. Made the logo noticeably larger on both screens, tweaked the ripples so th
   .ripple.r3{animation-delay:2s;}
   @keyframes ripple{
     0%{transform:scale(.7);opacity:.8;}
-    100%{transform:scale(2.2);opacity:0;}
+    100%{transform:scale(2.15);opacity:0;}
   }
   .logo-img{
     position:relative;
@@ -317,7 +314,7 @@ Done. Made the logo noticeably larger on both screens, tweaked the ripples so th
     display:flex;align-items:center;gap:8px;
     color:var(--paper);
     font-size:.85rem;font-weight:600;
-    margin-bottom:clamp(6px,1.5vh,12px);
+    margin-bottom:clamp(4px,1vh,8px);
     cursor:pointer;
     width:fit-content;
   }
@@ -325,9 +322,9 @@ Done. Made the logo noticeably larger on both screens, tweaked the ripples so th
 
   .menu-logo-wrap{
     position:relative;
-    width:clamp(72px,18vw,100px);
-    height:clamp(72px,18vw,100px);
-    margin-bottom:clamp(6px,1.5vh,10px);
+    width:clamp(96px,24vw,140px);
+    height:clamp(96px,24vw,140px);
+    margin-bottom:clamp(4px,1vh,8px);
   }
 </style>
 </head>
@@ -382,7 +379,6 @@ Done. Made the logo noticeably larger on both screens, tweaked the ripples so th
               </defs>
 
               <g clip-path="url(#frame)">
-                <!-- wheel -->
                 <g id="wheel-spin">
                   <circle cx="100" cy="90" r="58" fill="none" stroke="#6b4423" stroke-width="6"/>
                   <circle cx="100" cy="90" r="10" fill="#4a2c15"/>
@@ -394,7 +390,6 @@ Done. Made the logo noticeably larger on both screens, tweaked the ripples so th
                   <g transform="rotate(300 100 90)"><line x1="100" y1="90" x2="100" y2="35" stroke="#6b4423" stroke-width="4"/><rect id="paddle-6" class="paddle" x="93" y="12" width="14" height="24" rx="3"/></g>
                 </g>
 
-                <!-- water -->
                 <path class="wave wave1" fill="#2fd2ff" opacity=".55"
                   d="M0,150 Q12.5,140 25,150 T50,150 T75,150 T100,150 T125,150 T150,150 T175,150 T200,150 T225,150 T250,150 V190 H0 Z"/>
                 <path class="wave wave2" fill="#3d3dea" opacity=".5"
@@ -522,7 +517,6 @@ Done. Made the logo noticeably larger on both screens, tweaked the ripples so th
 </div>
 
 <script>
-  // ---- permanent first-visit badge (localStorage) ----
   const KEY = 'gei_member_since_v1';
   function fmt(iso){
     const d = new Date(iso);
@@ -538,7 +532,6 @@ Done. Made the logo noticeably larger on both screens, tweaked the ripples so th
   document.getElementById('member-since-dash').textContent = label;
   document.getElementById('member-since-menu').textContent = label;
 
-  // ---- light up wheel paddles for completed days ----
   const completedDays = 0;
   for(let i = 1; i <= completedDays && i <= 6; i++){
     const p = document.getElementById('paddle-' + i);
@@ -548,7 +541,6 @@ Done. Made the logo noticeably larger on both screens, tweaked the ripples so th
   document.getElementById('wheel-count').textContent = completedDays + '/6';
   document.getElementById('days-left').textContent = 6 - completedDays;
 
-  // ---- skin toggle (persisted) ----
   const THEME_KEY = 'gei_theme_v1';
   function setTheme(name){
     if(name === 'regular'){
@@ -563,7 +555,6 @@ Done. Made the logo noticeably larger on both screens, tweaked the ripples so th
   }
   setTheme(localStorage.getItem(THEME_KEY) || 'regular');
 
-  // ---- screen switch (no page scroll, just slide) ----
   function goTo(which){
     const dash = document.getElementById('screen-dash');
     const menu = document.getElementById('screen-menu');
@@ -579,4 +570,3 @@ Done. Made the logo noticeably larger on both screens, tweaked the ripples so th
 
 </body>
 </html>
-```

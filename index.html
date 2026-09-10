@@ -6,483 +6,69 @@
 <title>GEI Dam Academy — Dashboard</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap');
-
-  :root{
-    --cyan:#2fd2ff;
-    --indigo:#3d3dea;
-    --magenta:#f310ba;
-    --pink:#ff9df2;
-    --ink:#06070d;
-    --paper:#ffffff;
-    --surface:#ffffff;
-    --mist:#f4f6fb;
-    --line:#e6e8f0;
-    --grey:#7a7f92;
-  }
-
-  body[data-theme="dark"]{
-    --surface:#15161f;
-    --ink:#f2f4fb;
-    --mist:#1c1d29;
-    --line:#2c2d3a;
-    --grey:#9aa0b8;
-  }
-  body[data-theme="hotpink"]{
-    --cyan:#ff6fd8;
-    --indigo:#d6249f;
-    --magenta:#ff1f9c;
-    --pink:#ffb3ec;
-    --surface:#fff6fb;
-    --line:#ffd9f1;
-    --grey:#b06a95;
-  }
-  body[data-theme="babyblue"]{
-    --cyan:#bfeaff;
-    --indigo:#4fb3e8;
-    --magenta:#6fb8e6;
-    --pink:#e3f6ff;
-    --surface:#f3fbff;
-    --line:#d7ecfb;
-    --grey:#7f9db3;
-  }
-
-  *{box-sizing:border-box;}
-  html,body{
-    margin:0;
-    padding:0;
-    height:100%;
-    overflow:hidden;
-    background:var(--surface);
-    font-family:'Inter',system-ui,sans-serif;
-    color:var(--ink);
-  }
-
-  .stage{
-    height:100%;
-    width:100%;
-    display:flex;
-    align-items:stretch;
-    justify-content:center;
-  }
-
-  .phone{
-    width:min(430px,100vw);
-    height:100%;
-    background:var(--surface);
-    position:relative;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-  }
-
-  .screen{
-    position:absolute;
-    inset:0;
-    display:flex;
-    flex-direction:column;
-    background:var(--surface);
-    transform:translateX(0);
-    transition:transform .32s ease, opacity .32s ease;
-  }
-  .screen.off-right{transform:translateX(100%);pointer-events:none;}
-  .screen.off-left{transform:translateX(-30%);opacity:0;pointer-events:none;}
-
-  /* ---------- shared banner ---------- */
-  .banner{
-    flex:0 0 auto;
-    padding:clamp(8px,1.8vh,14px) clamp(18px,5vw,28px) clamp(10px,2vh,14px);
-    color:var(--paper);
-    position:relative;
-  }
-  .banner.dash{background:linear-gradient(135deg,var(--indigo) 0%, var(--cyan) 100%);}
-  .banner.menu{background:linear-gradient(135deg,var(--magenta) 0%, var(--pink) 100%);}
-  .banner.portfolio{background:linear-gradient(135deg,var(--indigo) 0%, var(--cyan) 100%);}
-
-  .status-row{
-    display:flex;justify-content:space-between;align-items:center;
-    font-size:.7rem;font-weight:600;opacity:.85;margin-bottom:clamp(4px,1vh,8px);
-  }
-
-  .skin-toggle{display:flex;gap:7px;}
-  .skin-dot{
-    width:17px;height:17px;border-radius:50%;padding:0;margin:0;
-    border:2px solid rgba(255,255,255,.85);
-    cursor:pointer;
-    appearance:none;-webkit-appearance:none;
-    box-shadow:0 1px 3px rgba(0,0,0,.25);
-    transition:transform .2s ease, box-shadow .2s ease;
-  }
-  .skin-dot.regular{background:linear-gradient(135deg,#3d3dea,#2fd2ff);}
-  .skin-dot.dark{background:#15161f;}
-  .skin-dot.hotpink{background:linear-gradient(135deg,#d6249f,#ff6fd8);}
-  .skin-dot.babyblue{background:linear-gradient(135deg,#4fb3e8,#bfeaff);}
-  .skin-dot.is-active{
-    transform:scale(1.2);
-    box-shadow:0 0 0 2px rgba(255,255,255,1), 0 0 0 4px rgba(255,255,255,.35);
-  }
-
-  .headline{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:clamp(1.5rem,6vw,2rem);
-    line-height:1.05;
-    margin:0 0 10px;
-  }
-
-  .badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    background:rgba(255,255,255,.18);
-    border:1px solid rgba(255,255,255,.35);
-    border-radius:999px;
-    padding:6px 14px;
-    font-size:.8rem;
-    font-weight:600;
-    backdrop-filter:blur(2px);
-  }
-  .badge .dot{width:6px;height:6px;border-radius:50%;background:var(--paper);}
-
-  /* ---------- logo mark ---------- */
-  .logo-wrap{
-    position:relative;
-    width:clamp(120px,32vw,180px);
-    height:clamp(120px,32vw,180px);
-    margin-bottom:clamp(4px,1vh,10px);
-  }
-  .logo-wrap.centered{margin-left:auto;margin-right:auto;}
-  .ripple{
-    position:absolute;inset:0;
-    border-radius:50%;
-    border:2px solid rgba(255,255,255,.65);
-    animation:ripple 3s ease-out infinite;
-  }
-  .ripple.r2{animation-delay:1s;}
-  .ripple.r3{animation-delay:2s;}
-  @keyframes ripple{
-    0%{transform:scale(.7);opacity:.8;}
-    100%{transform:scale(2.15);opacity:0;}
-  }
-  .logo-img{
-    position:relative;
-    width:100%;height:100%;
-    object-fit:contain;
-    background:transparent;
-    display:block;
-    filter:drop-shadow(0 6px 14px rgba(0,0,0,.28));
-    animation:logoFloat 3.2s ease-in-out infinite;
-  }
-  @keyframes logoFloat{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-6px);}
-  }
-
-  .cart-link{display:flex;color:inherit;padding:8px;margin:-8px;cursor:pointer;pointer-events:auto;border-radius:10px;}
-  .cart-link:active{background:rgba(255,255,255,.25);}
-  .cart{width:22px;height:22px;opacity:.95;pointer-events:none;}
-
-  /* ---------- waterwheel ---------- */
-  .waterwheel{
-    position:relative;
-    width:min(88%, 42vh, 340px);
-    aspect-ratio:200/190;
-    margin:0 auto;
-    flex:0 0 auto;
-  }
-  .waterwheel svg{width:100%;height:100%;overflow:visible;display:block;}
-  #wheel-spin{transform-origin:100px 90px;animation:wheelSpin 9s linear infinite;}
-  @keyframes wheelSpin{to{transform:rotate(360deg);}}
-  .wave{animation:flow 3s linear infinite;}
-  .wave2{animation-duration:4s;animation-direction:reverse;}
-  @keyframes flow{from{transform:translateX(0);}to{transform:translateX(-50px);}}
-  .droplet{animation:splash 1.8s ease-in infinite;}
-  .d2{animation-delay:.6s;}
-  .d3{animation-delay:1.1s;}
-  @keyframes splash{
-    0%{transform:translateY(0);opacity:0;}
-    20%{opacity:1;}
-    100%{transform:translateY(-28px);opacity:0;}
-  }
-  .paddle{fill:url(#wood);transition:fill .4s;}
-  .paddle.lit{fill:url(#litGrad);animation:paddleGlow 2s ease-in-out infinite;}
-  @keyframes paddleGlow{
-    0%,100%{filter:drop-shadow(0 0 2px rgba(47,210,255,.5));}
-    50%{filter:drop-shadow(0 0 9px rgba(47,210,255,.95));}
-  }
-  .wheel-caption{margin-top:2px;text-align:center;}
-  .wheel-caption .ring-num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.4rem,5.5vw,2.1rem);color:var(--indigo);display:block;}
-  .wheel-caption .ring-sub{font-size:.7rem;letter-spacing:.03em;color:var(--grey);font-weight:600;}
-
-  @media (prefers-reduced-motion: reduce){
-    .ripple,.logo-img,#wheel-spin,.wave,.droplet,.paddle.lit{animation:none !important;}
-  }
-
-  /* ---------- dashboard body ---------- */
-  .dash-body{
-    flex:1 1 auto;
-    display:flex;
-    flex-direction:column;
-    padding:clamp(10px,2vh,16px) clamp(18px,5vw,28px);
-    gap:clamp(6px,1.5vh,12px);
-    overflow:hidden;
-    min-height:0;
-  }
-
-  .plan-head{display:flex;justify-content:space-between;align-items:baseline;}
-  .plan-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;margin:0;}
-  .plan-counter{font-size:.85rem;color:var(--grey);}
-  .plan-counter b{color:var(--ink);}
-  .gauge-card{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(4px,1vh,10px);padding:0;min-height:0;overflow:hidden;}
-  .gauge-note{font-size:.8rem;color:var(--grey);}
-  .gauge-note b{color:var(--ink);}
-
-  /* ---------- bottom nav ---------- */
-  .nav{flex:0 0 auto;display:flex;border-top:1px solid var(--line);background:var(--surface);}
-  .nav a,.nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px 12px;font-size:.68rem;font-weight:600;color:var(--grey);text-decoration:none;background:none;border:none;font-family:'Inter',sans-serif;cursor:pointer;}
-  .nav svg{width:22px;height:22px;stroke:var(--grey);}
-  .nav .active{color:var(--indigo);}
-  .nav .active svg{stroke:var(--indigo);}
-  .nav.on-menu .menu-item{color:var(--magenta);}
-  .nav.on-menu .menu-item svg{stroke:var(--magenta);}
-  .nav.on-portfolio .portfolio-item{color:var(--indigo);}
-  .nav.on-portfolio .portfolio-item svg{stroke:var(--indigo);}
-
-  /* ---------- menu screen ---------- */
-  .menu-body{flex:1 1 auto;overflow-y:auto;padding:0 clamp(18px,5vw,28px) 8px;}
-  .menu-body::-webkit-scrollbar{width:0;}
-  .section-label{font-size:.72rem;color:var(--grey);font-weight:600;margin:clamp(14px,2.5vh,20px) 0 6px;}
-  .day-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);}
-  .day-left{display:flex;align-items:center;gap:12px;}
-  .day-chip{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--indigo),var(--cyan));color:var(--paper);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.85rem;flex:0 0 auto;}
-  .day-text b{display:block;font-size:.92rem;font-weight:600;}
-  .day-text span{display:block;font-size:.76rem;color:var(--grey);}
-  .chev{width:16px;height:16px;stroke:var(--grey);flex:0 0 auto;}
-
-  /* ---------- portfolio screen ---------- */
-  .portfolio-body{flex:1 1 auto;min-height:0;overflow:hidden;display:flex;flex-direction:column;padding:clamp(8px,1.5vh,12px) clamp(14px,4vw,22px) clamp(8px,1.2vh,12px);}
-  .portfolio-accordion{flex:1 1 auto;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:16px;background:var(--surface);}
-  .portfolio-accordion::-webkit-scrollbar{width:3px;}
-  .portfolio-accordion::-webkit-scrollbar-thumb{background:#d0d4e0;border-radius:99px;}
-  .acc-item{border-bottom:1px solid var(--line);background:var(--surface);}
-  .acc-item:last-child{border-bottom:none;}
-  .acc-trigger{width:100%;display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:none;border:none;text-align:left;cursor:pointer;font-family:'Inter',system-ui,sans-serif;color:var(--ink);}
-  .acc-item.is-open .acc-trigger{background:rgba(61,61,234,.05);padding-bottom:8px;}
-  .acc-trigger:active{background:rgba(61,61,234,.06);}
-  .acc-index{flex:0 0 auto;width:28px;height:28px;margin-top:1px;border-radius:8px;background:linear-gradient(135deg,var(--indigo),var(--cyan));color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.72rem;}
-  .acc-title{flex:1 1 auto;min-width:0;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.84rem;line-height:1.3;padding-top:4px;}
-  .acc-chev{flex:0 0 auto;width:16px;height:16px;margin-top:6px;stroke:var(--grey);transition:transform .2s ease;}
-  .acc-item.is-open .acc-chev{transform:rotate(90deg);stroke:var(--indigo);}
-  .acc-panel{max-height:0;opacity:0;overflow:hidden;transition:max-height .28s ease,opacity .2s ease,padding .2s ease;padding:0 14px 0 52px;}
-  .acc-item.is-open .acc-panel{max-height:280px;opacity:1;padding:0 14px 14px 52px;overflow:visible;}
-  .paper-summary{font-size:.8rem;line-height:1.45;color:#3a3d4a;margin:0 0 12px;}
-  body[data-theme="dark"] .paper-summary{color:#d8dbea;}
-  .paper-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
-  .source-tag{font-size:.66rem;font-weight:600;letter-spacing:.03em;color:var(--grey);text-transform:uppercase;}
-  .read-link{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;color:#fff;background:linear-gradient(135deg,var(--indigo),var(--cyan));padding:8px 13px;border-radius:999px;text-decoration:none;}
-  .read-link svg{width:12px;height:12px;stroke:#fff;}
-  .portfolio-note{flex:0 0 auto;font-size:.72rem;color:var(--grey);text-align:center;margin:8px 0 0;}
-
-  .back-row{display:flex;align-items:center;gap:8px;color:var(--paper);font-size:.85rem;font-weight:600;margin-bottom:clamp(4px,1vh,8px);cursor:pointer;width:fit-content;}
-  .back-row svg{width:16px;height:16px;stroke:var(--paper);}
-  .menu-logo-wrap,.portfolio-logo-wrap{position:relative;width:clamp(96px,24vw,140px);height:clamp(96px,24vw,140px);margin-bottom:clamp(4px,1vh,8px);}
+  :root{--cyan:#2fd2ff;--indigo:#3d3dea;--magenta:#f310ba;--pink:#ff9df2;--ink:#06070d;--paper:#fff;--surface:#fff;--mist:#f4f6fb;--line:#e6e8f0;--grey:#7a7f92;}
+  body[data-theme="dark"]{--surface:#15161f;--ink:#f2f4fb;--mist:#1c1d29;--line:#2c2d3a;--grey:#9aa0b8;}
+  body[data-theme="hotpink"]{--cyan:#ff6fd8;--indigo:#d6249f;--magenta:#ff1f9c;--pink:#ffb3ec;--surface:#fff6fb;--line:#ffd9f1;--grey:#b06a95;}
+  body[data-theme="babyblue"]{--cyan:#bfeaff;--indigo:#4fb3e8;--magenta:#6fb8e6;--pink:#e3f6ff;--surface:#f3fbff;--line:#d7ecfb;--grey:#7f9db3;}
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;height:100%;overflow:hidden;background:var(--surface);font-family:'Inter',system-ui,sans-serif;color:var(--ink);}
+  .stage{height:100%;width:100%;display:flex;align-items:stretch;justify-content:center}.phone{width:min(430px,100vw);height:100%;background:var(--surface);position:relative;overflow:hidden;display:flex;flex-direction:column;}
+  .screen{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--surface);transform:translateX(0);transition:transform .32s ease,opacity .32s ease}.screen.off-right{transform:translateX(100%);pointer-events:none}.screen.off-left{transform:translateX(-30%);opacity:0;pointer-events:none}
+  .banner{flex:0 0 auto;padding:clamp(8px,1.8vh,14px) clamp(18px,5vw,28px) clamp(10px,2vh,14px);color:var(--paper);position:relative}.banner.dash{background:linear-gradient(135deg,var(--indigo) 0%,var(--cyan) 100%)}.banner.menu{background:linear-gradient(135deg,var(--magenta) 0%,var(--pink) 100%)}.banner.portfolio{background:linear-gradient(135deg,var(--indigo) 0%,var(--cyan) 100%)}.banner.support{background:linear-gradient(135deg,var(--magenta) 0%,var(--pink) 100%)}
+  .status-row{display:flex;justify-content:space-between;align-items:center;font-size:.7rem;font-weight:600;opacity:.85;margin-bottom:clamp(4px,1vh,8px)}.skin-toggle{display:flex;gap:7px}.skin-dot{width:17px;height:17px;border-radius:50%;padding:0;margin:0;border:2px solid rgba(255,255,255,.85);cursor:pointer;appearance:none;-webkit-appearance:none;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s ease,box-shadow .2s ease}.skin-dot.regular{background:linear-gradient(135deg,#3d3dea,#2fd2ff)}.skin-dot.dark{background:#15161f}.skin-dot.hotpink{background:linear-gradient(135deg,#d6249f,#ff6fd8)}.skin-dot.babyblue{background:linear-gradient(135deg,#4fb3e8,#bfeaff)}.skin-dot.is-active{transform:scale(1.2);box-shadow:0 0 0 2px #fff,0 0 0 4px rgba(255,255,255,.35)}
+  .headline{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.5rem,6vw,2rem);line-height:1.05;margin:0 0 10px}.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:6px 14px;font-size:.8rem;font-weight:600;backdrop-filter:blur(2px)}.badge .dot{width:6px;height:6px;border-radius:50%;background:var(--paper)}
+  .logo-wrap{position:relative;width:clamp(120px,32vw,180px);height:clamp(120px,32vw,180px);margin-bottom:clamp(4px,1vh,10px)}.logo-wrap.centered{margin-left:auto;margin-right:auto}.ripple{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(255,255,255,.65);animation:ripple 3s ease-out infinite}.ripple.r2{animation-delay:1s}.ripple.r3{animation-delay:2s}@keyframes ripple{0%{transform:scale(.7);opacity:.8}100%{transform:scale(2.15);opacity:0}}.logo-img{position:relative;width:100%;height:100%;object-fit:contain;background:transparent;display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.28));animation:logoFloat 3.2s ease-in-out infinite}@keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  .cart-link{display:flex;color:inherit;padding:8px;margin:-8px;cursor:pointer;pointer-events:auto;border-radius:10px}.cart-link:active{background:rgba(255,255,255,.25)}.cart{width:22px;height:22px;opacity:.95;pointer-events:none}
+  .waterwheel{position:relative;width:min(88%,42vh,340px);aspect-ratio:200/190;margin:0 auto;flex:0 0 auto}.waterwheel svg{width:100%;height:100%;overflow:visible;display:block}#wheel-spin{transform-origin:100px 90px;animation:wheelSpin 9s linear infinite}@keyframes wheelSpin{to{transform:rotate(360deg)}}.wave{animation:flow 3s linear infinite}.wave2{animation-duration:4s;animation-direction:reverse}@keyframes flow{from{transform:translateX(0)}to{transform:translateX(-50px)}}.droplet{animation:splash 1.8s ease-in infinite}.d2{animation-delay:.6s}.d3{animation-delay:1.1s}@keyframes splash{0%{transform:translateY(0);opacity:0}20%{opacity:1}100%{transform:translateY(-28px);opacity:0}}.paddle{fill:url(#wood);transition:fill .4s}.paddle.lit{fill:url(#litGrad);animation:paddleGlow 2s ease-in-out infinite}@keyframes paddleGlow{0%,100%{filter:drop-shadow(0 0 2px rgba(47,210,255,.5))}50%{filter:drop-shadow(0 0 9px rgba(47,210,255,.95))}}.wheel-caption{margin-top:2px;text-align:center}.wheel-caption .ring-num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.4rem,5.5vw,2.1rem);color:var(--indigo);display:block}.wheel-caption .ring-sub{font-size:.7rem;letter-spacing:.03em;color:var(--grey);font-weight:600}
+  @media (prefers-reduced-motion:reduce){.ripple,.logo-img,#wheel-spin,.wave,.droplet,.paddle.lit{animation:none!important}}
+  .dash-body{flex:1 1 auto;display:flex;flex-direction:column;padding:clamp(10px,2vh,16px) clamp(18px,5vw,28px);gap:clamp(6px,1.5vh,12px);overflow:hidden;min-height:0}.plan-head{display:flex;justify-content:space-between;align-items:baseline}.plan-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;margin:0}.plan-counter{font-size:.85rem;color:var(--grey)}.plan-counter b{color:var(--ink)}.gauge-card{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(4px,1vh,10px);padding:0;min-height:0;overflow:hidden}.gauge-note{font-size:.8rem;color:var(--grey)}.gauge-note b{color:var(--ink)}
+  .nav{flex:0 0 auto;display:flex;border-top:1px solid var(--line);background:var(--surface)}.nav a,.nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px 12px;font-size:.68rem;font-weight:600;color:var(--grey);text-decoration:none;background:none;border:none;font-family:'Inter',sans-serif;cursor:pointer}.nav svg{width:22px;height:22px;stroke:var(--grey)}.nav .active{color:var(--indigo)}.nav .active svg{stroke:var(--indigo)}.nav.on-menu .menu-item{color:var(--magenta)}.nav.on-menu .menu-item svg{stroke:var(--magenta)}.nav.on-portfolio .portfolio-item{color:var(--indigo)}.nav.on-portfolio .portfolio-item svg{stroke:var(--indigo)}.nav.on-support .support-item{color:var(--magenta)}.nav.on-support .support-item svg{stroke:var(--magenta)}
+  .menu-body{flex:1 1 auto;overflow-y:auto;padding:0 clamp(18px,5vw,28px) 8px}.menu-body::-webkit-scrollbar{width:0}.section-label{font-size:.72rem;color:var(--grey);font-weight:600;margin:clamp(14px,2.5vh,20px) 0 6px}.day-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}.day-left{display:flex;align-items:center;gap:12px}.day-chip{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--indigo),var(--cyan));color:var(--paper);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.85rem;flex:0 0 auto}.day-text b{display:block;font-size:.92rem;font-weight:600}.day-text span{display:block;font-size:.76rem;color:var(--grey)}.chev{width:16px;height:16px;stroke:var(--grey);flex:0 0 auto}
+  .portfolio-body{flex:1 1 auto;min-height:0;overflow:hidden;display:flex;flex-direction:column;padding:clamp(8px,1.5vh,12px) clamp(14px,4vw,22px) clamp(8px,1.2vh,12px)}.portfolio-accordion{flex:1 1 auto;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:16px;background:var(--surface)}.portfolio-accordion::-webkit-scrollbar{width:3px}.portfolio-accordion::-webkit-scrollbar-thumb{background:#d0d4e0;border-radius:99px}.acc-item{border-bottom:1px solid var(--line);background:var(--surface)}.acc-item:last-child{border-bottom:none}.acc-trigger{width:100%;display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:none;border:none;text-align:left;cursor:pointer;font-family:'Inter',system-ui,sans-serif;color:var(--ink)}.acc-item.is-open .acc-trigger{background:rgba(61,61,234,.05);padding-bottom:8px}.acc-trigger:active{background:rgba(61,61,234,.06)}.acc-index{flex:0 0 auto;width:28px;height:28px;margin-top:1px;border-radius:8px;background:linear-gradient(135deg,var(--indigo),var(--cyan));color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.72rem}.acc-title{flex:1 1 auto;min-width:0;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.84rem;line-height:1.3;padding-top:4px}.acc-chev{flex:0 0 auto;width:16px;height:16px;margin-top:6px;stroke:var(--grey);transition:transform .2s ease}.acc-item.is-open .acc-chev{transform:rotate(90deg);stroke:var(--indigo)}.acc-panel{max-height:0;opacity:0;overflow:hidden;transition:max-height .28s ease,opacity .2s ease,padding .2s ease;padding:0 14px 0 52px}.acc-item.is-open .acc-panel{max-height:280px;opacity:1;padding:0 14px 14px 52px;overflow:visible}.paper-summary{font-size:.8rem;line-height:1.45;color:#3a3d4a;margin:0 0 12px}body[data-theme="dark"] .paper-summary{color:#d8dbea}.paper-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.source-tag{font-size:.66rem;font-weight:600;letter-spacing:.03em;color:var(--grey);text-transform:uppercase}.read-link{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;color:#fff;background:linear-gradient(135deg,var(--indigo),var(--cyan));padding:8px 13px;border-radius:999px;text-decoration:none}.read-link svg{width:12px;height:12px;stroke:#fff}.portfolio-note{flex:0 0 auto;font-size:.72rem;color:var(--grey);text-align:center;margin:8px 0 0}
+  .support-body{flex:1 1 auto;min-height:0;overflow-y:auto;padding:clamp(10px,2vh,16px) clamp(18px,5vw,28px) 10px}.support-body::-webkit-scrollbar{width:3px}.support-body::-webkit-scrollbar-thumb{background:#d0d4e0;border-radius:99px}.support-card{border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px;background:var(--surface)}.support-card-icon{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}.support-card-icon svg{width:22px;height:22px;stroke:#fff}.support-card-icon.mail{background:linear-gradient(135deg,var(--indigo),var(--cyan))}.support-card-icon.fund{background:linear-gradient(135deg,var(--magenta),var(--pink))}.support-card-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;margin:0 0 8px}.support-card-body{font-size:.85rem;line-height:1.5;color:#3a3d4a;margin:0 0 16px}.support-card-body b{color:var(--ink)}body[data-theme="dark"] .support-card-body{color:#d8dbea}.action-link{display:inline-flex;align-items:center;gap:8px;font-size:.84rem;font-weight:600;color:#fff;padding:10px 18px;border-radius:999px;text-decoration:none}.action-link.mail{background:linear-gradient(135deg,var(--indigo),var(--cyan))}.action-link.fund{background:linear-gradient(135deg,var(--magenta),var(--pink))}.action-link svg{width:14px;height:14px;stroke:#fff}.support-note{font-size:.75rem;color:var(--grey);text-align:center;margin:4px 0 0;padding-bottom:4px}
+  .back-row{display:flex;align-items:center;gap:8px;color:var(--paper);font-size:.85rem;font-weight:600;margin-bottom:clamp(4px,1vh,8px);cursor:pointer;width:fit-content}.back-row svg{width:16px;height:16px;stroke:var(--paper)}.menu-logo-wrap,.portfolio-logo-wrap,.support-logo-wrap{position:relative;width:clamp(96px,24vw,140px);height:clamp(96px,24vw,140px);margin-bottom:clamp(4px,1vh,8px)}
 </style>
 </head>
 <body>
-
-<div class="stage">
-  <div class="phone">
-
-    <!-- ============ SCREEN 1 : DASHBOARD ============ -->
-    <div class="screen" id="screen-dash">
-      <div class="banner dash" style="text-align:center;">
-        <div class="status-row">
-          <div class="skin-toggle" role="group" aria-label="Color theme">
-            <button class="skin-dot regular is-active" data-theme="regular" title="Regular mode" aria-label="Regular mode" onclick="setTheme('regular')"></button>
-            <button class="skin-dot dark" data-theme="dark" title="Dark mode" aria-label="Dark mode" onclick="setTheme('dark')"></button>
-            <button class="skin-dot hotpink" data-theme="hotpink" title="Hot pink mode" aria-label="Hot pink mode" onclick="setTheme('hotpink')"></button>
-            <button class="skin-dot babyblue" data-theme="babyblue" title="Baby blue mode" aria-label="Baby blue mode" onclick="setTheme('babyblue')"></button>
-          </div>
-          <a class="cart-link" href="https://www.yalltoo.com/gei-discovery-guide-" target="_blank" rel="noopener noreferrer" aria-label="Get the GEI Discovery Guide">
-            <svg class="cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M3 4h2l2.4 12.2a1.8 1.8 0 0 0 1.8 1.4h8.3a1.8 1.8 0 0 0 1.75-1.36L21 9H6"/></svg>
-          </a>
-        </div>
-        <div class="logo-wrap centered">
-          <div class="ripple r1"></div><div class="ripple r2"></div><div class="ripple r3"></div>
-          <img class="logo-img" src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yall-too-beaver-p8oCrzuwdz7fwcXd.png" alt="Yall Too logo">
-        </div>
-        <h1 class="headline" style="text-align:center;">Welcoming You<br>Back</h1>
-        <div class="badge"><span class="dot"></span><span id="member-since-dash">Member since —</span></div>
-      </div>
-
-      <div class="dash-body">
-        <div class="plan-head"><p class="plan-title">The Dam Progress →</p><p class="plan-counter">Day <b id="day-count">0</b> of 6</p></div>
-        <div class="gauge-card">
-          <div class="waterwheel">
-            <svg viewBox="0 0 200 190">
-              <defs>
-                <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9713f"/><stop offset="1" stop-color="#6b4423"/></linearGradient>
-                <linearGradient id="litGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--cyan)"/><stop offset="1" stop-color="var(--indigo)"/></linearGradient>
-                <clipPath id="frame"><rect x="0" y="0" width="200" height="190"/></clipPath>
-              </defs>
-              <g clip-path="url(#frame)">
-                <g id="wheel-spin">
-                  <circle cx="100" cy="90" r="58" fill="none" stroke="#6b4423" stroke-width="6"/><circle cx="100" cy="90" r="10" fill="#4a2c15"/>
-                  <g transform="rotate(0 100 90)"><line x1="100" y1="90" x2="100" y2="35" stroke="#6b4423" stroke-width="4"/><rect id="paddle-1" class="paddle" x="93" y="12" width="14" height="24" rx="3"/></g>
-                  <g transform="rotate(60 100 90)"><line x1="100" y1="90" x2="100" y2="35" stroke="#6b4423" stroke-width="4"/><rect id="paddle-2" class="paddle" x="93" y="12" width="14" height="24" rx="3"/></g>
-                  <g transform="rotate(120 100 90)"><line x1="100" y1="90" x2="100" y2="35" stroke="#6b4423" stroke-width="4"/><rect id="paddle-3" class="paddle" x="93" y="12" width="14" height="24" rx="3"/></g>
-                  <g transform="rotate(180 100 90)"><line x1="100" y1="90" x2="100" y2="35" stroke="#6b4423" stroke-width="4"/><rect id="paddle-4" class="paddle" x="93" y="12" width="14" height="24" rx="3"/></g>
-                  <g transform="rotate(240 100 90)"><line x1="100" y1="90" x2="100" y2="35" stroke="#6b4423" stroke-width="4"/><rect id="paddle-5" class="paddle" x="93" y="12" width="14" height="24" rx="3"/></g>
-                  <g transform="rotate(300 100 90)"><line x1="100" y1="90" x2="100" y2="35" stroke="#6b4423" stroke-width="4"/><rect id="paddle-6" class="paddle" x="93" y="12" width="14" height="24" rx="3"/></g>
-                </g>
-                <path class="wave wave1" fill="#2fd2ff" opacity=".55" d="M0,150 Q12.5,140 25,150 T50,150 T75,150 T100,150 T125,150 T150,150 T175,150 T200,150 T225,150 T250,150 V190 H0 Z"/>
-                <path class="wave wave2" fill="#3d3dea" opacity=".5" d="M0,158 Q12.5,150 25,158 T50,158 T75,158 T100,158 T125,158 T150,158 T175,158 T200,158 T225,158 T250,158 V190 H0 Z"/>
-                <circle class="droplet d1" cx="62" cy="146" r="3" fill="#eaf9ff"/><circle class="droplet d2" cx="100" cy="150" r="2.5" fill="#eaf9ff"/><circle class="droplet d3" cx="138" cy="146" r="3" fill="#eaf9ff"/>
-              </g>
-            </svg>
-            <div class="wheel-caption"><span class="ring-num" id="wheel-count">0/6</span><span class="ring-sub">DAYS COMPLETE</span></div>
-          </div>
-          <p class="gauge-note"><b id="days-left">6</b> days until the Sabbath milestone</p>
-        </div>
-      </div>
-
-      <nav class="nav">
-        <button class="active" onclick="goTo('dash')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 3v18M20 3v18M4 3h16M4 12h16"/></svg>Dashboard</button>
-        <button class="portfolio-item" onclick="goTo('portfolio')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/></svg>Portfolio</button>
-        <a class="nav-link" href="support.html" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Support</a>
-        <button onclick="goTo('menu')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Start</button>
-      </nav>
-    </div>
-
-    <!-- ============ SCREEN 2 : MENU ============ -->
-    <div class="screen off-right" id="screen-menu">
-      <div class="banner menu">
-        <div class="back-row" onclick="goTo('dash')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>Dashboard</div>
-        <div class="menu-logo-wrap"><div class="ripple r1"></div><div class="ripple r2"></div><div class="ripple r3"></div><img class="logo-img" src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yall-too-beaver-mascot-2AxaSvDgtbAn3kIP.png" alt="Yall Too logo"></div>
-        <div class="badge" style="margin-bottom:14px;">Genesis Day Menu</div>
-        <h1 class="headline" style="font-size:clamp(1.25rem,5vw,1.6rem);">Wilbert Bouie Jr.</h1>
-        <div class="badge"><span class="dot"></span><span id="member-since-menu">Member since —</span></div>
-      </div>
-      <div class="menu-body">
-        <p class="section-label">Genesis Days</p>
-        <a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-1" target="_top" rel="noopener"><span class="day-left"><span class="day-chip">D1</span><span class="day-text"><b>Day 1 — Chaos → Motion</b><span>Light divided from darkness</span></span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
-        <a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-2-firmament-dam-wall" target="_top" rel="noopener"><span class="day-left"><span class="day-chip">D2</span><span class="day-text"><b>Day 2 — Separation</b><span>Waters divided above &amp; below</span></span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
-        <a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-3-waters-land" target="_top" rel="noopener"><span class="day-left"><span class="day-chip">D3</span><span class="day-text"><b>Day 3 — Assign</b><span>Dry land &amp; vegetation named</span></span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
-        <a class="day-row" href="https://www.yalltoo.com/day-4-mill-of-the-dam" target="_top" rel="noopener"><span class="day-left"><span class="day-chip">D4</span><span class="day-text"><b>Day 4 — Activation</b><span>Sun, moon &amp; stars set in motion</span></span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
-        <a class="day-row" href="https://www.yalltoo.com/day-5-mill-activation" target="_top" rel="noopener"><span class="day-left"><span class="day-chip">D5</span><span class="day-text"><b>Day 5 — Manage</b><span>Sea &amp; sky life released</span></span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
-        <a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-6-final-operator" target="_top" rel="noopener"><span class="day-left"><span class="day-chip">D6</span><span class="day-text"><b>Day 6 — Naming</b><span>Land creatures &amp; dominion given</span></span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
-      </div>
-      <nav class="nav on-menu">
-        <button onclick="goTo('dash')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 3v18M20 3v18M4 3h16M4 12h16"/></svg>Dashboard</button>
-        <button class="portfolio-item" onclick="goTo('portfolio')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/></svg>Portfolio</button>
-        <a class="nav-link" href="support.html" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2 2h14a2 2 0 0 1 2 2z"/></svg>Support</a>
-        <button class="menu-item active" onclick="goTo('menu')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Start</button>
-      </nav>
-    </div>
-
-    <!-- ============ SCREEN 3 : PORTFOLIO ============ -->
-    <div class="screen off-right" id="screen-portfolio">
-      <div class="banner portfolio">
-        <div class="back-row" onclick="goTo('dash')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>Dashboard</div>
-        <div class="portfolio-logo-wrap"><div class="ripple r1"></div><div class="ripple r2"></div><div class="ripple r3"></div><img class="logo-img" src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yall-too-beaver-p8oCrzuwdz7fwcXd.png" alt="Yall Too logo"></div>
-        <h1 class="headline">Portfolio</h1>
-        <p class="subhead">Published research from Genesis Engineered Interpretations — Genesis 1 as an antediluvian hydraulic blueprint.</p>
-      </div>
-
-      <div class="portfolio-body">
-        <div class="portfolio-accordion" id="portfolioAccordion" role="list">
-          <div class="acc-item is-open" data-acc><button class="acc-trigger" type="button" aria-expanded="true"><span class="acc-index">01</span><span class="acc-title">Decoding the Creation Story as an Antediluvian Hydraulic Blueprint</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Reads Genesis 1 as a technical record of a pre-Flood hydraulic system, mapping its verses onto dam, sluice, and reservoir engineering rather than a purely theological account.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5622371" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
-          <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">02</span><span class="acc-title">Decoding Genesis through Literary Mechanics</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Applies a literary-mechanical reading method to Genesis 1, treating its structure, repetition, and word choice as engineering notation rather than poetry.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5792302" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
-          <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">03</span><span class="acc-title">A Methodological Framework for Decoding Ancient Sacred Texts as Technical Manuals</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Proposes a repeatable method for reading ancient scripture as disguised technical documentation, using Genesis 1 as the primary test case.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789382" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
-          <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">04</span><span class="acc-title">Reconstructing an Antediluvian Mill and Power-Generation System from Genesis 1</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Works through the imagery of Genesis 1 to reconstruct a plausible pre-Flood mill and power-generation system implied by the text.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789342" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
-          <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">05</span><span class="acc-title">Symbolic Hydrology: Biblical Characters as Natural and Mechanical Elements</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Re-reads biblical figures as symbolic stand-ins for natural forces and mechanical components within the proposed hydraulic system.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789322" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
-          <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">06</span><span class="acc-title">The Semicolon in Genesis 1:1–2: Hydraulic Sequencing Marker</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Focuses on the punctuation and sequencing of Genesis 1:1–2, arguing it marks ordered steps in a hydraulic process rather than a stylistic pause.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789263" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
-          <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">07</span><span class="acc-title">The Firmament as a Hydraulic Partition Wall (Genesis 1:6–8)</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Reinterprets the “firmament” of Genesis 1:6–8 as a literal partition wall separating two managed bodies of water.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789102" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
-          <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">08</span><span class="acc-title">“Badal,” “Raqia,” and “Miqveh”: Water Control Terminology</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Traces three key Hebrew terms through Genesis 1 to argue they function as technical water-control vocabulary rather than general description.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6077590" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
-          <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">09</span><span class="acc-title">Systems-Oriented Interpretation of Water, Storage, and Flow</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Applies a systems-engineering lens to the water, storage, and flow language used throughout Genesis 1, framing it as a coherent technical vocabulary.</p><div class="paper-meta"><span class="source-tag">Zenodo</span><a class="read-link" href="https://zenodo.org/records/18269802" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
-          <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">10</span><span class="acc-title">Genesis Engineered — The Dam and Mill Blueprint Revealed</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Zenodo edition of the core GEI thesis, documenting Genesis 1 as the design record of an antediluvian dam-and-mill complex.</p><div class="paper-meta"><span class="source-tag">Zenodo</span><a class="read-link" href="https://zenodo.org/records/17316846" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17\">M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
-          <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">11</span><span class="acc-title">Yalltoo.com — Project Home Base</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Home base for the Genesis Engineered Interpretations project — the Dam Academy, the D.A.M. framework, and all published research in one place.</p><div class="paper-meta"><span class="source-tag">Website</span><a class="read-link" href="https://www.yalltoo.com/" target="_blank" rel="noopener noreferrer">Visit site <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
-        </div>
-        <p class="portfolio-note">One paper open at a time · tap a row to expand</p>
-      </div>
-
-      <nav class="nav on-portfolio">
-        <button onclick="goTo('dash')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 3v18M20 3v18M4 3h16M4 12h16"/></svg>Dashboard</button>
-        <button class="portfolio-item active" onclick="goTo('portfolio')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/></svg>Portfolio</button>
-        <a class="nav-link" href="support.html" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Support</a>
-        <button onclick="goTo('menu')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Start</button>
-      </nav>
-    </div>
-
+<div class="stage"><div class="phone">
+  <div class="screen" id="screen-dash">
+    <div class="banner dash" style="text-align:center"><div class="status-row"><div class="skin-toggle" role="group" aria-label="Color theme"><button class="skin-dot regular is-active" data-theme="regular" title="Regular mode" aria-label="Regular mode" onclick="setTheme('regular')"></button><button class="skin-dot dark" data-theme="dark" title="Dark mode" aria-label="Dark mode" onclick="setTheme('dark')"></button><button class="skin-dot hotpink" data-theme="hotpink" title="Hot pink mode" aria-label="Hot pink mode" onclick="setTheme('hotpink')"></button><button class="skin-dot babyblue" data-theme="babyblue" title="Baby blue mode" aria-label="Baby blue mode" onclick="setTheme('babyblue')"></button></div><a class="cart-link" href="https://www.yalltoo.com/gei-discovery-guide-" target="_blank" rel="noopener noreferrer" aria-label="Get the GEI Discovery Guide"><svg class="cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M3 4h2l2.4 12.2a1.8 1.8 0 0 0 1.8 1.4h8.3a1.8 1.8 0 0 0 1.75-1.36L21 9H6"/></svg></a></div><div class="logo-wrap centered"><div class="ripple r1"></div><div class="ripple r2"></div><div class="ripple r3"></div><img class="logo-img" src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yall-too-beaver-p8oCrzuwdz7fwcXd.png" alt="Yall Too logo"></div><h1 class="headline" style="text-align:center">Welcoming You<br>Back</h1><div class="badge"><span class="dot"></span><span id="member-since-dash">Member since —</span></div></div>
+    <div class="dash-body"><div class="plan-head"><p class="plan-title">The Dam Progress →</p><p class="plan-counter">Day <b id="day-count">0</b> of 6</p></div><div class="gauge-card"><div class="waterwheel"><svg viewBox="0 0 200 190"><defs><linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9713f"/><stop offset="1" stop-color="#6b4423"/></linearGradient><linearGradient id="litGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--cyan)"/><stop offset="1" stop-color="var(--indigo)"/></linearGradient><clipPath id="frame"><rect x="0" y="0" width="200" height="190"/></clipPath></defs><g clip-path="url(#frame)"><g id="wheel-spin"><circle cx="100" cy="90" r="58" fill="none" stroke="#6b4423" stroke-width="6"/><circle cx="100" cy="90" r="10" fill="#4a2c15"/><g transform="rotate(0 100 90)"><line x1="100" y1="90" x2="100" y2="35" stroke="#6b4423" stroke-width="4"/><rect id="paddle-1" class="paddle" x="93" y="12" width="14" height="24" rx="3"/></g><g transform="rotate(60 100 90)"><line x1="100" y1="90" x2="100" y2="35" stroke="#6b4423" stroke-width="4"/><rect id="paddle-2" class="paddle" x="93" y="12" width="14" height="24" rx="3"/></g><g transform="rotate(120 100 90)"><line x1="100" y1="90" x2="100" y2="35" stroke="#6b4423" stroke-width="4"/><rect id="paddle-3" class="paddle" x="93" y="12" width="14" height="24" rx="3"/></g><g transform="rotate(180 100 90)"><line x1="100" y1="90" x2="100" y2="35" stroke="#6b4423" stroke-width="4"/><rect id="paddle-4" class="paddle" x="93" y="12" width="14" height="24" rx="3"/></g><g transform="rotate(240 100 90)"><line x1="100" y1="90" x2="100" y2="35" stroke="#6b4423" stroke-width="4"/><rect id="paddle-5" class="paddle" x="93" y="12" width="14" height="24" rx="3"/></g><g transform="rotate(300 100 90)"><line x1="100" y1="90" x2="100" y2="35" stroke="#6b4423" stroke-width="4"/><rect id="paddle-6" class="paddle" x="93" y="12" width="14" height="24" rx="3"/></g></g><path class="wave wave1" fill="#2fd2ff" opacity=".55" d="M0,150 Q12.5,140 25,150 T50,150 T75,150 T100,150 T125,150 T150,150 T175,150 T200,150 T225,150 T250,150 V190 H0 Z"/><path class="wave wave2" fill="#3d3dea" opacity=".5" d="M0,158 Q12.5,150 25,158 T50,158 T75,158 T100,158 T125,158 T150,158 T175,158 T200,158 T225,158 T250,158 V190 H0 Z"/><circle class="droplet d1" cx="62" cy="146" r="3" fill="#eaf9ff"/><circle class="droplet d2" cx="100" cy="150" r="2.5" fill="#eaf9ff"/><circle class="droplet d3" cx="138" cy="146" r="3" fill="#eaf9ff"/></g></svg><div class="wheel-caption"><span class="ring-num" id="wheel-count">0/6</span><span class="ring-sub">DAYS COMPLETE</span></div></div><p class="gauge-note"><b id="days-left">6</b> days until the Sabbath milestone</p></div></div>
+    <nav class="nav"><button class="active" onclick="goTo('dash')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 3v18M20 3v18M4 3h16M4 12h16"/></svg>Dashboard</button><button class="portfolio-item" onclick="goTo('portfolio')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/></svg>Portfolio</button><button class="support-item" onclick="goTo('support')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Support</button><button onclick="goTo('menu')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Start</button></nav>
   </div>
-</div>
-
+  <div class="screen off-right" id="screen-menu">
+    <div class="banner menu"><div class="back-row" onclick="goTo('dash')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>Dashboard</div><div class="menu-logo-wrap"><div class="ripple r1"></div><div class="ripple r2"></div><div class="ripple r3"></div><img class="logo-img" src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yall-too-beaver-mascot-2AxaSvDgtbAn3kIP.png" alt="Yall Too logo"></div><div class="badge" style="margin-bottom:14px">Genesis Day Menu</div><h1 class="headline" style="font-size:clamp(1.25rem,5vw,1.6rem)">Wilbert Bouie Jr.</h1><div class="badge"><span class="dot"></span><span id="member-since-menu">Member since —</span></div></div>
+    <div class="menu-body"><p class="section-label">Genesis Days</p><a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-1" target="_top" rel="noopener"><span class="day-left"><span class="day-chip">D1</span><span class="day-text"><b>Day 1 — Chaos → Motion</b><span>Light divided from darkness</span></span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a><a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-2-firmament-dam-wall" target="_top" rel="noopener"><span class="day-left"><span class="day-chip">D2</span><span class="day-text"><b>Day 2 — Separation</b><span>Waters divided above &amp; below</span></span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a><a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-3-waters-land" target="_top" rel="noopener"><span class="day-left"><span class="day-chip">D3</span><span class="day-text"><b>Day 3 — Assign</b><span>Dry land &amp; vegetation named</span></span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a><a class="day-row" href="https://www.yalltoo.com/day-4-mill-of-the-dam" target="_top" rel="noopener"><span class="day-left"><span class="day-chip">D4</span><span class="day-text"><b>Day 4 — Activation</b><span>Sun, moon &amp; stars set in motion</span></span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a><a class="day-row" href="https://www.yalltoo.com/day-5-mill-activation" target="_top" rel="noopener"><span class="day-left"><span class="day-chip">D5</span><span class="day-text"><b>Day 5 — Manage</b><span>Sea &amp; sky life released</span></span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a><a class="day-row" href="https://www.yalltoo.com/genesis-engineered-day-6-final-operator" target="_top" rel="noopener"><span class="day-left"><span class="day-chip">D6</span><span class="day-text"><b>Day 6 — Naming</b><span>Land creatures &amp; dominion given</span></span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a></div>
+    <nav class="nav on-menu"><button onclick="goTo('dash')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 3v18M20 3v18M4 3h16M4 12h16"/></svg>Dashboard</button><button class="portfolio-item" onclick="goTo('portfolio')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/></svg>Portfolio</button><button class="support-item" onclick="goTo('support')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Support</button><button class="menu-item active" onclick="goTo('menu')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Start</button></nav>
+  </div>
+  <div class="screen off-right" id="screen-portfolio">
+    <div class="banner portfolio"><div class="back-row" onclick="goTo('dash')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>Dashboard</div><div class="portfolio-logo-wrap"><div class="ripple r1"></div><div class="ripple r2"></div><div class="ripple r3"></div><img class="logo-img" src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yall-too-beaver-p8oCrzuwdz7fwcXd.png" alt="Yall Too logo"></div><h1 class="headline">Portfolio</h1><p class="subhead">Published research from Genesis Engineered Interpretations — Genesis 1 as an antediluvian hydraulic blueprint.</p></div>
+    <div class="portfolio-body"><div class="portfolio-accordion" id="portfolioAccordion" role="list">
+      <div class="acc-item is-open" data-acc><button class="acc-trigger" type="button" aria-expanded="true"><span class="acc-index">01</span><span class="acc-title">Decoding the Creation Story as an Antediluvian Hydraulic Blueprint</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Reads Genesis 1 as a technical record of a pre-Flood hydraulic system, mapping its verses onto dam, sluice, and reservoir engineering rather than a purely theological account.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5622371" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
+      <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">02</span><span class="acc-title">Decoding Genesis through Literary Mechanics</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Applies a literary-mechanical reading method to Genesis 1, treating its structure, repetition, and word choice as engineering notation rather than poetry.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5792302" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
+      <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">03</span><span class="acc-title">A Methodological Framework for Decoding Ancient Sacred Texts as Technical Manuals</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Proposes a repeatable method for reading ancient scripture as disguised technical documentation, using Genesis 1 as the primary test case.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789382" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
+      <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">04</span><span class="acc-title">Reconstructing an Antediluvian Mill and Power-Generation System from Genesis 1</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Works through the imagery of Genesis 1 to reconstruct a plausible pre-Flood mill and power-generation system implied by the text.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789342" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
+      <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">05</span><span class="acc-title">Symbolic Hydrology: Biblical Characters as Natural and Mechanical Elements</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Re-reads biblical figures as symbolic stand-ins for natural forces and mechanical components within the proposed hydraulic system.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789322" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
+      <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">06</span><span class="acc-title">The Semicolon in Genesis 1:1–2: Hydraulic Sequencing Marker</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Focuses on the punctuation and sequencing of Genesis 1:1–2, arguing it marks ordered steps in a hydraulic process rather than a stylistic pause.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789263" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
+      <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">07</span><span class="acc-title">The Firmament as a Hydraulic Partition Wall (Genesis 1:6–8)</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Reinterprets the “firmament” of Genesis 1:6–8 as a literal partition wall separating two managed bodies of water.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789102" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
+      <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">08</span><span class="acc-title">“Badal,” “Raqia,” and “Miqveh”: Water Control Terminology</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Traces three key Hebrew terms through Genesis 1 to argue they function as technical water-control vocabulary rather than general description.</p><div class="paper-meta"><span class="source-tag">SSRN</span><a class="read-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6077590" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
+      <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">09</span><span class="acc-title">Systems-Oriented Interpretation of Water, Storage, and Flow</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Applies a systems-engineering lens to the water, storage, and flow language used throughout Genesis 1, framing it as a coherent technical vocabulary.</p><div class="paper-meta"><span class="source-tag">Zenodo</span><a class="read-link" href="https://zenodo.org/records/18269802" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
+      <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">10</span><span class="acc-title">Genesis Engineered — The Dam and Mill Blueprint Revealed</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Zenodo edition of the core GEI thesis, documenting Genesis 1 as the design record of an antediluvian dam-and-mill complex.</p><div class="paper-meta"><span class="source-tag">Zenodo</span><a class="read-link" href="https://zenodo.org/records/17316846" target="_blank" rel="noopener noreferrer">Read paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
+      <div class="acc-item" data-acc><button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">11</span><span class="acc-title">Yalltoo.com — Project Home Base</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button><div class="acc-panel"><p class="paper-summary">Home base for the Genesis Engineered Interpretations project — the Dam Academy, the D.A.M. framework, and all published research in one place.</p><div class="paper-meta"><span class="source-tag">Website</span><a class="read-link" href="https://www.yalltoo.com/" target="_blank" rel="noopener noreferrer">Visit site <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div></div>
+    </div><p class="portfolio-note">One paper open at a time · tap a row to expand</p></div>
+    <nav class="nav on-portfolio"><button onclick="goTo('dash')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 3v18M20 3v18M4 3h16M4 12h16"/></svg>Dashboard</button><button class="portfolio-item" onclick="goTo('portfolio')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/></svg>Portfolio</button><button class="support-item" onclick="goTo('support')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Support</button><button onclick="goTo('menu')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Start</button></nav>
+  </div>
+  <div class="screen off-right" id="screen-support">
+    <div class="banner support"><div class="back-row" onclick="goTo('dash')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>Dashboard</div><div class="support-logo-wrap"><div class="ripple r1"></div><div class="ripple r2"></div><div class="ripple r3"></div><img class="logo-img" src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yall-too-beaver-p8oCrzuwdz7fwcXd.png" alt="Yall Too logo"></div><h1 class="headline">Support</h1><p class="subhead">Get in touch, or help keep the Genesis Engineered Interpretations research and Dam Academy going.</p></div>
+    <div class="support-body"><div class="support-card"><div class="support-card-icon mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><p class="support-card-title">Contact</p><p class="support-card-body">Questions about the research, the Dam Academy, or the site itself — reach out directly at <b>Contact@yalltoo.com</b>.</p><a class="action-link mail" href="mailto:Contact@yalltoo.com">Email us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div><div class="support-card"><div class="support-card-icon fund"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.5-8 11-8 11z"/></svg></div><p class="support-card-title">Support the project</p><p class="support-card-body">If the research or the Dam Academy has been worth your time, you can help keep it running with a contribution on GoFundMe.</p><a class="action-link fund" href="https://gofund.me/927c07d75" target="_blank" rel="noopener">Give on GoFundMe <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div><p class="support-note">Every message and every bit of support helps keep this project going.</p></div>
+    <nav class="nav on-support"><button onclick="goTo('dash')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 3v18M20 3v18M4 3h16M4 12h16"/></svg>Dashboard</button><button class="portfolio-item" onclick="goTo('portfolio')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/></svg>Portfolio</button><button class="support-item active" onclick="goTo('support')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Support</button><button onclick="goTo('menu')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Start</button></nav>
+  </div>
+</div></div>
 <script>
-  const KEY='gei_member_since_v1';
-  function fmt(iso){const d=new Date(iso);return d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})+' · '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});}
-  let since=localStorage.getItem(KEY);
-  if(!since){since=new Date().toISOString();localStorage.setItem(KEY,since);}
-  const label='Member since '+fmt(since);
-  const dashMember=document.getElementById('member-since-dash');
-  const menuMember=document.getElementById('member-since-menu');
-  if(dashMember) dashMember.textContent=label;
-  if(menuMember) menuMember.textContent=label;
-
-  const completedDays=0;
-  for(let i=1;i<=completedDays&&i<=6;i++){const p=document.getElementById('paddle-'+i);if(p)p.classList.add('lit');}
-  document.getElementById('day-count').textContent=completedDays;
-  document.getElementById('wheel-count').textContent=completedDays+'/6';
-  document.getElementById('days-left').textContent=6-completedDays;
-
-  const THEME_KEY='gei_theme_v1';
-  function setTheme(name){
-    if(name==='regular') document.body.removeAttribute('data-theme'); else document.body.setAttribute('data-theme',name);
-    localStorage.setItem(THEME_KEY,name);
-    document.querySelectorAll('.skin-dot').forEach(dot=>dot.classList.toggle('is-active',dot.dataset.theme===name));
-  }
-  setTheme(localStorage.getItem(THEME_KEY)||'regular');
-
-  const screens={dash:document.getElementById('screen-dash'),menu:document.getElementById('screen-menu'),portfolio:document.getElementById('screen-portfolio')};
-  let current='dash';
-  function goTo(which){
-    if(!screens[which]) return;
-    Object.entries(screens).forEach(([key,el])=>{
-      el.classList.remove('off-left','off-right');
-      if(key===which) return;
-      el.classList.add(key==='dash' && which!=='dash' ? 'off-left' : 'off-right');
-    });
-    current=which;
-  }
-
-  (function(){
-    const accordion=document.getElementById('portfolioAccordion');
-    if(!accordion)return;
-    const items=Array.from(accordion.querySelectorAll('[data-acc]'));
-    function openOnly(target){
-      items.forEach(item=>{
-        const on=item===target;
-        item.classList.toggle('is-open',on);
-        const btn=item.querySelector('.acc-trigger');
-        if(btn)btn.setAttribute('aria-expanded',on?'true':'false');
-      });
-      requestAnimationFrame(()=>{
-        const top=target.offsetTop;
-        const bottom=top+target.offsetHeight;
-        const viewTop=accordion.scrollTop;
-        const viewBottom=viewTop+accordion.clientHeight;
-        if(top<viewTop)accordion.scrollTo({top,behavior:'smooth'});
-        else if(bottom>viewBottom)accordion.scrollTo({top:bottom-accordion.clientHeight,behavior:'smooth'});
-      });
-    }
-    items.forEach(item=>{
-      const btn=item.querySelector('.acc-trigger');
-      if(!btn)return;
-      btn.addEventListener('click',()=>{
-        if(item.classList.contains('is-open'))return;
-        openOnly(item);
-      });
-    });
-  })();
+  const KEY='gei_member_since_v1';function fmt(iso){const d=new Date(iso);return d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})+' · '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'})}let since=localStorage.getItem(KEY);if(!since){since=new Date().toISOString();localStorage.setItem(KEY,since)}const label='Member since '+fmt(since);document.getElementById('member-since-dash').textContent=label;document.getElementById('member-since-menu').textContent=label;
+  const completedDays=0;for(let i=1;i<=completedDays&&i<=6;i++){const p=document.getElementById('paddle-'+i);if(p)p.classList.add('lit')}document.getElementById('day-count').textContent=completedDays;document.getElementById('wheel-count').textContent=completedDays+'/6';document.getElementById('days-left').textContent=6-completedDays;
+  const THEME_KEY='gei_theme_v1';function setTheme(name){if(name==='regular')document.body.removeAttribute('data-theme');else document.body.setAttribute('data-theme',name);localStorage.setItem(THEME_KEY,name);document.querySelectorAll('.skin-dot').forEach(dot=>dot.classList.toggle('is-active',dot.dataset.theme===name))}setTheme(localStorage.getItem(THEME_KEY)||'regular');
+  function goTo(which){const screens={dash:document.getElementById('screen-dash'),menu:document.getElementById('screen-menu'),portfolio:document.getElementById('screen-portfolio'),support:document.getElementById('screen-support')};Object.entries(screens).forEach(([name,screen])=>{if(name===which){screen.classList.remove('off-right','off-left')}else if(name==='dash'){screen.classList.add('off-left');screen.classList.remove('off-right')}else{screen.classList.add('off-right');screen.classList.remove('off-left')}})}
+  (function(){const accordion=document.getElementById('portfolioAccordion');const items=Array.from(document.querySelectorAll('#screen-portfolio [data-acc]'));function openOnly(target){items.forEach(item=>{const on=item===target;item.classList.toggle('is-open',on);const btn=item.querySelector('.acc-trigger');if(btn)btn.setAttribute('aria-expanded',on?'true':'false')});requestAnimationFrame(()=>{const top=target.offsetTop;const bottom=top+target.offsetHeight;const viewTop=accordion.scrollTop;const viewBottom=viewTop+accordion.clientHeight;if(top<viewTop)accordion.scrollTo({top,behavior:'smooth'});else if(bottom>viewBottom)accordion.scrollTo({top:bottom-accordion.clientHeight,behavior:'smooth'})})}items.forEach(item=>{const btn=item.querySelector('.acc-trigger');if(btn)btn.addEventListener('click',()=>{if(item.classList.contains('is-open'))return;openOnly(item)})})})();
 </script>
-
 </body>
 </html>

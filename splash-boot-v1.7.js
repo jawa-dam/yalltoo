@@ -1,48 +1,24 @@
-/* V1.7 — Splash Boot Recovery helper
- * Loaded inline by index.html when possible. Safe, self-contained, and
- * intentionally independent of the optional V1.6 asset helper.
- */
+/* V1.7 — Splash Boot Recovery helper */
 (function(){
-  const FALLBACK='https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yalltoo-mascot-animated-UgmkGIe3sJES4tKm.gif';
-  const FALLBACKS=[
-    FALLBACK,
-    'https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yall-too-god-is-a-mountain-z7efLdbRpVLTxHbD.png',
-    'https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/start-here-gei-ZAxHC3CvlzNVXcDh.png'
-  ];
-  function q(id){return document.getElementById(id)}
-  function ready(fn){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fn,{once:true});else fn()}
-  ready(function(){
-    const splash=q('gei-splash'),hero=q('splashHero'),status=q('splashStatus'),loading=q('splashLoading'),label=q('splashLoadingLabel'),progress=q('splashProgress'),skip=q('splashSkip'),enter=q('splashEnter'),phone=q('app-phone');
-    if(!splash||!hero||!phone)return;
-    let closed=false, started=performance.now();
-    const set=(el,text)=>{if(el)el.textContent=text};
-    const pct=n=>{if(progress)progress.style.width=Math.max(0,Math.min(100,n))+'%'};
-    function close(){if(closed)return;closed=true;phone.classList.add('splash-done');setTimeout(()=>{try{splash.remove()}catch(_){ }},720)}
-    if(skip)skip.addEventListener('click',close,{passive:true});
-    if(enter)enter.addEventListener('click',close,{passive:true});
-    window.addEventListener('keydown',function(e){if(e.key==='Escape'||e.key==='Enter'||e.key===' '){e.preventDefault();close()}},{passive:false});
-
-    function load(url,timeout){return new Promise(resolve=>{let done=false;const t=setTimeout(()=>finish(false),timeout||5000);const img=new Image();function finish(ok){if(done)return;done=true;clearTimeout(t);resolve({ok,url,img})}img.onload=()=>finish(img.naturalWidth>0&&img.naturalHeight>0);img.onerror=()=>finish(false);img.src=url;if(img.complete&&img.naturalWidth>0)queueMicrotask(()=>finish(true))})}
-    async function boot(){
-      set(status,'Preparing cinematic image…');set(label,'LOADING SPLASH');pct(8);
-      let pool=[];
-      try{if(Array.isArray(window.GEI_V16_SPLASH_ASSETS))pool=window.GEI_V16_SPLASH_ASSETS.slice()}catch(_){ }
-      if(!pool.length)pool=FALLBACKS.slice();
-      const last=(()=>{try{return localStorage.getItem('gei_splash_last_asset_v1')||''}catch(_){return ''}})();
-      const candidates=pool.filter(x=>x&&x!==last); const source=candidates.length?candidates:pool;
-      const selected=source[Math.floor(Math.random()*source.length)]||FALLBACK;
-      const result=await load(selected,6000);
-      if(result.ok){hero.src=result.url;hero.classList.add('is-ready');try{localStorage.setItem('gei_splash_last_asset_v1',result.url)}catch(_){ }set(status,'Image ready — welcome to GEI.');set(label,'SPLASH READY');pct(100);}
-      else {
-        set(status,'Primary image unavailable — activating Adam.');set(label,'RECOVERING GATEWAY');pct(55);
-        let fallbackResult=null;
-        for(const url of FALLBACKS){fallbackResult=await load(url,3000);if(fallbackResult.ok)break}
-        if(fallbackResult&&fallbackResult.ok){hero.src=fallbackResult.url;hero.classList.add('is-ready');set(status,'Adam verified — gateway ready.');set(label,'ADAM READY');pct(100)}
-        else {hero.removeAttribute('src');set(status,'Visual unavailable — safe entry enabled.');set(label,'SAFE ENTRY');pct(100)}
-      }
-      if(loading)loading.hidden=true;
-      const elapsed=performance.now()-started;setTimeout(close,Math.max(150,10000-elapsed));
-    }
-    try{boot()}catch(_){set(label,'SAFE ENTRY');pct(100);setTimeout(close,250)}
-  });
+  'use strict';
+  var FALLBACK='https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yalltoo-mascot-animated-UgmkGIe3sJES4tKm.gif';
+  var FALLBACKS=[FALLBACK,'https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/y-all-too-god-is-a-mountain-z7efLdbRpVLTxHbD.png','https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/start-here-gei-ZAxHC3CvlzNVXcDh.png'];
+  var splash=document.getElementById('gei-splash'),hero=document.getElementById('splashHero'),skip=document.getElementById('splashSkip'),enter=document.getElementById('splashEnter'),phone=document.getElementById('app-phone'),status=document.getElementById('splashStatus'),label=document.getElementById('splashLoadingLabel'),loading=document.getElementById('splashLoading'),progress=document.getElementById('splashProgress');
+  if(!splash||!hero||!skip||!phone)return;
+  var closed=false,started=Date.now();
+  function text(el,v){if(el)el.textContent=v} function pct(v){if(progress)progress.style.width=Math.max(0,Math.min(100,v))+'%'}
+  function closeSplash(){if(closed)return;closed=true;phone.classList.add('splash-done')}
+  skip.addEventListener('click',closeSplash);if(enter)enter.addEventListener('click',closeSplash);
+  window.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key==='Escape'||e.key===' '){e.preventDefault();closeSplash()}},{passive:false});
+  function preload(url,timeout){return new Promise(function(resolve){var img=new Image(),done=false,t=setTimeout(function(){finish(false)},timeout||5000);function finish(ok){if(done)return;done=true;clearTimeout(t);resolve(ok)}img.onload=function(){finish(img.naturalWidth>0&&img.naturalHeight>0)};img.onerror=function(){finish(false)};img.src=url})}
+  function choose(pool){var last='';try{last=localStorage.getItem('gei_splash_last_asset_v1')||''}catch(_){ }var list=pool.filter(function(x){return x&&x!==last});if(!list.length)list=pool;return list[Math.floor(Math.random()*list.length)]||FALLBACK}
+  async function boot(){
+    var pool=Array.isArray(window.GEI_V16_SPLASH_ASSETS)&&window.GEI_V16_SPLASH_ASSETS.length?window.GEI_V16_SPLASH_ASSETS.slice():[FALLBACK];
+    var selected=choose(pool);text(label,'LOADING SPLASH');text(status,'Loading cinematic image…');pct(10);
+    var ok=await preload(selected,5500);
+    if(ok){hero.src=selected;hero.classList.add('is-ready');try{localStorage.setItem('gei_splash_last_asset_v1',selected)}catch(_){ }text(label,'SPLASH READY');text(status,'Image ready — welcome to GEI.');pct(100)}
+    else{text(label,'RECOVERING GATEWAY');text(status,'Primary image unavailable — activating Adam.');pct(55);var fallbackOk=false;for(var i=0;i<FALLBACKS.length;i++){fallbackOk=await preload(FALLBACKS[i],3000);if(fallbackOk){hero.src=FALLBACKS[i];hero.classList.add('is-ready');break}}if(fallbackOk){text(label,'ADAM READY');text(status,'Adam verified — gateway ready.')}else{text(label,'SAFE ENTRY');text(status,'Visual unavailable — safe entry enabled.')}pct(100)}
+    if(loading)loading.hidden=true;setTimeout(closeSplash,Math.max(250,10000-(Date.now()-started)));
+  }
+  boot().catch(function(){text(label,'SAFE ENTRY');text(status,'Safe entry enabled.');pct(100);if(loading)loading.hidden=true;setTimeout(closeSplash,250)});
 })();

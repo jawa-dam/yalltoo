@@ -98,3 +98,68 @@ window.GEI_V16_SPLASH_ROTATION = Object.freeze({
     } catch (_) {}
   }
 });
+
+/* V1.8 — Emergency splash boot hardening
+ * Loaded before index.html's large runtime. Guarantees an actionable splash,
+ * resilient asset fallback, keyboard exit, and a fixed 10s maximum hold.
+ */
+(function(){
+  'use strict';
+  var FALLBACK='https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yalltoo-mascot-animated-UgmkGIe3sJES4tKm.gif';
+  function boot(){
+    var splash=document.getElementById('gei-splash');
+    var hero=document.getElementById('splashHero');
+    var skip=document.getElementById('splashSkip');
+    var enter=document.getElementById('splashEnter');
+    var phone=document.getElementById('app-phone');
+    if(!splash||!phone)return;
+    var closed=false;
+    var auto=setTimeout(close,10000);
+    function close(){if(closed)return;closed=true;phone.classList.add('splash-done');}
+    function forceButtons(){
+      [skip,enter].forEach(function(el){
+        if(!el)return;
+        el.hidden=false;
+        el.style.pointerEvents='auto';
+        el.style.zIndex='10001';
+        el.onclick=close;
+      });
+    }
+    var css=document.createElement('style');
+    css.textContent='#splashEnter[hidden],#splashSkip[hidden]{display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;}';
+    (document.head||document.documentElement).appendChild(css);
+    forceButtons();
+    setTimeout(forceButtons,0);
+    setTimeout(forceButtons,120);
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape'||e.key==='Enter'||e.key===' '){
+        e.preventDefault();
+        close();
+      }
+    },true);
+    function show(url){
+      if(!hero||!url)return;
+      hero.src=url;
+      hero.classList.add('is-ready');
+      hero.style.opacity='1';
+    }
+    var pool=(window.GEI_V16_SPLASH_ASSETS&&window.GEI_V16_SPLASH_ASSETS.length?window.GEI_V16_SPLASH_ASSETS:[FALLBACK]).slice();
+    var chosen;
+    try{chosen=(window.GEI_V16_SPLASH_ROTATION&&window.GEI_V16_SPLASH_ROTATION.select(pool))||pool[Math.floor(Math.random()*pool.length)]||FALLBACK;}catch(_){chosen=pool[Math.floor(Math.random()*pool.length)]||FALLBACK;}
+    var settled=false;
+    function settle(url,ok){
+      if(settled)return;
+      settled=true;
+      show(ok&&url?url:FALLBACK);
+      try{if(ok&&window.GEI_V16_SPLASH_ROTATION)window.GEI_V16_SPLASH_ROTATION.commit(url);}catch(_){}
+    }
+    var img=new Image();
+    img.onload=function(){settle(chosen,img.naturalWidth>0&&img.naturalHeight>0);};
+    img.onerror=function(){settle(FALLBACK,false);};
+    img.src=chosen;
+    setTimeout(function(){if(!settled)settle(FALLBACK,false);},2500);
+    window.clearTimeout=window.clearTimeout||function(){};
+  }
+  if(document.getElementById('gei-splash'))boot();
+  else document.addEventListener('DOMContentLoaded',boot,{once:true});
+})();

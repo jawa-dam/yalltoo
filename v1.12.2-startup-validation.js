@@ -1,25 +1,22 @@
-/* V1.12.2 — Startup Validation
- * Verifies the GEI splash gateway is present before app interaction is exposed,
- * keeps the existing cinematic splash authoritative, and provides a safe,
- * capture-phase route handler for the four app destinations + Back controls.
+/* V1.12.6 — Single Splash Authority
+ * Startup validation no longer styles or controls the splash.
+ * The cinematic splash controller owns splash startup/exit.
+ * This layer only restores the app routes after the splash is done.
  */
 (function(){
   'use strict';
   function boot(){
-    var body=document.body,phone=document.getElementById('app-phone');
-    if(!body||!phone||body.dataset.geiStartupV122==='1')return;
-    body.dataset.geiStartupV122='1';
+    var body=document.body;
+    var phone=document.getElementById('app-phone');
+    if(!body||!phone||body.dataset.geiStartupV126==='1')return;
+    body.dataset.geiStartupV126='1';
 
-    var splash=document.getElementById('gei-splash');
-    if(splash){
-      splash.style.display='flex';
-      splash.style.visibility='visible';
-      splash.style.opacity='1';
-      splash.style.pointerEvents='auto';
-      splash.style.zIndex='99999';
+    function appReady(){
+      return phone.classList.contains('splash-done');
     }
 
     function show(which){
+      if(!appReady())return;
       var target=document.getElementById('screen-'+which);
       if(!target)return;
       document.querySelectorAll('.screen').forEach(function(screen){
@@ -50,25 +47,19 @@
       if(!target||target.classList.contains('cart-link')||target.closest('#gei-splash'))return;
       var which=route(target);
       if(which){
+        if(!appReady())return;
         e.preventDefault();
         e.stopImmediatePropagation();
         show(which);
         return;
       }
       if(target.hasAttribute('data-back')){
+        if(!appReady())return;
         e.preventDefault();
         e.stopImmediatePropagation();
         show(target.getAttribute('data-back')||'dash');
       }
     },true);
-
-    /* Never let this validation layer own the splash exit. */
-    document.addEventListener('click',function(e){
-      if(!splash||!e.target)return;
-      var target=e.target.closest?e.target.closest('#splashEnter,#splashSkip'):null;
-      if(target){ return; }
-    },true);
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});
-  else boot();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();

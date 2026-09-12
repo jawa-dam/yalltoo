@@ -128,7 +128,6 @@
       if(note)note.textContent='12 entries • one entry per publication or official destination.';
     }
 
-    /* Restore the catalog before any other portfolio enhancements interact with it. */
     try{restorePortfolio()}catch(e){}
     window.setTimeout(function(){try{restorePortfolio()}catch(e){}},50);
     window.setTimeout(function(){try{restorePortfolio()}catch(e){}},300);

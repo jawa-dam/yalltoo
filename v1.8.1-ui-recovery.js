@@ -3,8 +3,8 @@
  * Restores navigation, skins, splash effects, and official YallToo branding
  * without replacing the existing app shell.
  *
- * V1.8.4 — Research Portfolio Intelligence & Live Verification
- * Adds defensive catalog validation and honest best-effort external reachability state.
+ * V1.8.6 — Research Entry Intelligence
+ * Enriches each portfolio entry with an identifier, repository, role, and direct source action.
  */
 (function(){
   'use strict';
@@ -81,22 +81,22 @@
     bindAccordion();
 
     var portfolioData=[
-      {n:'01',title:'Decoding the Creation Story as an Antediluvian Hydraulic Blueprint',summary:'Presents the Genesis creation story as an antediluvian hydraulic blueprint and develops the project’s core engineering interpretation.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5622371'},
-      {n:'02',title:'Genesis Engineered – The Dam and Mill Blueprint Revealed',summary:'Details the proposed dam-and-mill architecture at the center of Genesis Engineered, linking textual imagery to water storage, controlled release, and mechanical work.',source:'YallToo / Paper',kind:'yalltoo',label:'Read on Zenodo ↗',url:'https://zenodo.org/records/17316846'},
-      {n:'03',title:'Decoding Genesis through Literary Mechanics',summary:'Examines Genesis through literary structure, sequence, repetition, and mechanics as evidence within the proposed interpretive method.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5792302'},
-      {n:'04',title:'A Methodological Framework for Decoding Ancient Sacred Texts as Technical Manuals',summary:'Sets out a methodological framework for testing whether ancient sacred texts can be read as technical or procedural documentation.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789382'},
-      {n:'05',title:'Reconstructing an Antediluvian Mill and Power-Generation System from Genesis 1 Symbolism',summary:'Reconstructs a proposed antediluvian mill and power-generation system from the symbolic language and sequence of Genesis 1.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789342'},
-      {n:'06',title:'Symbolic Hydrology: Reclassifying Biblical Characters as Natural and Mechanical Elements in a Proto-Engineering System',summary:'Reclassifies selected biblical characters as symbolic natural forces or mechanical elements within the proposed proto-engineering system.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789322'},
-      {n:'07',title:'The Semicolon in Genesis 1:1–2: A Linguistic Marker of Hydraulic Sequencing in Ancient Symbolic Notation',summary:'Focuses on the semicolon in Genesis 1:1–2 and proposes a linguistic-sequencing interpretation for the punctuation’s role in the project.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789263'},
-      {n:'08',title:'The Firmament as a Hydraulic Partition Wall: Reinterpreting Genesis 1:6–8 Through Antediluvian Water Engineering',summary:'Interprets the firmament of Genesis 1:6–8 as a hydraulic partition wall within the proposed antediluvian water-engineering model.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789102'},
-      {n:'09',title:'Badal, “Raqia,” and “Miqveh”: Water Control Terminology in the Hebrew of Genesis 1',summary:'Studies the Hebrew terms badal, raqia, and miqveh in relation to the project’s water-control vocabulary and Genesis 1 terminology.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6077590'},
-      {n:'10',title:'A Systems-Oriented Interpretation of Water, Storage, and Flow Terminology in Genesis 1',summary:'Presents a systems-oriented reading of Genesis 1 vocabulary involving water, storage, separation, and flow.',source:'Zenodo',kind:'zenodo',label:'Read on Zenodo ↗',url:'https://zenodo.org/records/18269802'},
-      {n:'11',title:'Genesis Engineered – The Dam and Mill Blueprint Revealed • YallToo.com',summary:'YallToo.com presentation and publication home for the Dam and Mill Blueprint concept within the Genesis Engineered project.',source:'YallToo.com',kind:'yalltoo',label:'Open YallToo.com ↗',url:'https://www.yalltoo.com/'},
-      {n:'12',title:'Genesis Engineered – The Dam and Mill Blueprint Revealed • Zenodo',summary:'Zenodo record for the same Dam and Mill Blueprint publication, retained as a separate canonical repository entry rather than duplicated as a second research work.',source:'Zenodo',kind:'zenodo',label:'Open Zenodo ↗',url:'https://zenodo.org/records/17316846'}
+      {n:'01',title:'Decoding the Creation Story as an Antediluvian Hydraulic Blueprint',summary:'Presents the Genesis creation story as an antediluvian hydraulic blueprint and develops the project’s core engineering interpretation.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5622371',identifier:'SSRN 5622371',repository:'SSRN',role:'Core Genesis hydraulic blueprint thesis.'},
+      {n:'02',title:'Genesis Engineered – The Dam and Mill Blueprint Revealed',summary:'Details the proposed dam-and-mill architecture at the center of Genesis Engineered, linking textual imagery to water storage, controlled release, and mechanical work.',source:'YallToo / Paper',kind:'yalltoo',label:'Read on Zenodo ↗',url:'https://zenodo.org/records/17316846',identifier:'Zenodo 17316846',repository:'Zenodo',role:'Dam and Mill Blueprint publication record.'},
+      {n:'03',title:'Decoding Genesis through Literary Mechanics',summary:'Examines Genesis through literary structure, sequence, repetition, and mechanics as evidence within the proposed interpretive method.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5792302',identifier:'SSRN 5792302',repository:'SSRN',role:'Literary-mechanics support for the interpretive method.'},
+      {n:'04',title:'A Methodological Framework for Decoding Ancient Sacred Texts as Technical Manuals',summary:'Sets out a methodological framework for testing whether ancient sacred texts can be read as technical or procedural documentation.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789382',identifier:'SSRN 5789382',repository:'SSRN',role:'Methodological framework for technical-text interpretation.'},
+      {n:'05',title:'Reconstructing an Antediluvian Mill and Power-Generation System from Genesis 1 Symbolism',summary:'Reconstructs a proposed antediluvian mill and power-generation system from the symbolic language and sequence of Genesis 1.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789342',identifier:'SSRN 5789342',repository:'SSRN',role:'Mill and power-generation reconstruction within GEI.'},
+      {n:'06',title:'Symbolic Hydrology: Reclassifying Biblical Characters as Natural and Mechanical Elements in a Proto-Engineering System',summary:'Reclassifies selected biblical characters as symbolic natural forces or mechanical elements within the proposed proto-engineering system.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789322',identifier:'SSRN 5789322',repository:'SSRN',role:'Symbolic hydrology and system-element mapping.'},
+      {n:'07',title:'The Semicolon in Genesis 1:1–2: A Linguistic Marker of Hydraulic Sequencing in Ancient Symbolic Notation',summary:'Focuses on the semicolon in Genesis 1:1–2 and proposes a linguistic-sequencing interpretation for the punctuation’s role in the project.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789263',identifier:'SSRN 5789263',repository:'SSRN',role:'Linguistic sequencing evidence focused on Genesis 1:1–2.'},
+      {n:'08',title:'The Firmament as a Hydraulic Partition Wall: Reinterpreting Genesis 1:6–8 Through Antediluvian Water Engineering',summary:'Interprets the firmament of Genesis 1:6–8 as a hydraulic partition wall within the proposed antediluvian water-engineering model.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789102',identifier:'SSRN 5789102',repository:'SSRN',role:'Firmament and hydraulic partition-wall interpretation.'},
+      {n:'09',title:'Badal, “Raqia,” and “Miqveh”: Water Control Terminology in the Hebrew of Genesis 1',summary:'Studies the Hebrew terms badal, raqia, and miqveh in relation to the project’s water-control vocabulary and Genesis 1 terminology.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6077590',identifier:'SSRN 6077590',repository:'SSRN',role:'Hebrew terminology layer for the GEI water-control vocabulary.'},
+      {n:'10',title:'A Systems-Oriented Interpretation of Water, Storage, and Flow Terminology in Genesis 1',summary:'Presents a systems-oriented reading of Genesis 1 vocabulary involving water, storage, separation, and flow.',source:'Zenodo',kind:'zenodo',label:'Read on Zenodo ↗',url:'https://zenodo.org/records/18269802',identifier:'Zenodo 18269802',repository:'Zenodo',role:'Systems-oriented water, storage, and flow research record.'},
+      {n:'11',title:'Genesis Engineered – The Dam and Mill Blueprint Revealed • YallToo.com',summary:'YallToo.com presentation and publication home for the Dam and Mill Blueprint concept within the Genesis Engineered project.',source:'YallToo.com',kind:'yalltoo',label:'Open YallToo.com ↗',url:'https://www.yalltoo.com/',identifier:'YallToo.com',repository:'YallToo',role:'Official GEI presentation and project destination.'},
+      {n:'12',title:'Genesis Engineered – The Dam and Mill Blueprint Revealed • Zenodo',summary:'Zenodo record for the same Dam and Mill Blueprint publication, retained as a separate canonical repository entry rather than duplicated as a second research work.',source:'Zenodo',kind:'zenodo',label:'Open Zenodo ↗',url:'https://zenodo.org/records/17316846',identifier:'Zenodo 17316846',repository:'Zenodo',role:'Canonical repository entry for the Dam and Mill Blueprint.'}
     ];
     function renderPortfolioItem(item){
       var wrap=document.createElement('div'); wrap.className='acc-item';
-      wrap.innerHTML='<button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">'+item.n+'</span><span class="acc-title">'+item.title+'</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="acc-panel"><p class="paper-summary">'+item.summary+'</p><div class="paper-meta"><span class="source-tag '+item.kind+'">'+item.source+'</span><a class="read-link '+(item.kind==='yalltoo'?'yalltoo':'')+'" href="'+item.url+'" target="_blank" rel="noopener">'+item.label+'</a></div></div>';
+      wrap.innerHTML='<button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">'+item.n+'</span><span class="acc-title">'+item.title+'</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="acc-panel"><p class="paper-summary">'+item.summary+'</p><div class="paper-intel"><div><span class="intel-label">Identifier</span><strong>'+item.identifier+'</strong></div><div><span class="intel-label">Repository</span><strong>'+item.repository+'</strong></div><div class="intel-role"><span class="intel-label">GEI Role</span><strong>'+item.role+'</strong></div></div><div class="paper-meta"><span class="source-tag '+item.kind+'">'+item.source+'</span><a class="read-link '+(item.kind==='yalltoo'?'yalltoo':'')+'" href="'+item.url+'" target="_blank" rel="noopener">'+item.label+'</a></div></div>';
       return wrap;
     }
     function ensurePortfolio(){
@@ -109,6 +109,18 @@
         var frag=document.createDocumentFragment();
         portfolioData.forEach(function(item){frag.appendChild(renderPortfolioItem(item));});
         list.appendChild(frag);
+      } else {
+        list.querySelectorAll('.acc-item').forEach(function(row,index){
+          var item=portfolioData[index];
+          if(!row.querySelector('.paper-intel')){
+            var panel=row.querySelector('.acc-panel');
+            if(panel){
+              var meta=document.createElement('div'); meta.className='paper-intel';
+              meta.innerHTML='<div><span class="intel-label">Identifier</span><strong>'+item.identifier+'</strong></div><div><span class="intel-label">Repository</span><strong>'+item.repository+'</strong></div><div class="intel-role"><span class="intel-label">GEI Role</span><strong>'+item.role+'</strong></div>';
+              var links=panel.querySelector('.paper-meta'); if(links)panel.insertBefore(meta,links);else panel.appendChild(meta);
+            }
+          }
+        });
       }
       bindAccordion();
       var count=document.querySelector('.research-count'); if(count)count.textContent=portfolioData.length+' entries';
@@ -118,7 +130,6 @@
     ensurePortfolio();
     window.setTimeout(ensurePortfolio,250);
 
-    /* ----- V1.8.5 — Research Portfolio Command Center ----- */
     var centerCss=document.createElement('style');
     centerCss.textContent=''+
       '.gei-research-center{display:flex;flex-direction:column;gap:8px;margin:0 0 8px}'+
@@ -140,7 +151,14 @@
       '.gei-research-detail h3{font-family:"Space Grotesk",sans-serif;font-size:.74rem;line-height:1.2;margin:0 0 5px}'+
       '.gei-research-detail p{font-size:.62rem;line-height:1.35;color:var(--grey);margin:0 0 6px}'+
       '.gei-research-detail .meta{font-size:.57rem;color:var(--grey);font-weight:700}'+
-      '@media(max-width:350px){.gei-research-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.gei-research-health{width:100%;margin-left:0}}';
+      '.paper-intel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:7px 0}'+
+      '.paper-intel>div{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:6px;min-width:0}'+
+      '.paper-intel .intel-role{grid-column:1/-1}'+
+      '.intel-label{display:block;font-size:.48rem;color:var(--grey);font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}'+
+      '.paper-intel strong{display:block;font-size:.57rem;line-height:1.25;color:var(--ink);word-break:break-word}'+
+      '.gei-entry-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}'+
+      '.gei-entry-open{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:999px;padding:6px 10px;background:linear-gradient(135deg,var(--indigo),var(--cyan));color:#fff;font-size:.57rem;font-weight:800;text-decoration:none;touch-action:manipulation}'+
+      '@media(max-width:350px){.gei-research-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.gei-research-health{width:100%;margin-left:0}.paper-intel{grid-template-columns:1fr}.paper-intel .intel-role{grid-column:auto}}';
     document.head.appendChild(centerCss);
 
     function buildResearchCenter(){
@@ -149,22 +167,22 @@
       if(!bodyEl||!list||document.getElementById('geiResearchCenter'))return;
       var center=document.createElement('div'); center.id='geiResearchCenter'; center.className='gei-research-center';
       center.innerHTML='<div class="gei-research-stats">'+
-        '<div class="gei-research-stat"><strong>12</strong><span>Cataloged</span></div>'+
+        '<div class="gei-research-stat"><strong>12</strong><span>Cataloged</span></div>'+ 
         '<div class="gei-research-stat"><strong>8</strong><span>SSRN</span></div>'+ 
         '<div class="gei-research-stat"><strong>2</strong><span>Zenodo</span></div>'+ 
         '<div class="gei-research-stat"><strong>1</strong><span>YallToo</span></div>'+ 
-        '</div><div class="gei-research-tools"><button type="button" class="gei-research-filter is-active" data-filter="all">ALL</button><button type="button" class="gei-research-filter" data-filter="ssrn">SSRN</button><button type="button" class="gei-research-filter" data-filter="zenodo">ZENODO</button><button type="button" class="gei-research-filter" data-filter="yalltoo">YALLTOO</button><span class="gei-research-health">Catalog <b id="geiResearchHealth">12/12</b></span></div><div class="gei-research-timeline" id="geiResearchTimeline"></div><div class="gei-research-detail" id="geiResearchDetail"></div>';
+        '</div><div class="gei-research-tools"><button type="button" class="gei-research-filter is-active" data-filter="all">ALL</button><button type="button" class="gei-research-filter" data-filter="ssrn">SSRN</button><button type="button" class="gei-research-filter" data-filter="zenodo">ZENODO</button><button type="button" class="gei-research-filter" data-filter="yalltoo">YALLOTOO</button><span class="gei-research-health">Catalog <b id="geiResearchHealth">12/12</b></span></div><div class="gei-research-timeline" id="geiResearchTimeline"></div><div class="gei-research-detail" id="geiResearchDetail"></div>';
       bodyEl.insertBefore(center,list);
 
       var timeline=document.getElementById('geiResearchTimeline');
       portfolioData.forEach(function(item,index){
-        if(index>0){var line=document.createElement('span');line.className='gei-timeline-line';timeline.appendChild(line)}
+        if(index>0){var line=document.createElement('span');line.className='gei-research-timeline-line gei-timeline-line';timeline.appendChild(line)}
         var dot=document.createElement('button');dot.type='button';dot.className='gei-timeline-dot';dot.textContent=item.n;dot.setAttribute('aria-label','Research entry '+item.n);dot.dataset.index=String(index);
         dot.addEventListener('click',function(){
           var data=portfolioData[Number(dot.dataset.index)];
           var detail=document.getElementById('geiResearchDetail');
           if(!detail)return;
-          detail.innerHTML='<h3>'+data.n+' — '+data.title+'</h3><p>'+data.summary+'</p><div class="meta">Source: '+data.source+' • <a href="'+data.url+'" target="_blank" rel="noopener">Open destination ↗</a></div>';
+          detail.innerHTML='<h3>'+data.n+' — '+data.title+'</h3><p>'+data.summary+'</p><div class="paper-intel"><div><span class="intel-label">Identifier</span><strong>'+data.identifier+'</strong></div><div><span class="intel-label">Repository</span><strong>'+data.repository+'</strong></div><div class="intel-role"><span class="intel-label">GEI Role</span><strong>'+data.role+'</strong></div></div><div class="gei-entry-actions"><a class="gei-entry-open" href="'+data.url+'" target="_blank" rel="noopener">Open Source ↗</a></div>';
           detail.classList.add('is-open');
           list.querySelectorAll('.acc-item').forEach(function(row){row.style.display='';});
           var target=list.querySelectorAll('.acc-item')[Number(dot.dataset.index)];

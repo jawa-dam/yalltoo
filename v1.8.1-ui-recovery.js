@@ -2,6 +2,9 @@
  * Defensive runtime loaded after the existing dashboard markup.
  * Restores navigation, skins, splash effects, and official YallToo branding
  * without replacing the existing app shell.
+ *
+ * V1.8.4 — Research Portfolio Intelligence & Live Verification
+ * Adds defensive catalog validation and honest best-effort external reachability state.
  */
 (function(){
   'use strict';
@@ -10,7 +13,6 @@
     var phone=document.getElementById('app-phone');
     if(!body||!phone)return;
 
-    /* ----- YallToo brand asset ----- */
     var LOGO='https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yall-too-logo-vq2GKHxbTzr7g8bO.png';
     var logoCss=document.createElement('style');
     logoCss.textContent=''+
@@ -32,15 +34,12 @@
     addLogo(document.querySelector('#screen-portfolio .banner'));
     addLogo(document.querySelector('#screen-support .banner'));
 
-    /* ----- Themes ----- */
     function applyTheme(name){
       var valid={regular:1,dark:1,hotpink:1,babyblue:1};
       var theme=valid[name]?name:'regular';
       body.setAttribute('data-theme',theme);
       try{localStorage.setItem('gei_theme_v1',theme)}catch(e){}
-      document.querySelectorAll('.skin-dot').forEach(function(dot){
-        dot.classList.toggle('is-active',dot.getAttribute('data-theme')===theme);
-      });
+      document.querySelectorAll('.skin-dot').forEach(function(dot){dot.classList.toggle('is-active',dot.getAttribute('data-theme')===theme)});
     }
     var saved='regular';
     try{saved=localStorage.getItem('gei_theme_v1')||'regular'}catch(e){}
@@ -49,7 +48,6 @@
       dot.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();applyTheme(dot.getAttribute('data-theme'));},true);
     });
 
-    /* ----- Screen navigation ----- */
     function show(which){
       var target=document.getElementById('screen-'+which);
       if(!target)return;
@@ -63,16 +61,11 @@
       });
     }
     function bindNav(selector,which){
-      document.querySelectorAll(selector).forEach(function(el){
-        el.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();show(which);},true);
-      });
+      document.querySelectorAll(selector).forEach(function(el){el.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();show(which);},true)});
     }
     bindNav('.menu-item','menu'); bindNav('.portfolio-item','portfolio'); bindNav('.support-item','support');
-    document.querySelectorAll('[data-back]').forEach(function(el){
-      el.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();show(el.getAttribute('data-back')||'dash');},true);
-    });
+    document.querySelectorAll('[data-back]').forEach(function(el){el.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();show(el.getAttribute('data-back')||'dash');},true)});
 
-    /* ----- Portfolio accordion ----- */
     function bindAccordion(){
       document.querySelectorAll('.acc-trigger').forEach(function(trigger){
         if(trigger.dataset.geiAccordionBound==='1')return;
@@ -87,7 +80,6 @@
     }
     bindAccordion();
 
-    /* ----- V1.8.3 — Complete Research Portfolio Restoration ----- */
     var portfolioData=[
       {n:'01',title:'Decoding the Creation Story as an Antediluvian Hydraulic Blueprint',summary:'Presents the Genesis creation story as an antediluvian hydraulic blueprint and develops the project’s core engineering interpretation.',source:'SSRN',kind:'ssrn',label:'Read on SSRN ↗',url:'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5622371'},
       {n:'02',title:'Genesis Engineered – The Dam and Mill Blueprint Revealed',summary:'Details the proposed dam-and-mill architecture at the center of Genesis Engineered, linking textual imagery to water storage, controlled release, and mechanical work.',source:'YallToo / Paper',kind:'yalltoo',label:'Read on Zenodo ↗',url:'https://zenodo.org/records/17316846'},
@@ -110,8 +102,7 @@
     function ensurePortfolio(){
       var list=document.querySelector('.portfolio-accordion'); if(!list)return;
       var expectedUrls=portfolioData.map(function(x){return x.url});
-      var links=Array.from(list.querySelectorAll('.read-link'));
-      var urls=new Set(links.map(function(a){return a.getAttribute('href')}));
+      var urls=new Set(Array.from(list.querySelectorAll('.read-link')).map(function(a){return a.getAttribute('href')}));
       var valid=list.querySelectorAll('.acc-item').length===portfolioData.length&&expectedUrls.every(function(url){return urls.has(url)});
       if(!valid){
         list.innerHTML='';
@@ -127,35 +118,97 @@
     ensurePortfolio();
     window.setTimeout(ensurePortfolio,250);
 
-    /* ----- V1.8.4 — Research Portfolio Intelligence & Live Verification ----- */
+    /* ----- V1.8.5 — Research Portfolio Command Center ----- */
+    var centerCss=document.createElement('style');
+    centerCss.textContent=''+
+      '.gei-research-center{display:flex;flex-direction:column;gap:8px;margin:0 0 8px}'+
+      '.gei-research-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}'+
+      '.gei-research-stat{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:7px 5px;text-align:center;min-width:0;box-shadow:0 2px 8px rgba(0,0,0,.04)}'+
+      '.gei-research-stat strong{display:block;font-family:"Space Grotesk",sans-serif;font-size:1rem;line-height:1;color:var(--indigo)}'+
+      '.gei-research-stat span{display:block;margin-top:3px;font-size:.53rem;color:var(--grey);font-weight:700;letter-spacing:.03em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}'+
+      '.gei-research-tools{display:flex;align-items:center;gap:6px;flex-wrap:wrap}'+
+      '.gei-research-filter{border:1px solid var(--line);background:var(--surface);color:var(--grey);border-radius:999px;padding:5px 9px;font-size:.58rem;font-weight:800;letter-spacing:.03em;cursor:pointer;touch-action:manipulation}'+
+      '.gei-research-filter.is-active{background:linear-gradient(135deg,var(--indigo),var(--cyan));border-color:transparent;color:#fff}'+
+      '.gei-research-health{margin-left:auto;font-size:.57rem;color:var(--grey);font-weight:700;white-space:nowrap}'+
+      '.gei-research-health b{color:var(--indigo)}'+
+      '.gei-research-timeline{display:flex;align-items:center;gap:5px;overflow-x:auto;scrollbar-width:none;padding:1px 0 2px}'+
+      '.gei-research-timeline::-webkit-scrollbar{display:none}'+
+      '.gei-timeline-dot{flex:0 0 auto;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--indigo),var(--cyan));color:#fff;font-size:.5rem;font-weight:800;border:0;cursor:pointer}'+
+      '.gei-timeline-line{flex:0 0 8px;height:2px;background:var(--line)}'+
+      '.gei-research-detail{display:none;border:1px solid var(--line);border-radius:12px;padding:9px;background:var(--surface)}'+
+      '.gei-research-detail.is-open{display:block}'+
+      '.gei-research-detail h3{font-family:"Space Grotesk",sans-serif;font-size:.74rem;line-height:1.2;margin:0 0 5px}'+
+      '.gei-research-detail p{font-size:.62rem;line-height:1.35;color:var(--grey);margin:0 0 6px}'+
+      '.gei-research-detail .meta{font-size:.57rem;color:var(--grey);font-weight:700}'+
+      '@media(max-width:350px){.gei-research-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.gei-research-health{width:100%;margin-left:0}}';
+    document.head.appendChild(centerCss);
+
+    function buildResearchCenter(){
+      var bodyEl=document.querySelector('#screen-portfolio .portfolio-body');
+      var list=document.querySelector('#screen-portfolio .portfolio-accordion');
+      if(!bodyEl||!list||document.getElementById('geiResearchCenter'))return;
+      var center=document.createElement('div'); center.id='geiResearchCenter'; center.className='gei-research-center';
+      center.innerHTML='<div class="gei-research-stats">'+
+        '<div class="gei-research-stat"><strong>12</strong><span>Cataloged</span></div>'+
+        '<div class="gei-research-stat"><strong>8</strong><span>SSRN</span></div>'+ 
+        '<div class="gei-research-stat"><strong>2</strong><span>Zenodo</span></div>'+ 
+        '<div class="gei-research-stat"><strong>1</strong><span>YallToo</span></div>'+ 
+        '</div><div class="gei-research-tools"><button type="button" class="gei-research-filter is-active" data-filter="all">ALL</button><button type="button" class="gei-research-filter" data-filter="ssrn">SSRN</button><button type="button" class="gei-research-filter" data-filter="zenodo">ZENODO</button><button type="button" class="gei-research-filter" data-filter="yalltoo">YALLTOO</button><span class="gei-research-health">Catalog <b id="geiResearchHealth">12/12</b></span></div><div class="gei-research-timeline" id="geiResearchTimeline"></div><div class="gei-research-detail" id="geiResearchDetail"></div>';
+      bodyEl.insertBefore(center,list);
+
+      var timeline=document.getElementById('geiResearchTimeline');
+      portfolioData.forEach(function(item,index){
+        if(index>0){var line=document.createElement('span');line.className='gei-timeline-line';timeline.appendChild(line)}
+        var dot=document.createElement('button');dot.type='button';dot.className='gei-timeline-dot';dot.textContent=item.n;dot.setAttribute('aria-label','Research entry '+item.n);dot.dataset.index=String(index);
+        dot.addEventListener('click',function(){
+          var data=portfolioData[Number(dot.dataset.index)];
+          var detail=document.getElementById('geiResearchDetail');
+          if(!detail)return;
+          detail.innerHTML='<h3>'+data.n+' — '+data.title+'</h3><p>'+data.summary+'</p><div class="meta">Source: '+data.source+' • <a href="'+data.url+'" target="_blank" rel="noopener">Open destination ↗</a></div>';
+          detail.classList.add('is-open');
+          list.querySelectorAll('.acc-item').forEach(function(row){row.style.display='';});
+          var target=list.querySelectorAll('.acc-item')[Number(dot.dataset.index)];
+          if(target){target.scrollIntoView({block:'nearest'});target.classList.add('is-open');var trigger=target.querySelector('.acc-trigger');if(trigger)trigger.setAttribute('aria-expanded','true')}
+        });
+        timeline.appendChild(dot);
+      });
+
+      center.querySelectorAll('.gei-research-filter').forEach(function(btn){
+        btn.addEventListener('click',function(){
+          center.querySelectorAll('.gei-research-filter').forEach(function(b){b.classList.toggle('is-active',b===btn)});
+          var filter=btn.dataset.filter;
+          list.querySelectorAll('.acc-item').forEach(function(row){
+            var tag=row.querySelector('.source-tag');
+            var kind=tag?(tag.classList.contains('ssrn')?'ssrn':tag.classList.contains('zenodo')?'zenodo':tag.classList.contains('yalltoo')?'yalltoo':''):'');
+            row.style.display=(filter==='all'||kind===filter)?'':'none';
+          });
+        });
+      });
+    }
+    buildResearchCenter();
+
     var verificationData=portfolioData.map(function(item){return {url:item.url,kind:item.kind,title:item.title};});
     function verifyExternalLink(item,done){
       var img=new Image(); var settled=false;
-      function finish(status){if(settled)return;settled=true;done(status);}
-      var timer=window.setTimeout(function(){finish('unreachable');},4500);
-      img.onload=function(){window.clearTimeout(timer);finish('reachable');};
-      img.onerror=function(){window.clearTimeout(timer);finish('unverified');};
+      function finish(status){if(settled)return;settled=true;done(status)}
+      var timer=window.setTimeout(function(){finish('unreachable')},4500);
+      img.onload=function(){window.clearTimeout(timer);finish('reachable')};
+      img.onerror=function(){window.clearTimeout(timer);finish('unverified')};
       img.referrerPolicy='no-referrer';
-      /* Cross-origin image probes cannot reliably validate document pages.
-         We distinguish deferred checks from known network failures and keep
-         the user-facing state honest rather than claiming 12/12 when CORS
-         or a site policy prevents inspection. */
-      if(/^https?:\/\//i.test(item.url)&&!/^https?:\/\/(?:www\.)?yalltoo\.com\/?$/i.test(item.url)){
-        img.src=item.url;
-      }else{
-        window.clearTimeout(timer);finish('deferred');
-      }
+      if(/^https?:\/\//i.test(item.url)&&!/^https?:\/\/(?:www\.)?yalltoo\.com\/?$/i.test(item.url))img.src=item.url;
+      else{window.clearTimeout(timer);finish('deferred')}
     }
     function runPortfolioVerification(){
       var banner=document.querySelector('#screen-portfolio .badge'); if(!banner)return;
       var checked=0,reachable=0,unverified=0,deferred=0,started=Date.now();
-      var total=verificationData.length;
       function update(){
         checked++;
-        if(checked<total)return;
+        if(checked<verificationData.length)return;
+        var statusEl=document.getElementById('geiResearchHealth');
+        var confirmed=reachable;
+        if(statusEl)statusEl.textContent='12/12 cataloged • '+confirmed+' confirmed';
         var elapsed=((Date.now()-started)/1000).toFixed(1);
-        var trust=reachable+' confirmed • '+(unverified+deferred)+' not auto-confirmed';
-        banner.innerHTML='<span class="dot"></span>12 entries • '+trust+' • '+elapsed+'s';
+        banner.innerHTML='<span class="dot"></span>12 entries • '+confirmed+' confirmed • '+(unverified+deferred)+' not auto-confirmed • '+elapsed+'s';
         banner.title='Verification is best-effort: external repositories may block browser probes, so unconfirmed does not mean broken.';
       }
       verificationData.forEach(function(item){
@@ -166,16 +219,15 @@
           update();
         });
       });
-      try{sessionStorage.setItem('gei_portfolio_last_verified',new Date().toISOString());}catch(e){}
+      try{sessionStorage.setItem('gei_portfolio_last_verified',new Date().toISOString())}catch(e){}
     }
     function lazyVerify(){
-      var last=''; try{last=sessionStorage.getItem('gei_portfolio_last_verified')||'';}catch(e){}
+      var last=''; try{last=sessionStorage.getItem('gei_portfolio_last_verified')||''}catch(e){}
       var age=last?(Date.now()-Date.parse(last)):Infinity;
       if(!isFinite(age)||age>1800000)runPortfolioVerification();
     }
     window.setTimeout(lazyVerify,350);
 
-    /* ----- Splash effects + reliable exit ----- */
     var hero=document.getElementById('splashHero');
     var splash=document.getElementById('gei-splash');
     var enter=document.getElementById('splashEnter');

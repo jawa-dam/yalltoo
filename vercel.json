@@ -1,0 +1,8 @@
+{
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "feature/v1-13-clean-splash-foundation": true
+    }
+  }
+}

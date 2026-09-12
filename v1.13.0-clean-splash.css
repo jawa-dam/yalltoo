@@ -1,0 +1,13 @@
+/* V1.13.0 — Clean Splash Foundation CSS
+ * Static startup contract for the clean reboot.
+ */
+html,body{background:#06070d!important;}
+#app-phone{position:relative;overflow:hidden;background:#06070d!important;}
+#app-phone>#gei-splash{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:2147483647!important;background:#06070d!important;isolation:isolate!important;overflow:hidden!important;}
+#app-phone:not(.splash-done)> .screen{visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
+#app-phone.splash-done>#gei-splash{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
+#app-phone.splash-done> .screen{visibility:visible!important;opacity:1!important;}
+#gei-splash::before{content:"";position:absolute;inset:0;background:#06070d;z-index:0;pointer-events:none;}
+#gei-splash>.splash-bg{position:absolute;inset:0;z-index:1!important;opacity:1!important;}
+#gei-splash>.splash-rays,#gei-splash>.splash-glow,#gei-splash>.splash-core,#gei-splash>.splash-water,#gei-splash>.splash-ripple,#gei-splash>.splash-copy{z-index:2!important;}
+#gei-splash>.splash-hero{z-index:3!important;}

@@ -1,16 +1,18 @@
-/* V1.12.1 — Navigation Recovery + Splash Guard
- * Restores all primary and internal navigation after the Video Music Lab mount.
- * Uses capture-phase handlers so dynamically mounted media controls cannot
- * interfere with app routing.
+/* V1.12.6 — Navigation Recovery
+ * Navigation remains available after the cinematic splash controller
+ * marks the app shell ready. This layer does not style or control splash.
  */
 (function(){
   'use strict';
   function boot(){
     var body=document.body,phone=document.getElementById('app-phone');
-    if(!body||!phone||body.dataset.geiNavV121==='1')return;
-    body.dataset.geiNavV121='1';
+    if(!body||!phone||body.dataset.geiNavV126==='1')return;
+    body.dataset.geiNavV126='1';
+
+    function appReady(){return phone.classList.contains('splash-done');}
 
     function show(which){
+      if(!appReady())return;
       var target=document.getElementById('screen-'+which);
       if(!target)return;
       document.querySelectorAll('.screen').forEach(function(screen){
@@ -39,31 +41,20 @@
     document.addEventListener('click',function(e){
       var target=e.target&&e.target.closest?e.target.closest('.nav a,.nav button,.portfolio-nav a,.portfolio-nav button,[data-back]'):null;
       if(!target||target.classList.contains('cart-link')||target.closest('#gei-splash'))return;
+      if(!appReady())return;
       var which=route(target);
       if(which){
         e.preventDefault();
-        e.stopPropagation();
-        if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+        e.stopImmediatePropagation();
         show(which);
         return;
       }
       if(target.hasAttribute('data-back')){
         e.preventDefault();
-        e.stopPropagation();
-        if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+        e.stopImmediatePropagation();
         show(target.getAttribute('data-back')||'dash');
       }
     },true);
-
-    /* Splash guard: keep the cinematic gateway visible until its own controller closes it. */
-    var splash=document.getElementById('gei-splash');
-    if(splash){
-      splash.style.zIndex='99999';
-      splash.style.pointerEvents='auto';
-      splash.style.display='flex';
-      splash.setAttribute('aria-hidden','false');
-    }
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});
-  else boot();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();

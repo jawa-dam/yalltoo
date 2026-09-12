@@ -1,0 +1,17 @@
+/* V1.12.4 — Deterministic Splash Gate
+ * CSS-level startup lock. The splash owns the entire phone canvas until
+ * .splash-done is applied by the existing runtime.
+ */
+#app-phone{position:relative!important;isolation:isolate!important;background:#06070d!important;}
+#app-phone #gei-splash{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:2147483647!important;background:#06070d!important;overflow:hidden!important;isolation:isolate!important;}
+#app-phone #gei-splash .splash-bg{position:absolute!important;inset:0!important;z-index:0!important;opacity:1!important;}
+#app-phone #gei-splash .splash-rays,#app-phone #gei-splash .splash-glow,#app-phone #gei-splash .splash-core,#app-phone #gei-splash .splash-water,#app-phone #gei-splash .splash-ripple{z-index:1!important;}
+#app-phone #gei-splash .splash-copy,#app-phone #gei-splash .splash-hero,#app-phone #gei-splash .splash-loading,#app-phone #gei-splash .splash-status,#app-phone #gei-splash .splash-progress,#app-phone #gei-splash .splash-enter,#app-phone #gei-splash .splash-skip{position:absolute!important;z-index:20!important;}
+#app-phone #gei-splash .splash-copy{top:14%!important;left:0!important;right:0!important;}
+#app-phone #gei-splash .splash-hero{left:50%!important;top:38%!important;transform:translateX(-50%)!important;}
+#app-phone #gei-splash .splash-loading{left:0!important;right:0!important;bottom:17%!important;}
+#app-phone #gei-splash .splash-status{left:0!important;right:0!important;bottom:13.5%!important;}
+#app-phone #gei-splash .splash-progress{left:15%!important;right:15%!important;bottom:10.5%!important;}
+#app-phone #gei-splash .splash-enter{left:50%!important;bottom:3.6%!important;transform:translateX(-50%)!important;}
+#app-phone #gei-splash .splash-skip{right:18px!important;bottom:4.2%!important;}
+#app-phone.splash-done #gei-splash{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;}

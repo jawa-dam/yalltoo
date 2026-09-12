@@ -24,10 +24,7 @@
       if(!container||container.querySelector('.gei-yalltoo-logo'))return;
       var img=document.createElement('img');
       img.className='gei-yalltoo-logo'+(extra?' '+extra:'');
-      img.src=LOGO;
-      img.alt='YallToo';
-      img.decoding='async';
-      img.loading='eager';
+      img.src=LOGO; img.alt='YallToo'; img.decoding='async'; img.loading='eager';
       container.insertBefore(img,container.firstChild);
     }
     addLogo(document.querySelector('.splash-copy'),'splash');
@@ -49,21 +46,14 @@
     try{saved=localStorage.getItem('gei_theme_v1')||'regular'}catch(e){}
     applyTheme(saved);
     document.querySelectorAll('.skin-dot').forEach(function(dot){
-      dot.addEventListener('click',function(e){
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        applyTheme(dot.getAttribute('data-theme'));
-      },true);
+      dot.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();applyTheme(dot.getAttribute('data-theme'));},true);
     });
 
     /* ----- Screen navigation ----- */
     function show(which){
       var target=document.getElementById('screen-'+which);
       if(!target)return;
-      document.querySelectorAll('.screen').forEach(function(screen){
-        screen.classList.add('off-right');
-        screen.classList.remove('off-left');
-      });
+      document.querySelectorAll('.screen').forEach(function(screen){screen.classList.add('off-right');screen.classList.remove('off-left')});
       target.classList.remove('off-right');
       document.querySelectorAll('.nav').forEach(function(nav){
         nav.classList.remove('on-menu','on-portfolio','on-support');
@@ -74,35 +64,28 @@
     }
     function bindNav(selector,which){
       document.querySelectorAll(selector).forEach(function(el){
-        el.addEventListener('click',function(e){
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          show(which);
-        },true);
+        el.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();show(which);},true);
       });
     }
-    bindNav('.menu-item','menu');
-    bindNav('.portfolio-item','portfolio');
-    bindNav('.support-item','support');
+    bindNav('.menu-item','menu'); bindNav('.portfolio-item','portfolio'); bindNav('.support-item','support');
     document.querySelectorAll('[data-back]').forEach(function(el){
-      el.addEventListener('click',function(e){
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        show(el.getAttribute('data-back')||'dash');
-      },true);
+      el.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();show(el.getAttribute('data-back')||'dash');},true);
     });
 
     /* ----- Portfolio accordion ----- */
-    document.querySelectorAll('.acc-trigger').forEach(function(trigger){
-      trigger.addEventListener('click',function(e){
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        var item=trigger.closest('.acc-item');
-        if(!item)return;
-        var open=item.classList.toggle('is-open');
-        trigger.setAttribute('aria-expanded',String(open));
-      },true);
-    });
+    function bindAccordion(){
+      document.querySelectorAll('.acc-trigger').forEach(function(trigger){
+        if(trigger.dataset.geiAccordionBound==='1')return;
+        trigger.dataset.geiAccordionBound='1';
+        trigger.addEventListener('click',function(e){
+          e.preventDefault(); e.stopImmediatePropagation();
+          var item=trigger.closest('.acc-item'); if(!item)return;
+          var open=item.classList.toggle('is-open');
+          trigger.setAttribute('aria-expanded',String(open));
+        },true);
+      });
+    }
+    bindAccordion();
 
     /* ----- V1.8.3 — Complete Research Portfolio Restoration ----- */
     var portfolioData=[
@@ -120,53 +103,77 @@
       {n:'12',title:'Genesis Engineered – The Dam and Mill Blueprint Revealed • Zenodo',summary:'Zenodo record for the same Dam and Mill Blueprint publication, retained as a separate canonical repository entry rather than duplicated as a second research work.',source:'Zenodo',kind:'zenodo',label:'Open Zenodo ↗',url:'https://zenodo.org/records/17316846'}
     ];
     function renderPortfolioItem(item){
-      var wrap=document.createElement('div');
-      wrap.className='acc-item';
+      var wrap=document.createElement('div'); wrap.className='acc-item';
       wrap.innerHTML='<button class="acc-trigger" type="button" aria-expanded="false"><span class="acc-index">'+item.n+'</span><span class="acc-title">'+item.title+'</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="acc-panel"><p class="paper-summary">'+item.summary+'</p><div class="paper-meta"><span class="source-tag '+item.kind+'">'+item.source+'</span><a class="read-link '+(item.kind==='yalltoo'?'yalltoo':'')+'" href="'+item.url+'" target="_blank" rel="noopener">'+item.label+'</a></div></div>';
       return wrap;
     }
     function ensurePortfolio(){
-      var list=document.querySelector('.portfolio-accordion');
-      if(!list)return;
-      var existing=list.querySelectorAll('.acc-item');
-      var expected=new Set(portfolioData.map(function(x){return x.url}));
-      var existingUrls=new Set(Array.from(list.querySelectorAll('.read-link')).map(function(a){return a.getAttribute('href')}));
-      var complete=existing.length===portfolioData.length&&portfolioData.every(function(x){return existingUrls.has(x.url)});
-      if(complete)return;
-      var frag=document.createDocumentFragment();
-      portfolioData.forEach(function(item){
-        if(!existingUrls.has(item.url))frag.appendChild(renderPortfolioItem(item));
-      });
-      if(existing.length===0){
+      var list=document.querySelector('.portfolio-accordion'); if(!list)return;
+      var expectedUrls=portfolioData.map(function(x){return x.url});
+      var links=Array.from(list.querySelectorAll('.read-link'));
+      var urls=new Set(links.map(function(a){return a.getAttribute('href')}));
+      var valid=list.querySelectorAll('.acc-item').length===portfolioData.length&&expectedUrls.every(function(url){return urls.has(url)});
+      if(!valid){
+        list.innerHTML='';
+        var frag=document.createDocumentFragment();
+        portfolioData.forEach(function(item){frag.appendChild(renderPortfolioItem(item));});
         list.appendChild(frag);
-      }else{
-        var items=list.querySelectorAll('.acc-item');
-        portfolioData.forEach(function(item){
-          if(!existingUrls.has(item.url)){
-            var rendered=renderPortfolioItem(item);
-            list.appendChild(rendered);
-          }
-        });
       }
-      document.querySelectorAll('.acc-trigger').forEach(function(trigger){
-        if(trigger.dataset.geiPortfolioBound==='1')return;
-        trigger.dataset.geiPortfolioBound='1';
-        trigger.addEventListener('click',function(e){
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          var row=trigger.closest('.acc-item');
-          if(!row)return;
-          var open=row.classList.toggle('is-open');
-          trigger.setAttribute('aria-expanded',String(open));
-        },true);
-      });
-      var count=document.querySelector('.research-count');
-      if(count)count.textContent=portfolioData.length+' entries';
-      var note=document.querySelector('.portfolio-note');
-      if(note)note.textContent=portfolioData.length+' entries • one entry per publication or official destination.';
+      bindAccordion();
+      var count=document.querySelector('.research-count'); if(count)count.textContent=portfolioData.length+' entries';
+      var note=document.querySelector('.portfolio-note'); if(note)note.textContent=portfolioData.length+' entries • one entry per publication or official destination.';
+      var banner=document.querySelector('#screen-portfolio .badge'); if(banner)banner.innerHTML='<span class="dot"></span>SSRN • Zenodo • YallToo • portfolio ready';
     }
     ensurePortfolio();
     window.setTimeout(ensurePortfolio,250);
+
+    /* ----- V1.8.4 — Research Portfolio Intelligence & Live Verification ----- */
+    var verificationData=portfolioData.map(function(item){return {url:item.url,kind:item.kind,title:item.title};});
+    function verifyExternalLink(item,done){
+      var img=new Image(); var settled=false;
+      function finish(status){if(settled)return;settled=true;done(status);}
+      var timer=window.setTimeout(function(){finish('unreachable');},4500);
+      img.onload=function(){window.clearTimeout(timer);finish('reachable');};
+      img.onerror=function(){window.clearTimeout(timer);finish('unverified');};
+      img.referrerPolicy='no-referrer';
+      /* Cross-origin image probes cannot reliably validate document pages.
+         We distinguish deferred checks from known network failures and keep
+         the user-facing state honest rather than claiming 12/12 when CORS
+         or a site policy prevents inspection. */
+      if(/^https?:\/\//i.test(item.url)&&!/^https?:\/\/(?:www\.)?yalltoo\.com\/?$/i.test(item.url)){
+        img.src=item.url;
+      }else{
+        window.clearTimeout(timer);finish('deferred');
+      }
+    }
+    function runPortfolioVerification(){
+      var banner=document.querySelector('#screen-portfolio .badge'); if(!banner)return;
+      var checked=0,reachable=0,unverified=0,deferred=0,started=Date.now();
+      var total=verificationData.length;
+      function update(){
+        checked++;
+        if(checked<total)return;
+        var elapsed=((Date.now()-started)/1000).toFixed(1);
+        var trust=reachable+' confirmed • '+(unverified+deferred)+' not auto-confirmed';
+        banner.innerHTML='<span class="dot"></span>12 entries • '+trust+' • '+elapsed+'s';
+        banner.title='Verification is best-effort: external repositories may block browser probes, so unconfirmed does not mean broken.';
+      }
+      verificationData.forEach(function(item){
+        verifyExternalLink(item,function(status){
+          if(status==='reachable')reachable++;
+          else if(status==='deferred')deferred++;
+          else unverified++;
+          update();
+        });
+      });
+      try{sessionStorage.setItem('gei_portfolio_last_verified',new Date().toISOString());}catch(e){}
+    }
+    function lazyVerify(){
+      var last=''; try{last=sessionStorage.getItem('gei_portfolio_last_verified')||'';}catch(e){}
+      var age=last?(Date.now()-Date.parse(last)):Infinity;
+      if(!isFinite(age)||age>1800000)runPortfolioVerification();
+    }
+    window.setTimeout(lazyVerify,350);
 
     /* ----- Splash effects + reliable exit ----- */
     var hero=document.getElementById('splashHero');
@@ -174,9 +181,7 @@
     var enter=document.getElementById('splashEnter');
     var skip=document.getElementById('splashSkip');
     if(hero&&splash){
-      var effects={
-        float:'gei81Float',drift:'gei81Drift',breathe:'gei81Breathe',sway:'gei81Sway',rise:'gei81Rise',glide:'gei81Glide',pulse:'gei81Pulse',tilt:'gei81Tilt',bob:'gei81Bob',zoom:'gei81Zoom',wave:'gei81Wave',levitate:'gei81Levitate',shimmer:'gei81Shimmer',rock:'gei81Rock',aurora:'gei81Aurora',tide:'gei81Tide',hover:'gei81Hover',elastic:'gei81Elastic'
-      };
+      var effects={float:'gei81Float',drift:'gei81Drift',breathe:'gei81Breathe',sway:'gei81Sway',rise:'gei81Rise',glide:'gei81Glide',pulse:'gei81Pulse',tilt:'gei81Tilt',bob:'gei81Bob',zoom:'gei81Zoom',wave:'gei81Wave',levitate:'gei81Levitate',shimmer:'gei81Shimmer',rock:'gei81Rock',aurora:'gei81Aurora',tide:'gei81Tide',hover:'gei81Hover',elastic:'gei81Elastic'};
       var keyframes='';
       keyframes+='@keyframes gei81Float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-10px) scale(1.015)}}';
       keyframes+='@keyframes gei81Drift{0%,100%{transform:translate(0) rotate(0)}50%{transform:translate(10px,-7px) rotate(1deg)}}';
@@ -197,22 +202,13 @@
       keyframes+='@keyframes gei81Hover{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-8px) rotate(3deg)}}';
       keyframes+='@keyframes gei81Elastic{0%,100%{transform:scale(1)}30%{transform:scale(1.06,.96)}60%{transform:scale(.98,1.03)}}';
       var style=document.createElement('style');style.textContent=keyframes;document.head.appendChild(style);
-      var motionKeys=Object.keys(effects);var last='';try{last=sessionStorage.getItem('gei_splash_effect_v81')||''}catch(e){}
-      var choices=motionKeys.filter(function(k){return k!==last});
-      var picked=choices[Math.floor(Math.random()*choices.length)]||motionKeys[0];
+      var motionKeys=Object.keys(effects),last='';try{last=sessionStorage.getItem('gei_splash_effect_v81')||''}catch(e){}
+      var choices=motionKeys.filter(function(k){return k!==last}); var picked=choices[Math.floor(Math.random()*choices.length)]||motionKeys[0];
       var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if(!reduced)hero.style.animation='heroReveal .95s .05s cubic-bezier(.18,.86,.32,1.28) forwards,'+effects[picked]+' 3.7s 1s ease-in-out infinite';
       try{sessionStorage.setItem('gei_splash_effect_v81',picked)}catch(e){}
-      var pool=(Array.isArray(window.GEI_V16_SPLASH_ASSETS)&&window.GEI_V16_SPLASH_ASSETS.length?window.GEI_V16_SPLASH_ASSETS:[]).slice();
-      var selected='';
-      try{selected=(window.GEI_V16_SPLASH_ROTATION&&window.GEI_V16_SPLASH_ROTATION.select(pool))||pool[Math.floor(Math.random()*pool.length)]||''}catch(e){selected=pool[Math.floor(Math.random()*pool.length)]||''}
-      if(selected){var preload=new Image();preload.onload=function(){hero.src=selected;hero.classList.add('is-ready');try{window.GEI_V16_SPLASH_ROTATION.commit(selected)}catch(e){}};preload.onerror=function(){hero.src=LOGO;hero.classList.add('is-ready')};preload.src=selected}else{hero.src=LOGO;hero.classList.add('is-ready')}
     }
-
-    function closeSplash(){
-      phone.classList.add('splash-done');
-      if(splash)setTimeout(function(){if(splash.parentNode)splash.remove()},700);
-    }
+    function closeSplash(){phone.classList.add('splash-done');if(splash)setTimeout(function(){if(splash.parentNode)splash.remove()},700)}
     [enter,skip].forEach(function(btn){if(btn)btn.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();closeSplash()},true)});
     document.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '||e.key==='Escape'){e.preventDefault();closeSplash()}},true);
   }

@@ -1,0 +1,6 @@
+/* V1.12.5 — Startup Gate Paint Isolation */
+.phone.splash-gated{background:#06070d!important}
+.phone.splash-gated>.screen{visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+.phone.splash-gated #gei-splash{visibility:visible!important;opacity:1!important;display:flex!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;z-index:2147483647!important;background:#06070d!important;pointer-events:auto!important}
+.phone.splash-done>.screen{visibility:visible!important;opacity:1!important}
+.phone.splash-done #gei-splash{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}

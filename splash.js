@@ -106,23 +106,33 @@
     try {
       window.localStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(deck));
     } catch {
-      // Continue with in-memory selection when storage is unavailable.
+      // Continue without persistence when storage is unavailable.
+    }
+  }
+
+  function readLastImage() {
+    try {
+      return window.localStorage.getItem(LAST_IMAGE_KEY) || "";
+    } catch {
+      return "";
+    }
+  }
+
+  function writeLastImage(url) {
+    try {
+      window.localStorage.setItem(LAST_IMAGE_KEY, url);
+    } catch {
+      // Continue without persistence when storage is unavailable.
     }
   }
 
   function nextImage() {
     let deck = readDeck();
-    const lastImage = (() => {
-      try {
-        return window.localStorage.getItem(LAST_IMAGE_KEY) || "";
-      } catch {
-        return "";
-      }
-    })();
+    const lastImage = readLastImage();
 
     if (deck.length === 0) {
       deck = shuffle(SPLASH_IMAGES);
-      if (deck[0] === lastImage && deck.length > 1) {
+      if (deck.length > 1 && deck[0] === lastImage) {
         [deck[0], deck[1]] = [deck[1], deck[0]];
       }
     }
@@ -137,14 +147,29 @@
     }
 
     writeDeck(deck);
-
-    try {
-      window.localStorage.setItem(LAST_IMAGE_KEY, selected);
-    } catch {
-      // In-memory selection remains functional when storage is unavailable.
-    }
-
+    writeLastImage(selected);
     return selected;
+  }
+
+  function applyRandomTreatment(layer) {
+    const treatments = [
+      { scale: 1.02, x: "50%", y: "50%", saturate: 1.05, contrast: 1.03, brightness: 1.00, hue: 0, glow: "cyan" },
+      { scale: 1.08, x: "44%", y: "48%", saturate: 1.16, contrast: 1.08, brightness: 0.97, hue: -3, glow: "indigo" },
+      { scale: 1.12, x: "56%", y: "45%", saturate: 1.02, contrast: 1.12, brightness: 1.04, hue: 4, glow: "magenta" },
+      { scale: 1.05, x: "48%", y: "54%", saturate: 1.22, contrast: 1.00, brightness: 0.94, hue: 7, glow: "cyan" },
+      { scale: 1.10, x: "53%", y: "52%", saturate: 0.96, contrast: 1.10, brightness: 1.02, hue: -6, glow: "pink" },
+      { scale: 1.04, x: "46%", y: "56%", saturate: 1.10, contrast: 1.06, brightness: 1.06, hue: 2, glow: "indigo" }
+    ];
+
+    const treatment = treatments[Math.floor(Math.random() * treatments.length)];
+    layer.style.setProperty("--splash-art-scale", treatment.scale);
+    layer.style.setProperty("--splash-art-x", treatment.x);
+    layer.style.setProperty("--splash-art-y", treatment.y);
+    layer.style.setProperty("--splash-art-saturate", treatment.saturate);
+    layer.style.setProperty("--splash-art-contrast", treatment.contrast);
+    layer.style.setProperty("--splash-art-brightness", treatment.brightness);
+    layer.style.setProperty("--splash-art-hue", `${treatment.hue}deg`);
+    layer.dataset.visualTreatment = treatment.glow;
   }
 
   function installSplashMarkup(frame) {
@@ -198,6 +223,7 @@
     const status = splash.querySelector("#splash-status");
     const progressBar = splash.querySelector("#splash-progress-bar");
 
+    applyRandomTreatment(splash);
     const selectedImage = nextImage();
     artwork.src = selectedImage;
     artwork.onerror = () => {

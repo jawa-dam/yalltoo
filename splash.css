@@ -1,0 +1,220 @@
+:root {
+  --cyan: #2fd2ff;
+  --indigo: #3d3dea;
+  --magenta: #f310ba;
+  --pink: #ff9df2;
+  --near-black: #06070d;
+  --text: #f6f8ff;
+  --muted: #d7deec;
+}
+
+.splash-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--near-black);
+  isolation: isolate;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 520ms ease, visibility 520ms ease;
+}
+
+.app-frame:not(.splash-done) .app-shell {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.app-frame.splash-done .splash-layer {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.splash-artwork {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(1.05) contrast(1.03);
+  transform: scale(1.015);
+  background: linear-gradient(145deg, #101725, #06070d 60%, #171027);
+}
+
+.splash-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(6, 7, 13, 0.12) 0%, rgba(6, 7, 13, 0.3) 42%, rgba(6, 7, 13, 0.86) 100%),
+    linear-gradient(120deg, rgba(47, 210, 255, 0.18), transparent 44%, rgba(243, 16, 186, 0.14));
+  pointer-events: none;
+}
+
+.splash-content,
+.splash-controls {
+  position: relative;
+  z-index: 2;
+}
+
+.splash-content {
+  display: grid;
+  align-content: end;
+  gap: 12px;
+  padding: max(28px, env(safe-area-inset-top)) 22px 26px;
+}
+
+.splash-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  width: fit-content;
+  padding: 7px 10px;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 999px;
+  background: rgba(5, 8, 16, 0.36);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.splash-brand-mark {
+  color: var(--cyan);
+}
+
+.splash-kicker {
+  margin: 0;
+  color: var(--cyan);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.splash-title {
+  margin: 0;
+  max-width: 390px;
+  font-size: clamp(34px, 10vw, 58px);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.splash-subtitle {
+  margin: 0;
+  max-width: 340px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.splash-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.78);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.splash-meta-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--magenta);
+  box-shadow: 0 0 14px rgba(243,16,186,0.75);
+}
+
+.splash-controls {
+  display: grid;
+  gap: 10px;
+  padding: 0 22px calc(22px + env(safe-area-inset-bottom));
+}
+
+.splash-button {
+  min-height: 54px;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 18px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.splash-enter {
+  border-color: rgba(47,210,255,0.7);
+  background: linear-gradient(135deg, var(--cyan), #8feaff);
+  color: #04121a;
+  box-shadow: 0 14px 38px rgba(47,210,255,0.25);
+}
+
+.splash-skip {
+  background: rgba(5, 8, 16, 0.38);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+}
+
+.splash-button:focus-visible {
+  outline: 3px solid var(--pink);
+  outline-offset: 3px;
+}
+
+.splash-progress {
+  height: 3px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.15);
+}
+
+.splash-progress > span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--cyan), var(--indigo), var(--magenta));
+  transition: width 160ms linear;
+}
+
+@media (max-width: 360px) {
+  .splash-content,
+  .splash-controls {
+    padding-inline: 17px;
+  }
+
+  .splash-content {
+    padding-bottom: 20px;
+  }
+
+  .splash-title {
+    font-size: 32px;
+  }
+
+  .splash-subtitle {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-layer,
+  .splash-button,
+  .splash-progress > span {
+    transition: none !important;
+  }
+}

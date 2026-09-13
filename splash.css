@@ -23,6 +23,13 @@
   visibility: visible;
   pointer-events: auto;
   transition: opacity 520ms ease, visibility 520ms ease;
+  --splash-art-scale: 1.015;
+  --splash-art-x: 50%;
+  --splash-art-y: 50%;
+  --splash-art-saturate: 1.05;
+  --splash-art-contrast: 1.03;
+  --splash-art-brightness: 1;
+  --splash-art-hue: 0deg;
 }
 
 .app-frame:not(.splash-done) .app-shell {
@@ -42,10 +49,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
-  filter: saturate(1.05) contrast(1.03);
-  transform: scale(1.015);
+  object-position: var(--splash-art-x) var(--splash-art-y);
+  filter: saturate(var(--splash-art-saturate)) contrast(var(--splash-art-contrast)) brightness(var(--splash-art-brightness)) hue-rotate(var(--splash-art-hue));
+  transform: scale(var(--splash-art-scale));
   background: linear-gradient(145deg, #101725, #06070d 60%, #171027);
+  transition: transform 900ms ease, filter 900ms ease, object-position 900ms ease;
 }
 
 .splash-scrim {
@@ -56,6 +64,7 @@
     linear-gradient(180deg, rgba(6, 7, 13, 0.12) 0%, rgba(6, 7, 13, 0.3) 42%, rgba(6, 7, 13, 0.86) 100%),
     linear-gradient(120deg, rgba(47, 210, 255, 0.18), transparent 44%, rgba(243, 16, 186, 0.14));
   pointer-events: none;
+  transition: background 900ms ease;
 }
 
 .splash-content,
@@ -205,16 +214,6 @@
     padding-bottom: 20px;
   }
 
-  .splash-brand {
-    min-height: 66px;
-    padding: 9px 12px;
-  }
-
-  .splash-brand-logo {
-    width: min(165px, 60vw);
-    max-height: 62px;
-  }
-
   .splash-title {
     font-size: 32px;
   }
@@ -226,8 +225,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .splash-layer,
+  .splash-artwork,
   .splash-button,
-  .splash-progress > span {
+  .splash-progress > span,
+  .splash-scrim {
     transition: none !important;
   }
 }

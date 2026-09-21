@@ -11,7 +11,7 @@ is a test tool — it ships nothing to the browser.
 ```bash
 cd tools/v2-regression
 npm install
-npm test          # 178 checks, exit 0 = all protected behaviour intact
+npm test          # 189 checks, exit 0 = all protected behaviour intact
 ```
 
 `node_modules/` is gitignored. Nothing here is loaded by any page.
@@ -32,8 +32,9 @@ npm test          # 178 checks, exit 0 = all protected behaviour intact
 | 9. Simulator Wall | locked panel + disabled `ENTER LEVEL 1` when the gate is closed; unlocked when `geiDamGateV1.opened === true`; 6 stages |
 | 10. Level 1 | ±8 pressure step, 62–78 band enforcement both ways, +50 / +75 / +100, `3 / 3`, completion panel, `geiSimulatorScoreV1` = 225 at version `1.63.30`, score separate from Academy XP, navigation targets |
 | 11. CSS | all 66 stylesheets parse (css-tree); every `v2-*.css` layer (design system + the six Phase 3-8 remix layers) carries no `font-size` under 12 px and no untokenised hex |
+| 2c. Video Lab | the reflection / saved-notes UI mounts, and notes round-trip through `geiVideoLabIntelligenceV1` |
 | 11b. Skin system | 6 skins registered, `gei-hydraulic` is the default, and all five saved legacy skins (`academic`, `pink`, `blue`, `green`, `dark`) are honoured rather than reset |
-| 12. Runtime errors | no error beyond the two recorded baseline defects |
+| 12. Runtime errors | no error beyond the one recorded baseline defect |
 
 ## Re-recording the contract
 

@@ -193,7 +193,7 @@ check("dam gate section rendered", Boolean(idx.d.getElementById("gei-dam-gate"))
 check("5 nav items rendered", idx.d.querySelectorAll("#bottom-navigation [data-nav-id]").length === 5);
 
 /* ------------------------------------------------------------------ *
- * 2b. DYNAMIC CHILD-SCRIPT INJECTION (fixed in V2.0.3)
+ * 2b. DYNAMIC CHILD-SCRIPT INJECTION (fixed in V2.0.2)
  * ------------------------------------------------------------------ */
 section("2b. Child-script injection");
 check("no DOMStringMap SyntaxError anywhere on index.html",
@@ -239,6 +239,46 @@ for (const [, src] of CHILD_SCRIPTS.slice(1)) {
 check("restored Adam modules evaluate without throwing", restoredThrew === null, restoredThrew || "");
 const restoredNewErrors = [...new Set(idx.errors.slice(restoredErrorsBefore))];
 check("restored Adam modules add no new runtime error", restoredNewErrors.length === 0, restoredNewErrors.join(" | "));
+
+/* ------------------------------------------------------------------ *
+ * 2c. VIDEO LAB REFLECTION / SAVED NOTES (restored in V2.0.9)
+ * ------------------------------------------------------------------ */
+section("2c. Video Lab intelligence");
+const vli = idx.d.querySelector(".gei-video-intelligence");
+check(".gei-video-intelligence mounted", Boolean(vli), "section never inserted");
+check("  ... sits before .gei-video-connection",
+  vli?.nextElementSibling?.classList.contains("gei-video-connection") === true,
+  `next=${vli?.nextElementSibling?.className}`);
+check("#gei-video-observation textarea present", Boolean(idx.d.querySelector("#gei-video-observation")));
+check("#gei-video-question textarea present", Boolean(idx.d.querySelector("#gei-video-question")));
+check("#gei-video-save button present", Boolean(idx.d.querySelector("#gei-video-save")));
+check("window.GEI_VIDEO_INTELLIGENCE exposed", Boolean(idx.w.GEI_VIDEO_INTELLIGENCE));
+check("  ... reports version 1.63.16", idx.w.GEI_VIDEO_INTELLIGENCE?.version === "1.63.16",
+  `version=${idx.w.GEI_VIDEO_INTELLIGENCE?.version}`);
+
+// Saved-notes round trip: type -> save -> read straight back out of localStorage.
+const obsEl = idx.d.querySelector("#gei-video-observation");
+const qEl = idx.d.querySelector("#gei-video-question");
+if (obsEl && qEl && idx.d.querySelector("#gei-video-save")) {
+  obsEl.value = "Water is separated before land appears.";
+  qEl.value = "Where did the water come from?";
+  idx.d.querySelector("#gei-video-save").click();
+  const stored = JSON.parse(idx.w.localStorage.getItem("geiVideoLabIntelligenceV1") || "{}");
+  const rec = stored["8mYq2A_fgTA"] || {};
+  check("notes persist to geiVideoLabIntelligenceV1",
+    rec.observations === "Water is separated before land appears." && rec.questions === "Where did the water come from?",
+    JSON.stringify(rec));
+  check("  ... timestamped on save", typeof rec.updatedAt === "string" && rec.updatedAt.length > 0,
+    `updatedAt=${rec.updatedAt}`);
+  check("save button reports NOTES SAVED",
+    vli?.querySelector(".gei-video-save-status")?.textContent === "NOTES SAVED",
+    `status=${vli?.querySelector(".gei-video-save-status")?.textContent}`);
+  // Re-init must restore the saved text into the fields, not blank them.
+  idx.w.GEI_VIDEO_INTELLIGENCE.getState();
+  check("GEI_VIDEO_INTELLIGENCE.getState() reads the saved notes back",
+    idx.w.GEI_VIDEO_INTELLIGENCE.getState().observations === "Water is separated before land appears.",
+    JSON.stringify(idx.w.GEI_VIDEO_INTELLIGENCE.getState()));
+}
 
 /* ------------------------------------------------------------------ *
  * 3. DAY UNLOCK CHAIN
@@ -559,16 +599,21 @@ section("12. Runtime error budget");
 // Known pre-existing defects in the V1.63.30 baseline. Recorded, not fixed, so that any
 // NEW error introduced by the visual remix fails the run.
 const KNOWN_BASELINE_ERRORS = [
-  // FIXED IN V2.0.3 -- adam-milestones.js loadChildScript() used to do
+  // FIXED IN V2.0.2 -- adam-milestones.js loadChildScript() used to do
   // dataset["geiMastery-milestones"] = marker; a hyphen is illegal in a DOMStringMap
   // property name, so the setter threw SyntaxError and aborted init(), leaving
   // adam-mastery-milestones.js, adam-mastery-celebration.js and adam-reward-unlock.js
   // uninjected. It now uses setAttribute. If this error ever returns, section 2b fails too.
   //
-  // 1. A removeChild/insertBefore against an already-detached node during the render fan-out.
-  //    Owning module not yet identified.
-  "The child can not be found in the parent",
-  // 2. profile.js render() reaches c.querySelector("#gei-profile-percent").textContent.
+  // FIXED IN V2.0.9 -- was "NotFoundError: The child can not be found in the parent."
+  // Owned by v1-63-16-gei-video-lab-intelligence.js, which called
+  // root.insertBefore(section, connection) while connection.parentNode was
+  // .gei-video-learning rather than #video-root. The throw happened after the
+  // dataset.v16316 = "ready" marker was set, so the whole Video Lab reflection /
+  // saved-notes UI never mounted and never retried. Now inserts via
+  // connection.parentNode. If this error ever returns, this section fails.
+  //
+  // 1. profile.js render() reaches c.querySelector("#gei-profile-percent").textContent.
   //    The card is intact at boot (verified), so something later in the gei:xp-updated
   //    fan-out strips that node. Owning module not yet identified.
   "Cannot set properties of null",
@@ -576,7 +621,7 @@ const KNOWN_BASELINE_ERRORS = [
 const distinct = [...new Set(idx.errors.map((e) => (e.match(/\[(.*?)\]/) || [, e])[1].split("\n")[0]))];
 const unexpected = distinct.filter((e) => !KNOWN_BASELINE_ERRORS.some((k) => e.includes(k)));
 check("no NEW runtime errors beyond the recorded baseline", unexpected.length === 0, unexpected.join(" | "));
-check(`baseline still has exactly ${KNOWN_BASELINE_ERRORS.length} known defects`,
+check(`baseline still has exactly ${KNOWN_BASELINE_ERRORS.length} known defect${KNOWN_BASELINE_ERRORS.length === 1 ? "" : "s"}`,
   distinct.filter((e) => KNOWN_BASELINE_ERRORS.some((k) => e.includes(k))).length === KNOWN_BASELINE_ERRORS.length,
   `seen=${distinct.join(" | ")}`);
 for (const e of distinct) warnings.push(`known pre-existing runtime error: ${e}`);

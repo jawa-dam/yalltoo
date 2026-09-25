@@ -458,3 +458,16 @@ html[data-gei-day],
   .day-progress-fill, .audio-progress-fill, .v1-49-mastery-bar i { transition: none !important; }
   .completion button, .day-back, .day-nav a { transition: none !important; }
 }
+
+
+/* V1.63.31 — Transparent image backgrounds
+   Images remain transparent and inherit the surrounding surface. */
+.day-app img,
+.day-app picture,
+.day-app svg {
+  background-color: transparent !important;
+}
+.day-app img { mix-blend-mode: normal; }
+.v1-49-day-objective-mastery img,
+.gei-day-avatar-popout-image,
+.gei-day-avatar-popout-art { background-color: transparent !important; }

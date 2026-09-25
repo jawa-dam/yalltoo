@@ -13,12 +13,13 @@
     { id: "dark", label: "Dark Mode", className: "skin-dark" }
   ];
 
+  // V2.3: every text/accent value here meets WCAG 2.1 AA on its own skin.
   const PALETTES = {
-    "gei-hydraulic": { bg: "#06070d", surface: "#0a0d16", soft: "#0f1420", text: "#eaf2ff", muted: "#8fa2bd", accent: "#2fd2ff" },
-    academic: { bg: "#f7f9fc", surface: "#ffffff", soft: "#f1f4f8", text: "#102a43", muted: "#526b82", accent: "#2fd2ff" },
-    pink: { bg: "#fff0f7", surface: "#ffffff", soft: "#ffe5f1", text: "#3b1028", muted: "#70485f", accent: "#ff1493" },
-    blue: { bg: "#edf3ff", surface: "#ffffff", soft: "#dbe7ff", text: "#10254d", muted: "#4d6487", accent: "#0057ff" },
-    green: { bg: "#effaf3", surface: "#ffffff", soft: "#dcf7e6", text: "#123524", muted: "#4d6b59", accent: "#12b76a" },
+    "gei-hydraulic": { bg: "#06070d", surface: "#0a0d16", soft: "#0f1420", text: "#eaf2ff", muted: "#9fb0c8", accent: "#2fd2ff" },
+    academic: { bg: "#f7f9fc", surface: "#ffffff", soft: "#eef2f7", text: "#102a43", muted: "#475b70", accent: "#0b6285" },
+    pink: { bg: "#fff5fa", surface: "#ffffff", soft: "#fde8f2", text: "#3a102b", muted: "#6b3d58", accent: "#b0125f" },
+    blue: { bg: "#f3f7ff", surface: "#ffffff", soft: "#e6eefc", text: "#10254d", muted: "#445a7d", accent: "#1d4ed8" },
+    green: { bg: "#f3fbf6", surface: "#ffffff", soft: "#e5f5eb", text: "#123524", muted: "#3f5e4c", accent: "#0b7040" },
     dark: { bg: "#05060a", surface: "#0b0e18", soft: "#111522", text: "#f6f8ff", muted: "#aeb8cb", accent: "#aeb8cb" }
   };
 

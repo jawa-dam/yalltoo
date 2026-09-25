@@ -1,0 +1,266 @@
+/* ============================================================================
+   YALLTOO V2.3 — SKIN READABILITY LAYER
+   ----------------------------------------------------------------------------
+   Load LAST. Visual layer only.
+
+   Problem: the V2 remix painted every panel dark on every skin, while the V1
+   light-skin rules still set text dark. Light skins ended up with dark text on
+   dark panels, and bright cyan / grey labels on white.
+
+   Fix: on the four light skins, remap the V2 tokens to a light "paper"
+   palette whose every text colour meets WCAG 2.1 AA (4.5:1 body, 3:1 large).
+   GEI Hydraulic and Dark Mode keep the dark instrument look; this file only
+   corrects legacy text colours that were unreadable there.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Shared light-paper tokens (Academic, Hot Pink, Blue, Green)
+   -------------------------------------------------------------------------- */
+:root[data-skin="academic"],
+:root[data-skin="pink"],
+:root[data-skin="blue"],
+:root[data-skin="green"] {
+  color-scheme: light;
+
+  --v2-white:   #ffffff;           /* stays white: used on filled buttons */
+
+  --v2-success: #166534;
+  --v2-warning: #a14f05;
+  --v2-danger:  #c11b3a;
+  --v2-magenta: #a1127a;
+  --v2-hotpink: #b0125f;
+  --v2-indigo:  #3730a3;
+
+  --v2-hairline:   rgba(16, 42, 67, 0.10);
+  --v2-hairline-2: rgba(16, 42, 67, 0.16);
+  --v2-tick:       rgba(16, 42, 67, 0.22);
+
+  --v2-shadow-1: 0 1px 2px rgba(16, 42, 67, 0.06);
+  --v2-shadow-2: 0 6px 18px rgba(16, 42, 67, 0.08);
+  --v2-shadow-3: 0 16px 40px rgba(16, 42, 67, 0.12);
+  --v2-glow-flow:     0 0 0 3px var(--v2-wash-cyan-2);
+  --v2-glow-pressure: 0 0 0 3px var(--v2-wash-magenta);
+  --v2-glow-release:  0 0 0 4px var(--v2-wash-cyan-2);
+}
+
+/* --------------------------------------------------------------------------
+   2. Per-skin paper + ink
+   -------------------------------------------------------------------------- */
+:root[data-skin="academic"] {
+  --v2-void: #eef2f7; --v2-bg: #f7f9fc; --v2-surface: #ffffff; --v2-elevated: #eef2f7; --v2-line: #d3dce6;
+  --v2-text: #102a43; --v2-muted: #475b70;
+  --v2-cyan: #0b6285; --v2-cyan-foam: #0a4f6b; --v2-cyan-deep: #7fb4c9; --v2-cyan-abyss: #e3f1f7;
+  --v2-wash-cyan: rgba(11, 98, 133, 0.07); --v2-wash-cyan-2: rgba(11, 98, 133, 0.16);
+  --v2-wash-indigo: rgba(55, 48, 163, 0.08); --v2-wash-magenta: rgba(161, 18, 122, 0.08);
+  --v2-grid-line: rgba(16, 42, 67, 0.035);
+  --skin-bg: #f7f9fc; --skin-surface: #ffffff; --skin-soft: #eef2f7; --skin-text: #102a43; --skin-muted: #475b70; --skin-border: #d3dce6; --skin-accent: #0b6285;
+}
+:root[data-skin="pink"] {
+  --v2-void: #fbeef5; --v2-bg: #fff5fa; --v2-surface: #ffffff; --v2-elevated: #fde8f2; --v2-line: #f0c3d8;
+  --v2-text: #3a102b; --v2-muted: #6b3d58;
+  --v2-cyan: #b0125f; --v2-cyan-foam: #8f0e4c; --v2-cyan-deep: #e59abf; --v2-cyan-abyss: #fde8f2;
+  --v2-wash-cyan: rgba(176, 18, 95, 0.07); --v2-wash-cyan-2: rgba(176, 18, 95, 0.15);
+  --v2-wash-indigo: rgba(55, 48, 163, 0.07); --v2-wash-magenta: rgba(161, 18, 122, 0.08);
+  --v2-grid-line: rgba(58, 16, 43, 0.035);
+  --skin-bg: #fff5fa; --skin-surface: #ffffff; --skin-soft: #fde8f2; --skin-text: #3a102b; --skin-muted: #6b3d58; --skin-border: #f0c3d8; --skin-accent: #b0125f;
+}
+:root[data-skin="blue"] {
+  --v2-void: #e9f0fd; --v2-bg: #f3f7ff; --v2-surface: #ffffff; --v2-elevated: #e6eefc; --v2-line: #c4d4f3;
+  --v2-text: #10254d; --v2-muted: #445a7d;
+  --v2-cyan: #1d4ed8; --v2-cyan-foam: #1e40af; --v2-cyan-deep: #93acec; --v2-cyan-abyss: #e6eefc;
+  --v2-wash-cyan: rgba(29, 78, 216, 0.07); --v2-wash-cyan-2: rgba(29, 78, 216, 0.15);
+  --v2-wash-indigo: rgba(55, 48, 163, 0.07); --v2-wash-magenta: rgba(161, 18, 122, 0.07);
+  --v2-grid-line: rgba(16, 37, 77, 0.035);
+  --skin-bg: #f3f7ff; --skin-surface: #ffffff; --skin-soft: #e6eefc; --skin-text: #10254d; --skin-muted: #445a7d; --skin-border: #c4d4f3; --skin-accent: #1d4ed8;
+}
+:root[data-skin="green"] {
+  --v2-void: #eaf6ef; --v2-bg: #f3fbf6; --v2-surface: #ffffff; --v2-elevated: #e5f5eb; --v2-line: #bfe3cd;
+  --v2-text: #123524; --v2-muted: #3f5e4c;
+  --v2-cyan: #0b7040; --v2-cyan-foam: #095c35; --v2-cyan-deep: #8fcfae; --v2-cyan-abyss: #e5f5eb;
+  --v2-wash-cyan: rgba(11, 112, 64, 0.07); --v2-wash-cyan-2: rgba(11, 112, 64, 0.15);
+  --v2-wash-indigo: rgba(55, 48, 163, 0.07); --v2-wash-magenta: rgba(161, 18, 122, 0.07);
+  --v2-grid-line: rgba(18, 53, 36, 0.035);
+  --skin-bg: #f3fbf6; --skin-surface: #ffffff; --skin-soft: #e5f5eb; --skin-text: #123524; --skin-muted: #3f5e4c; --skin-border: #bfe3cd; --skin-accent: #0b7040;
+}
+
+/* Dark skins: keep the instrument look, lift the muted ink one step so small
+   labels clear AA on the darkest wells. */
+:root[data-skin="gei-hydraulic"],
+:root[data-skin="dark"],
+:root:not([data-skin]) {
+  --v2-muted: #9fb0c8;
+  --skin-muted: #9fb0c8;
+}
+
+/* ==========================================================================
+   3. Legacy text colours → theme tokens
+   --------------------------------------------------------------------------
+   Older V1 sheets pin light-theme ink (#102a43, #30465b, #526b82…) with
+   `#screen-x … !important`, so it lands on dark panels too. The prefix
+   `:root:not(#_r):not(#_r)` adds two id-weights so these token rules win
+   without editing the V1 files. Tokens resolve per skin, so one rule serves
+   every skin.
+   ========================================================================== */
+
+/* ---- Academy: headings and body ink ---- */
+:root:not(#_r):not(#_r) #screen-academy .academy-topbar h1,
+:root:not(#_r):not(#_r) #screen-academy .gei-path-title h2,
+:root:not(#_r):not(#_r) #screen-academy .academy-day-card h3,
+:root:not(#_r):not(#_r) #screen-academy .gei-stage-link h3 {
+  color: var(--v2-text) !important;
+  -webkit-text-fill-color: var(--v2-text) !important;
+}
+:root:not(#_r):not(#_r) #screen-academy .gei-path-progress-status,
+:root:not(#_r):not(#_r) #screen-academy .gei-path-progress-summary span,
+:root:not(#_r):not(#_r) #screen-academy .academy-day-number,
+:root:not(#_r):not(#_r) #screen-academy .academy-day-status,
+:root:not(#_r):not(#_r) #screen-academy .gei-stage-achievement b,
+:root:not(#_r):not(#_r) #screen-academy .gei-stage-achievement strong,
+:root:not(#_r):not(#_r) #gei-blueprint-status span {
+  color: var(--v2-muted) !important;
+  -webkit-text-fill-color: var(--v2-muted) !important;
+}
+:root:not(#_r):not(#_r) #screen-academy .academy-kicker,
+:root:not(#_r):not(#_r) #screen-academy .academy-section-label,
+:root:not(#_r):not(#_r) #screen-academy .gei-path-progress-summary strong,
+:root:not(#_r):not(#_r) #screen-academy .academy-day-card.is-active .academy-day-number,
+:root:not(#_r):not(#_r) #screen-academy .academy-day-card.is-active .academy-day-status,
+:root:not(#_r):not(#_r) #screen-academy .gei-stage-link.is-active .academy-day-number,
+:root:not(#_r):not(#_r) #screen-academy .gei-stage-link.is-active .academy-day-status,
+:root:not(#_r):not(#_r) #gei-blueprint-status #gei-blueprint-xp {
+  color: var(--v2-cyan) !important;
+  -webkit-text-fill-color: var(--v2-cyan) !important;
+}
+:root:not(#_r):not(#_r) #gei-blueprint-status #gei-blueprint-achievements {
+  color: var(--v2-magenta) !important;
+  -webkit-text-fill-color: var(--v2-magenta) !important;
+}
+/* Magenta on the dark skins needs its lighter tint to read as text. */
+:root:not([data-skin="academic"]):not([data-skin="pink"]):not([data-skin="blue"]):not([data-skin="green"]) #gei-blueprint-status #gei-blueprint-achievements {
+  color: #ff8fe0 !important;
+  -webkit-text-fill-color: #ff8fe0 !important;
+}
+
+/* ---- Quick-access tiles (Profile / XP / Vault…) follow the surface ---- */
+:root:not(#_r):not(#_r) .gei-quick-button {
+  background: var(--v2-surface) !important;
+  border-color: var(--v2-line) !important;
+  color: var(--v2-text) !important;
+}
+:root:not(#_r):not(#_r) .gei-quick-label { color: var(--v2-text) !important; }
+
+/* ---- Dam Name gate button: white on a deeper pink (6.8:1) ---- */
+:root:not(#_r):not(#_r) #v1-53-gate-save { background: #b0125f !important; color: #ffffff !important; }
+
+/* ---- Video Lab ---- */
+:root:not(#_r):not(#_r) #screen-video .gei-video-feature-copy h2,
+:root:not(#_r):not(#_r) #screen-video .gei-video-section-head h2,
+:root:not(#_r):not(#_r) #screen-video .video-section-head h2,
+:root:not(#_r):not(#_r) #screen-video .gei-video-save,
+:root:not(#_r):not(#_r) #screen-video .gei-video-watch-link {
+  color: var(--v2-text) !important;
+  -webkit-text-fill-color: var(--v2-text) !important;
+}
+:root:not(#_r):not(#_r) #screen-video .gei-video-watch-link { background: var(--v2-wash-cyan-2) !important; }
+:root:not(#_r):not(#_r) #screen-video .gei-video-feature-copy p,
+:root:not(#_r):not(#_r) #screen-video .gei-video-section-head p,
+:root:not(#_r):not(#_r) #screen-video .video-section-head p {
+  color: var(--v2-muted) !important;
+  -webkit-text-fill-color: var(--v2-muted) !important;
+}
+/* Gradient call-to-action buttons: deepen the gradient so white text passes. */
+:root:not(#_r):not(#_r) #screen-video .gei-video-continue,
+:root:not(#_r):not(#_r) #screen-video .gei-video-academy-link {
+  background: linear-gradient(135deg, #0b5f7d, #3730a3 55%, #a1127a) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* ---- Home ---- */
+:root:not(#_r):not(#_r) .skin-trigger-icon { color: var(--v2-cyan) !important; }
+:root[data-skin="academic"] .eyebrow, :root[data-skin="pink"] .eyebrow,
+:root[data-skin="blue"] .eyebrow, :root[data-skin="green"] .eyebrow,
+:root[data-skin="academic"] .card-label, :root[data-skin="pink"] .card-label,
+:root[data-skin="blue"] .card-label, :root[data-skin="green"] .card-label,
+:root[data-skin="academic"] .cta-kicker, :root[data-skin="pink"] .cta-kicker,
+:root[data-skin="blue"] .cta-kicker, :root[data-skin="green"] .cta-kicker {
+  color: var(--v2-cyan) !important;
+}
+/* Discovery Guide banner text sits on the cover photo: guarantee a dark scrim. */
+:root:not(#_r):not(#_r) #screen-home .home-product-cta {
+  background: linear-gradient(0deg, rgba(4, 5, 10, 0.86), rgba(4, 5, 10, 0.55)) !important;
+  color: #ffffff !important;
+}
+
+/* ---- Portfolio ---- */
+:root:not(#_r):not(#_r) .research-work-number { color: var(--v2-cyan) !important; }
+
+/* ---- Bottom navigation on light skins ---- */
+:root[data-skin="academic"] .bottom-navigation,
+:root[data-skin="pink"] .bottom-navigation,
+:root[data-skin="blue"] .bottom-navigation,
+:root[data-skin="green"] .bottom-navigation {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-color: var(--v2-line) !important;
+  box-shadow: 0 -1px 0 var(--v2-line), 0 10px 28px rgba(16, 42, 67, 0.10) !important;
+}
+:root:not(#_r):not(#_r) .bottom-navigation .nav-button { color: var(--v2-muted) !important; }
+:root:not(#_r):not(#_r) .bottom-navigation .nav-button.active { color: var(--v2-cyan) !important; }
+
+/* ---- Day lessons ---- */
+:root:not(#_r):not(#_r) #v1-49-question h3,
+:root:not(#_r):not(#_r) .v1-49-question h3 {
+  color: var(--v2-text) !important;
+  -webkit-text-fill-color: var(--v2-text) !important;
+}
+/* Locked / not-yet-available controls stay visibly dimmed but legible. */
+:root:not(#_r):not(#_r) .completion button:disabled { opacity: 0.72 !important; }
+:root:not(#_r):not(#_r) .completion button { color: var(--v2-text) !important; }
+
+/* ---- Locked stages: say "locked" with ink and border, not by fading the
+        whole card to 45% (which made titles unreadable). ---- */
+:root:not(#_r):not(#_r) #screen-academy .academy-day-card.is-locked,
+:root:not(#_r):not(#_r) #screen-academy .gei-stage-link.is-locked {
+  opacity: 1 !important;
+  border-style: dashed !important;
+  filter: saturate(0.55) !important;
+}
+:root:not(#_r):not(#_r) #screen-academy .academy-topbar p {
+  color: var(--v2-muted) !important;
+  -webkit-text-fill-color: var(--v2-muted) !important;
+}
+
+/* ---- Academy hero "Continue Day 1" button on light skins ---- */
+:root[data-skin="academic"] #screen-academy .academy-primary-action,
+:root[data-skin="pink"] #screen-academy .academy-primary-action,
+:root[data-skin="blue"] #screen-academy .academy-primary-action,
+:root[data-skin="green"] #screen-academy .academy-primary-action {
+  color: var(--v2-text) !important;
+  border-color: var(--v2-cyan) !important;
+}
+:root:not(#_r):not(#_r) #screen-academy .academy-primary-action strong { color: var(--v2-cyan-foam) !important; }
+:root:not(#_r):not(#_r) #screen-academy .gei-stage-achievement.is-locked { opacity: 1 !important; }
+
+/* ---- Home: Discovery Guide arrow chip ---- */
+:root:not(#_r):not(#_r) #screen-home .home-product-cta b {
+  background: var(--v2-cyan) !important;
+  color: var(--v2-void) !important;
+}
+
+/* ---- Small labels on tinted chips: step up to the deeper accent ---- */
+:root:not(#_r):not(#_r) .research-work-number { color: var(--v2-cyan-foam) !important; }
+:root:not(#_r):not(#_r) .research-work-copy small { color: var(--v2-muted) !important; }
+:root[data-skin="academic"] .video-thumb, :root[data-skin="pink"] .video-thumb,
+:root[data-skin="blue"] .video-thumb, :root[data-skin="green"] .video-thumb { color: var(--v2-text) !important; }
+:root[data-skin="academic"] .video-label, :root[data-skin="pink"] .video-label,
+:root[data-skin="blue"] .video-label, :root[data-skin="green"] .video-label { color: var(--v2-cyan-foam) !important; }
+
+/* ---- Day lessons: diagnostics + locked "next day" link ---- */
+:root:not(#_r):not(#_r) .day4-audio-diagnostics strong { color: var(--v2-text) !important; }
+:root:not(#_r):not(#_r) .day-nav a.next.is-locked { opacity: 1 !important; color: var(--v2-muted) !important; border-style: dashed !important; }
+
+/* ---- Glows are for dark instruments. On paper they only blur the ink. ---- */
+:root[data-skin="academic"] body *, :root[data-skin="pink"] body *,
+:root[data-skin="blue"] body *, :root[data-skin="green"] body * {
+  text-shadow: none !important;
+}

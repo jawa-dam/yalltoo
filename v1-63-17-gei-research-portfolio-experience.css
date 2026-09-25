@@ -60,3 +60,14 @@ body.gei-portfolio-guide-open{overflow:hidden}
  .gei-portfolio-guide{min-height:132px;max-height:none}
  .gei-portfolio-guide-hint{margin-top:6px;font-size:7px!important}
 }
+
+/* V1.63.32 — Transparent portfolio imagery */
+.gei-portfolio-mascot,
+.gei-portfolio-mascot img,
+.gei-portfolio-mascot-glow,
+.gei-portfolio-dialog-mascot,
+.gei-portfolio-dialog-mascot img,
+.portfolio-logo,
+.research-work img {
+  background-color: transparent !important;
+}

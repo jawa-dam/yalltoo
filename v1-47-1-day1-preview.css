@@ -99,3 +99,47 @@
   #screen-home .day1-preview-copy small{font-size:12px}
   #screen-home .day1-preview-card audio{height:42px}
 }
+
+
+/* V1.47.3 — Day 1 preview contrast lock
+   Keep the CTA readable across every applied skin. The panel stays vivid;
+   copy gets a stable dark text well and restrained accent colors. */
+#screen-home .day1-preview-card{
+  isolation:isolate;
+}
+#screen-home .day1-preview-card::before{
+  z-index:-1;
+  background:linear-gradient(90deg,rgba(255,255,255,.03),rgba(255,255,255,.012));
+}
+#screen-home .day1-preview-copy{
+  padding:10px 12px;
+  border-radius:14px;
+  background:rgba(3,7,14,.78);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 8px 20px rgba(0,0,0,.18);
+}
+#screen-home .day1-preview-copy .card-label{
+  color:#72def7 !important;
+  text-shadow:none !important;
+}
+#screen-home .day1-preview-copy strong{
+  color:#f3f6fb !important;
+  -webkit-text-fill-color:#f3f6fb !important;
+  text-shadow:none !important;
+}
+#screen-home .day1-preview-copy small{
+  color:#b9c4d2 !important;
+  -webkit-text-fill-color:#b9c4d2 !important;
+  text-shadow:none !important;
+}
+#screen-home .day1-preview-card::after{
+  background:#08111b;
+  border-color:rgba(114,222,247,.42);
+  color:#72def7;
+  text-shadow:none;
+}
+@media(max-width:520px){
+  #screen-home .day1-preview-copy{padding:9px 11px}
+}
+@media(max-width:360px){
+  #screen-home .day1-preview-copy{padding:8px 10px}
+}

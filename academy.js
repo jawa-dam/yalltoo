@@ -348,8 +348,26 @@
   }
 
 
+  let academyRendered = false;
+
+  function ensureAcademyRendered() {
+    const screen = document.getElementById("screen-academy");
+    if (!screen) return false;
+    if (!academyRendered || !screen.querySelector(".academy-view")) {
+      renderAcademy();
+      academyRendered = true;
+    } else {
+      syncDayState();
+    }
+    return true;
+  }
+
   function init() {
-    renderAcademy();
+    ensureAcademyRendered();
+    window.addEventListener("gei:navigation", (event) => {
+      if (event.detail?.id === "academy") ensureAcademyRendered();
+    });
+    window.addEventListener("gei:academy-render", ensureAcademyRendered);
     window.addEventListener("storage", () => { syncDayState(); });
     window.addEventListener("gei:day-completion", () => { syncDayState(); });
     window.addEventListener("gei:achievement-updated", () => { syncDayState(); });

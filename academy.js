@@ -186,6 +186,16 @@
           </button>
         </header>
 
+        <section class="academy-hero academy-waterwheel-hero" aria-labelledby="academy-hero-title">
+          <div class="academy-hero-copy">
+            <span class="academy-section-label">EXPLORE THE WATER BLUEPRINT</span>
+            <h2 id="academy-hero-title">6-Day Water Blueprint</h2>
+            <p>Turn the wheel and enter the first stage of the Genesis Engineered Interpretations learning path.</p>
+            <a class="academy-primary-action" href="day-1.html"><span>Begin Day 1</span><strong aria-hidden="true">→</strong></a>
+          </div>
+          ${wheelMarkup()}
+        </section>
+
         <section class="academy-path" aria-labelledby="academy-path-title">
           <div class="gei-academy-path-intro"><span class="academy-section-label">YOUR HYDRAULIC JOURNEY</span><h2 id="academy-path-title">Six Hydraulic Stages</h2><p>Build the six-day blueprint one hydraulic stage at a time.</p></div>
 

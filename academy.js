@@ -197,9 +197,17 @@
             <span id="gei-path-progress-fill"></span>
           </div>
           <p class="gei-path-progress-status" id="gei-path-progress-status">Build the six-day blueprint one hydraulic stage at a time.</p>
-          <div class="academy-day-grid gei-hydraulic-path">
-            ${ACADEMY_DAYS.map((day) => `<a class="academy-day-card gei-stage-link${day.active ? " is-active" : ""}${day.id > 1 ? " is-locked" : ""}" data-day="${day.id}" href="${day.url}" aria-label="Open ${day.label}: ${day.title}"><span class="gei-stage-top"><span class="academy-day-number">${day.label}</span><span class="gei-stage-icon" aria-hidden="true">${["💧","🧱","🌊","🚪","⚙️","🏗️"][day.id-1]}</span></span><h3>${day.title}</h3><span class="academy-day-status">${day.status}</span><span class="gei-stage-achievement" data-achievement-day="${day.id}">🏆 <b>ACHIEVEMENT</b><strong>—</strong></span><span class="gei-stage-flow" aria-hidden="true"><i></i><i></i><i></i></span></a>`).join("")}
+          <div class="academy-day-carousel" aria-label="Six hydraulic stages">
+            <div class="academy-day-carousel-track">
+              ${ACADEMY_DAYS.map((day) => `<a class="academy-day-card gei-stage-link${day.active ? " is-active" : ""}${day.id > 1 ? " is-locked" : ""}" data-day="${day.id}" href="${day.url}" aria-label="Open ${day.label}: ${day.title}"><span class="gei-stage-top"><span class="academy-day-number">${day.label}</span><span class="gei-stage-lock" aria-hidden="true">${day.id === 1 ? "UNLOCKED" : "LOCKED"}</span></span><div class="gei-stage-icon" aria-hidden="true">${["💧","🧱","🌊","🚪","⚙️","🏗️"][day.id-1]}</div><h3>${day.title}</h3><span class="academy-day-status">${day.status}</span><span class="gei-stage-achievement" data-achievement-day="${day.id}">🏆 <b>ACHIEVEMENT</b><strong>—</strong></span></a>`).join("")}
+            </div>
           </div>
+          <div class="academy-carousel-controls" aria-label="Hydraulic stage controls">
+            <button type="button" class="academy-carousel-arrow" data-academy-carousel="prev" aria-label="Previous stage">‹</button>
+            <div class="academy-carousel-dots" aria-hidden="true">${ACADEMY_DAYS.map((_,i)=>`<i class="${i===0?"is-active":""}"></i>`).join("")}</div>
+            <button type="button" class="academy-carousel-arrow" data-academy-carousel="next" aria-label="Next stage">›</button>
+          </div>
+
           <div class="gei-blueprint-status" id="gei-blueprint-status" aria-label="Blueprint status">
             <div><span>BLUEPRINT STATUS</span><strong id="gei-blueprint-xp">0 / 666 XP</strong></div>
             <div><strong id="gei-blueprint-days">0 / 6 STAGES</strong><span id="gei-blueprint-achievements">0 / 6 ACHIEVEMENTS</span></div>

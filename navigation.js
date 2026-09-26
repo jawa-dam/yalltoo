@@ -194,9 +194,6 @@
     };
     open?.addEventListener("click", openGoal);
     close?.addEventListener("click", closeGoal);
-    popover?.addEventListener("click", (event) => {
-      if (event.target === popover) closeGoal();
-    });
     screen.querySelectorAll(".support-method").forEach((link) => {
       link.addEventListener("click", () => window.GEI_SONIC_FX?.iconImmediate?.() || window.GEI_SONIC_FX?.icon?.());
     });

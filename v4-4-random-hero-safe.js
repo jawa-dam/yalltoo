@@ -29,90 +29,98 @@
     "gentle-tilt", "float", "breathe", "glow-pulse"
   ];
 
-  // Capture Adam's transparent asset BEFORE replacing the V4.3 avatar node.
-  const oldButton = currentHero.querySelector("#gei-day-avatar-button");
-  const oldImage = oldButton?.querySelector("img") || currentHero.querySelector("img.day-mascot");
-  const fallbackSrc = oldImage?.getAttribute("src") || "";
+  // V4.3 builds the hero at DOMContentLoaded. V4.4 waits for it.
+  const init = () => {
+    const currentHero = root.querySelector(".ftl-hero");
+    if (!currentHero) return false;
 
-  const readSession = (key) => {
-    try { return sessionStorage.getItem(key) || ""; } catch (_) { return ""; }
+    const readSession = (key) => {
+      try { return sessionStorage.getItem(key) || ""; } catch (_) { return ""; }
+    };
+    const writeSession = (key, value) => {
+      try { sessionStorage.setItem(key, value); } catch (_) {}
+    };
+    const pick = (list, previous) => {
+      const pool = list.filter((item) => item !== previous);
+      const source = pool.length ? pool : list.slice();
+      return source[Math.floor(Math.random() * source.length)];
+    };
+
+    const oldButton = currentHero.querySelector("#gei-day-avatar-button");
+    const oldImage = oldButton?.querySelector("img") || currentHero.querySelector("img.day-mascot");
+    const fallbackSrc = oldImage?.getAttribute("src") || "";
+
+    const previousImage = readSession("gei-ftl-last-hero-image-v44");
+    const previousEffect = readSession("gei-ftl-last-hero-effect-v44");
+    const imageSrc = pick(heroImages, previousImage) || fallbackSrc;
+    const effect = pick(effects, previousEffect);
+
+    writeSession("gei-ftl-last-hero-image-v44", imageSrc);
+    writeSession("gei-ftl-last-hero-effect-v44", effect);
+
+    const stage = currentHero.querySelector(".ftl-adam-stage");
+    const hint = currentHero.querySelector(".ftl-adam-hint");
+    const effectHost = currentHero.querySelector(".ftl-adam");
+    if (!stage || !effectHost) return false;
+
+    let button = stage.querySelector("#ftl-hero-art");
+    if (!button) {
+      button = document.createElement("button");
+      button.type = "button";
+      button.id = "ftl-hero-art";
+      button.className = "ftl-hero-art";
+      button.setAttribute("aria-label", "Tap hero artwork for a Day-specific clue");
+      stage.replaceChildren(button);
+    }
+
+    const image = document.createElement("img");
+    image.className = "ftl-hero-art-image";
+    image.alt = \`GEI Academy Day \${DAY} hero artwork\`;
+    image.decoding = "async";
+    image.loading = "eager";
+
+    let fallbackUsed = false;
+    const showFallback = () => {
+      if (!fallbackUsed && fallbackSrc && image.getAttribute("src") !== fallbackSrc) {
+        fallbackUsed = true;
+        image.src = fallbackSrc;
+        return;
+      }
+      button.classList.add("is-failed");
+    };
+
+    image.addEventListener("error", showFallback);
+    image.addEventListener("load", () => {
+      button.classList.add("is-loaded");
+      button.classList.remove("is-failed");
+    });
+
+    image.src = imageSrc;
+    button.appendChild(image);
+
+    effectHost.dataset.v44Fx = effect;
+    effectHost.classList.add("ftl-v44-hero");
+    if (hint) hint.textContent = "TAP FOR A CLUE";
+
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      window.GEI_FOLLOW_THE_LIGHT?.openGuide?.();
+    });
+
+    window.GEI_RANDOM_HERO_V44 = Object.freeze({
+      version: "4.4-safety-pass",
+      day: DAY,
+      image: imageSrc,
+      effect
+    });
+    return true;
   };
 
-  const writeSession = (key, value) => {
-    try { sessionStorage.setItem(key, value); } catch (_) {}
-  };
-
-  const previousImage = readSession("gei-ftl-last-hero-image-v44");
-  const previousEffect = readSession("gei-ftl-last-hero-effect-v44");
-
-  const pick = (list, previous) => {
-    const pool = list.filter((item) => item !== previous);
-    const source = pool.length ? pool : list.slice();
-    return source[Math.floor(Math.random() * source.length)];
-  };
-
-  const imageSrc = pick(heroImages, previousImage) || fallbackSrc;
-  const effect = pick(effects, previousEffect);
-
-  writeSession("gei-ftl-last-hero-image-v44", imageSrc);
-  writeSession("gei-ftl-last-hero-effect-v44", effect);
-
-  const stage = currentHero.querySelector(".ftl-adam-stage");
-  const hint = currentHero.querySelector(".ftl-adam-hint");
-  const effectHost = currentHero.querySelector(".ftl-adam");
-  if (!stage || !effectHost) return;
-
-  // Replace only the V4.3 Adam presentation node; the fallback image is preserved above.
-  let button = stage.querySelector("#ftl-hero-art");
-  if (!button) {
-    button = document.createElement("button");
-    button.type = "button";
-    button.id = "ftl-hero-art";
-    button.className = "ftl-hero-art";
-    button.setAttribute("aria-label", "Tap hero artwork for a Day-specific clue");
-    stage.replaceChildren(button);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else if (!init()) {
+    window.addEventListener("load", init, { once: true });
   }
 
-  const image = document.createElement("img");
-  image.className = "ftl-hero-art-image";
-  image.alt = `GEI Academy Day ${DAY} hero artwork`;
-  image.decoding = "async";
-  image.loading = "eager";
-
-  let fallbackUsed = false;
-  const showFallback = () => {
-    if (!fallbackUsed && fallbackSrc && image.getAttribute("src") !== fallbackSrc) {
-      fallbackUsed = true;
-      image.src = fallbackSrc;
-      return;
-    }
-    button.classList.add("is-failed");
-  };
-
-  image.addEventListener("error", showFallback);
-  image.addEventListener("load", () => {
-    button.classList.add("is-loaded");
-    button.classList.remove("is-failed");
-  });
-
-  image.src = imageSrc;
-  button.replaceChildren(image);
-
-  effectHost.dataset.v44Fx = effect;
-  effectHost.classList.add("ftl-v44-hero");
-
-  if (hint) hint.textContent = "TAP FOR A CLUE";
-
-  button.addEventListener("click", (event) => {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    window.GEI_FOLLOW_THE_LIGHT?.openGuide?.();
-  });
-
-  window.GEI_RANDOM_HERO_V44 = Object.freeze({
-    version: "4.4-safety-pass",
-    day: DAY,
-    image: imageSrc,
-    effect
-  });
 })();

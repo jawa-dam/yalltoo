@@ -307,3 +307,7 @@
 @media (min-width: 1024px) {
   .research-work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
 }
+
+/* V2.4.6 override — dedicated store card replaces the old stacked guide */
+#screen-portfolio .gei-portfolio-guide{display:none !important;}
+#screen-portfolio .gei-portfolio-store-card{z-index:2;}

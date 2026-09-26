@@ -689,3 +689,27 @@
     font-size:9px !important;
   }
 }
+
+/* V2.4.10 — Home module viewport fit
+   The combined preview/blueprint block stays above the fixed navigation. */
+
+#screen-home .dashboard-main{
+  min-height:0 !important;
+  overflow:hidden !important;
+}
+
+#screen-home .gei-home-hero .welcome-card{
+  min-height:176px !important;
+}
+
+@media(max-width:520px){
+  #screen-home .gei-home-hero .welcome-card{
+    min-height:188px !important;
+  }
+}
+
+@media(max-width:360px){
+  #screen-home .gei-home-hero .welcome-card{
+    min-height:170px !important;
+  }
+}

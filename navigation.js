@@ -257,6 +257,9 @@
     }
     if (item.id === "support") renderSupport();
     window.dispatchEvent(new CustomEvent("gei:navigation", { detail: { id: item.id, target: item.target } }));
+    if (item.id === "academy") {
+      window.dispatchEvent(new CustomEvent("gei:academy-render"));
+    }
   }
 
   function init() {

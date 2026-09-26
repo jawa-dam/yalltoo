@@ -36,6 +36,10 @@
     style.id = "support-page-styles";
     style.textContent = `
       #screen-support { position:relative;overflow:hidden!important;overscroll-behavior:none;touch-action:none; }
+      #screen-support .support-root { overflow:hidden!important; }
+      #screen-support .support-content { min-height:0;overflow:hidden!important; }
+      #screen-support .support-methods { min-height:0; }
+      #screen-support .support-goal-popover { touch-action:manipulation; }
       .support-root { position:absolute;inset:0;width:100%;height:100%;min-height:0;overflow:hidden!important;box-sizing:border-box;padding:max(10px,env(safe-area-inset-top)) 12px calc(74px + env(safe-area-inset-bottom));display:grid;grid-template-rows:auto minmax(0,1fr);gap:8px;color:var(--skin-text,#102a43); }
       .support-header { display:grid;grid-template-columns:minmax(0,1fr) 66px;align-items:start;gap:8px; }
       .support-kicker { display:block;color:var(--skin-accent,#2fd2ff);font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase; }

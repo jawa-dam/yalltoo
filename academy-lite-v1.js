@@ -79,6 +79,11 @@
         margin:4px 0 0!important;font-size:clamp(27px,7.7vw,38px)!important;
         line-height:1!important;letter-spacing:-.035em!important;overflow-wrap:anywhere!important;
       }
+      #screen-academy.gei-academy-lite-screen .gei-lite-heading{min-width:0;max-width:calc(100% - 82px)!important}
+      #screen-academy.gei-academy-lite-screen .gei-lite-heading h1{
+        display:block!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+        font-size:clamp(30px,8vw,38px)!important;line-height:1!important;
+      }
       #screen-academy.gei-academy-lite-screen .gei-lite-header p{
         margin:5px 0 0!important;font-size:14px!important;line-height:1.25!important;
         color:var(--skin-muted,#526b82)!important;
@@ -224,9 +229,9 @@
     screen.innerHTML = `
       <div class="gei-lite-root">
         <header class="gei-lite-header">
-          <div>
+          <div class="gei-lite-heading">
             <span class="gei-lite-eyebrow">GEI ACADEMY</span>
-            <h1>Six-Day Water Blueprint</h1>
+            <h1>Academy</h1>
             <p>Choose a stage. Explore the system.</p>
           </div>
           <div class="gei-lite-chip" aria-label="Blueprint progress">

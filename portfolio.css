@@ -176,3 +176,200 @@
     font-size:6px !important;
   }
 }
+
+/* V2.4.6 — Dedicated GIF store card + true no-scroll portfolio
+   The GIF owns its own visual section. Research rows never overlap it. */
+
+#screen-portfolio .portfolio-root{
+  display:grid !important;
+  grid-template-rows:auto 104px minmax(0,1fr) !important;
+  gap:7px !important;
+  overflow:hidden !important;
+}
+
+#screen-portfolio .gei-portfolio-store-card{
+  position:relative;
+  display:grid;
+  grid-template-columns:92px minmax(0,1fr);
+  align-items:center;
+  gap:10px;
+  min-height:104px;
+  height:104px;
+  padding:5px 10px 5px 5px;
+  box-sizing:border-box;
+  border:1px solid rgba(47,210,255,.30);
+  border-radius:18px;
+  background:
+    linear-gradient(135deg,rgba(47,210,255,.09),rgba(61,61,234,.05) 55%,rgba(243,16,186,.05)),
+    var(--v2-surface,#fff);
+  color:var(--v2-text,#102a43);
+  text-decoration:none;
+  overflow:hidden;
+  box-shadow:0 10px 24px rgba(16,42,67,.10);
+}
+
+#screen-portfolio .gei-portfolio-store-art{
+  width:84px;
+  height:92px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  border-radius:14px;
+  background:rgba(255,255,255,.40);
+  border:1px solid rgba(16,42,67,.10);
+}
+
+#screen-portfolio .gei-portfolio-store-gif{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  background:transparent !important;
+}
+
+#screen-portfolio .gei-portfolio-store-copy{
+  min-width:0;
+  display:grid;
+  align-content:center;
+  gap:3px;
+}
+
+#screen-portfolio .gei-portfolio-store-copy .screen-kicker{
+  font-size:9px !important;
+  line-height:1;
+}
+
+#screen-portfolio .gei-portfolio-store-copy h2{
+  margin:0;
+  font-size:17px !important;
+  line-height:1.03;
+  letter-spacing:-.02em;
+  color:var(--v2-text,#102a43);
+}
+
+#screen-portfolio .gei-portfolio-store-copy p{
+  margin:0;
+  font-size:10px !important;
+  line-height:1.18;
+  color:var(--v2-muted,#526b82);
+}
+
+#screen-portfolio .gei-portfolio-store-action{
+  margin-top:2px;
+  font-size:8px;
+  font-weight:950;
+  letter-spacing:.10em;
+  color:var(--v2-cyan,#0b6285);
+}
+
+#screen-portfolio .portfolio-main{
+  min-height:0 !important;
+  height:100% !important;
+  overflow:hidden !important;
+}
+
+#screen-portfolio .research-overview{
+  min-height:0 !important;
+  height:100% !important;
+  display:grid !important;
+  grid-template-rows:auto minmax(0,1fr) !important;
+  overflow:hidden !important;
+}
+
+#screen-portfolio .research-work-grid{
+  min-height:0 !important;
+  height:100% !important;
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  grid-template-rows:repeat(10,minmax(0,1fr)) !important;
+  gap:3px !important;
+  overflow:hidden !important;
+  align-content:stretch !important;
+  padding:0 !important;
+}
+
+#screen-portfolio .research-work{
+  min-height:0 !important;
+  height:auto !important;
+  padding:4px 7px !important;
+  border-radius:8px !important;
+  grid-template-columns:27px minmax(0,1fr) !important;
+  gap:5px !important;
+  align-items:center !important;
+  overflow:hidden !important;
+}
+
+#screen-portfolio .research-work-copy{
+  display:grid !important;
+  align-content:center !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+}
+
+#screen-portfolio .research-work-copy strong{
+  display:-webkit-box !important;
+  -webkit-box-orient:vertical !important;
+  -webkit-line-clamp:2 !important;
+  overflow:hidden !important;
+  font-size:10px !important;
+  line-height:1.05 !important;
+}
+
+#screen-portfolio .research-work-copy small{
+  margin-top:1px !important;
+  font-size:7px !important;
+  line-height:1 !important;
+}
+
+#screen-portfolio .research-work-number{
+  font-size:9px !important;
+}
+
+@media(max-width:360px){
+  #screen-portfolio .portfolio-root{
+    grid-template-rows:auto 88px minmax(0,1fr) !important;
+    gap:5px !important;
+  }
+  #screen-portfolio .gei-portfolio-store-card{
+    grid-template-columns:74px minmax(0,1fr);
+    min-height:88px;
+    height:88px;
+    padding:4px 7px 4px 4px;
+    gap:7px;
+    border-radius:15px;
+  }
+  #screen-portfolio .gei-portfolio-store-art{
+    width:68px;
+    height:78px;
+    border-radius:11px;
+  }
+  #screen-portfolio .gei-portfolio-store-copy .screen-kicker{
+    font-size:7px !important;
+  }
+  #screen-portfolio .gei-portfolio-store-copy h2{
+    font-size:14px !important;
+  }
+  #screen-portfolio .gei-portfolio-store-copy p{
+    font-size:8px !important;
+  }
+  #screen-portfolio .gei-portfolio-store-action{
+    font-size:6px;
+  }
+  #screen-portfolio .research-work{
+    grid-template-columns:22px minmax(0,1fr) !important;
+    padding:3px 5px !important;
+    gap:4px !important;
+    border-radius:7px !important;
+  }
+  #screen-portfolio .research-work-number{
+    font-size:8px !important;
+  }
+  #screen-portfolio .research-work-copy strong{
+    font-size:8px !important;
+    line-height:1.03 !important;
+  }
+  #screen-portfolio .research-work-copy small{
+    font-size:6px !important;
+  }
+}

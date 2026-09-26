@@ -36,19 +36,17 @@
         <img class="portfolio-logo" src="${GEI_LOGO_URL}" alt="G.E.I. logo" decoding="async">
       </header>
 
-      <section class="gei-portfolio-guide" aria-label="Adam portfolio guide">
-        <button class="gei-portfolio-mascot" type="button" aria-label="Open Adam research guide">
-          <span class="gei-portfolio-mascot-glow" aria-hidden="true"></span>
-          <img src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/inshot_20260808_192709068-u7bYAfdJRGRfnEfC.gif" alt="Adam, the GEI guide" decoding="async" class="gei-portfolio-guide-gif">
-          <span class="gei-portfolio-mascot-badge">ASK ADAM</span>
-        </button>
-        <div class="gei-portfolio-guide-copy">
-          <span class="screen-kicker">RESEARCH GUIDE</span>
-          <h2>Follow the evidence trail.</h2>
-          <p>Browse the GEI research record, from hydraulic interpretation to linguistic analysis.</p>
-          <span class="gei-portfolio-guide-hint">TAP ADAM FOR THE RESEARCH MAP</span>
+      <a class="gei-portfolio-store-card" href="https://www.yalltoo.com/gei-discovery-guide-" target="_blank" rel="noopener noreferrer" aria-label="Open the GEI Discovery Guide store page">
+        <div class="gei-portfolio-store-art">
+          <img src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/inshot_20260808_192709068-u7bYAfdJRGRfnEfC.gif" alt="GEI Discovery Guide" class="gei-portfolio-store-gif" decoding="async">
         </div>
-      </section>
+        <div class="gei-portfolio-store-copy">
+          <span class="screen-kicker">GEI DISCOVERY GUIDE</span>
+          <h2>Take the blueprint with you.</h2>
+          <p>Open the GEI store and explore the Discovery Guide.</p>
+          <span class="gei-portfolio-store-action">OPEN STORE ↗</span>
+        </div>
+      </a>
 
       <div class="portfolio-main">
         <article class="research-overview">

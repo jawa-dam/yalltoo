@@ -141,7 +141,68 @@
     if (!screen || screen.dataset.supportRendered === "true") return;
     ensureSupportStyles();
     screen.dataset.supportRendered = "true";
-    screen.innerHTML = `<div class="support-root"><header class="support-header"><div><span class="support-kicker">GEI SUPPORT</span><h1>Support the Research</h1><p>Help Genesis Engineered Interpretations grow, build, document and share.</p></div><img class="support-gei-logo" src="${GEI_LOGO_URL}" alt="Genesis Engineered Interpretations" loading="eager" decoding="async" /></header><div class="support-content"><section class="support-goal" aria-labelledby="support-goal-title"><span class="support-goal-label" id="support-goal-title">Fundraiser Goal</span><p>Your support directly funds the research — enabling GEI to develop working prototypes, documents, and share this knowledge freely with communities, students, and innovators worldwide. Every contribution moves GEI closer to a future where this guide is accessible to all.</p></section><section class="support-methods" aria-label="Ways to support GEI">${SUPPORT_LINKS.map((item) => `<a class="support-method ${item.className}" href="${item.href}" target="_blank" rel="noopener noreferrer"><span class="support-icon"><img src="${item.image}" alt="${item.imageAlt}" loading="lazy" decoding="async" /></span><span><strong>${item.label}</strong><span>${item.detail}</span></span><span class="support-arrow" aria-hidden="true">→</span></a>`).join("")}</section><div class="support-contact"><div class="support-contact-copy"><strong>Contact GEI</strong><span>Questions, collaboration or research support</span></div><a class="support-email" href="mailto:Contact@yalltoo.com">Contact@yalltoo.com</a></div></div></div>`;
+    screen.innerHTML = `
+      <div class="support-root">
+        <header class="support-header">
+          <div>
+            <span class="support-kicker">GEI SUPPORT</span>
+            <h1>Support the Research</h1>
+            <p>Help Genesis Engineered Interpretations grow, build, document and share.</p>
+          </div>
+          <img class="support-gei-logo" src="${GEI_LOGO_URL}" alt="Genesis Engineered Interpretations" loading="eager" decoding="async" />
+        </header>
+        <div class="support-content">
+          <button class="support-moses-trigger" id="support-moses-open" type="button" aria-label="Open the GEI fundraiser goal message" aria-controls="support-goal-popover">
+            <span class="support-moses-art"><img src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/operator-moses-NaoYxXNs8PIe8VAq.png" alt="Moses, GEI support mascot" loading="eager" decoding="async" /></span>
+            <span class="support-moses-copy">
+              <span class="support-goal-label">MEET MOSES</span>
+              <strong>Support the GEI Mission.</strong>
+              <span>Tap Moses to see what your support helps make possible.</span>
+            </span>
+          </button>
+          <section class="support-methods" aria-label="Ways to support GEI">
+            ${SUPPORT_LINKS.map((item) => `<a class="support-method ${item.className}" href="${item.href}" target="_blank" rel="noopener noreferrer"><span class="support-icon"><img src="${item.image}" alt="${item.imageAlt}" loading="lazy" decoding="async" /></span><span><strong>${item.label}</strong><span>${item.detail}</span></span><span class="support-arrow" aria-hidden="true">→</span></a>`).join("")}
+          </section>
+          <div class="support-contact">
+            <div class="support-contact-copy"><strong>Contact GEI</strong><span>Questions, collaboration or research support</span></div>
+            <a class="support-email" href="mailto:Contact@yalltoo.com">Contact@yalltoo.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="support-goal-popover" id="support-goal-popover" hidden>
+        <div class="support-goal-card" role="dialog" aria-modal="true" aria-labelledby="support-goal-title">
+          <button class="support-goal-close" id="support-goal-close" type="button" aria-label="Close fundraiser goal message">×</button>
+          <span class="support-goal-label">FUNDRAISER GOAL</span>
+          <h2 id="support-goal-title">Support the GEI mission.</h2>
+          <p>Your support directly funds the research — enabling GEI to develop working prototypes, documents, and share this knowledge freely with communities, students, and innovators worldwide. Every contribution moves GEI closer to a future where this guide is accessible to all.</p>
+        </div>
+      </div>
+    `;
+
+    const open = screen.querySelector("#support-moses-open");
+    const popover = screen.querySelector("#support-goal-popover");
+    const close = screen.querySelector("#support-goal-close");
+    const openGoal = () => {
+      popover.hidden = false;
+      document.body.classList.add("support-goal-open");
+      close?.focus();
+    };
+    const closeGoal = () => {
+      popover.hidden = true;
+      document.body.classList.remove("support-goal-open");
+      open?.focus();
+    };
+    open?.addEventListener("click", openGoal);
+    close?.addEventListener("click", closeGoal);
+    popover?.addEventListener("click", (event) => {
+      if (event.target === popover) closeGoal();
+    });
+    screen.querySelectorAll(".support-method").forEach((link) => {
+      link.addEventListener("click", () => window.GEI_SONIC_FX?.iconImmediate?.() || window.GEI_SONIC_FX?.icon?.());
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && popover && !popover.hidden) closeGoal();
+    });
   }
 
   function replaceHomeMascot() {

@@ -320,3 +320,116 @@
 #screen-portfolio .gei-portfolio-guide{
   display:none !important;
 }
+
+/* V2.6 — Portfolio vertical scroll + bottom media placement */
+#screen-portfolio{
+  overflow:hidden !important;
+}
+#screen-portfolio .portfolio-root{
+  height:100% !important;
+  min-height:0 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  gap:12px !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  padding-bottom:calc(104px + env(safe-area-inset-bottom)) !important;
+  scroll-padding-bottom:calc(104px + env(safe-area-inset-bottom)) !important;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+}
+#screen-portfolio .portfolio-header{
+  flex:0 0 auto !important;
+}
+#screen-portfolio .gei-portfolio-store-card{
+  order:3 !important;
+  flex:0 0 auto !important;
+  width:100% !important;
+  min-height:220px !important;
+  height:220px !important;
+  margin-top:2px !important;
+  grid-template-columns:1fr !important;
+  grid-template-rows:minmax(145px,1fr) auto !important;
+  gap:8px !important;
+  padding:8px !important;
+  border-radius:22px !important;
+}
+#screen-portfolio .gei-portfolio-store-art{
+  width:100% !important;
+  height:145px !important;
+  min-height:145px !important;
+  border-radius:16px !important;
+}
+#screen-portfolio .gei-portfolio-store-gif{
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+}
+#screen-portfolio .gei-portfolio-store-copy{
+  display:grid !important;
+  grid-template-columns:1fr auto !important;
+  grid-template-rows:auto auto !important;
+  column-gap:10px !important;
+  align-items:center !important;
+}
+#screen-portfolio .gei-portfolio-store-copy .screen-kicker{
+  grid-column:1 / -1;
+}
+#screen-portfolio .gei-portfolio-store-copy h2{
+  font-size:19px !important;
+  margin:0 !important;
+}
+#screen-portfolio .gei-portfolio-store-copy p{
+  display:none !important;
+}
+#screen-portfolio .gei-portfolio-store-action{
+  grid-column:2;
+  grid-row:2;
+  margin:0 !important;
+  align-self:center;
+}
+#screen-portfolio .research-carousel{
+  order:2 !important;
+  flex:0 0 auto !important;
+}
+#screen-portfolio .research-carousel-viewport{
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+}
+#screen-portfolio .research-hero-card{
+  flex-basis:min(84vw,360px) !important;
+}
+@media(max-width:520px){
+  #screen-portfolio .portfolio-root{
+    gap:10px !important;
+    padding-bottom:calc(108px + env(safe-area-inset-bottom)) !important;
+    scroll-padding-bottom:calc(108px + env(safe-area-inset-bottom)) !important;
+  }
+  #screen-portfolio .gei-portfolio-store-card{
+    min-height:238px !important;
+    height:238px !important;
+  }
+  #screen-portfolio .gei-portfolio-store-art{
+    height:168px !important;
+    min-height:168px !important;
+  }
+}
+@media(max-width:360px){
+  #screen-portfolio .gei-portfolio-store-card{
+    min-height:210px !important;
+    height:210px !important;
+  }
+  #screen-portfolio .gei-portfolio-store-art{
+    height:142px !important;
+    min-height:142px !important;
+  }
+  #screen-portfolio .gei-portfolio-store-copy h2{
+    font-size:16px !important;
+  }
+  #screen-portfolio .gei-portfolio-store-copy .screen-kicker{
+    font-size:7px !important;
+  }
+  #screen-portfolio .gei-portfolio-store-action{
+    font-size:7px !important;
+  }
+}

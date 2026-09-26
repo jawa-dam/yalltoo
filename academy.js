@@ -181,11 +181,9 @@
     /* Hard reset only the Academy screen: remove any stale runtime nodes left
        by previous controllers before rebuilding the canonical Academy tree. */
     screen.replaceChildren();
-
-    const view = document.createElement("div");
-    view.className = "academy-view";
-    screen.appendChild(view);
-    view.innerHTML = `
+    screen.innerHTML = `
+      <div class="academy-view">
+      <div class="academy-quick-slot" aria-label="GEI quick access"></div>
       <header class="academy-topbar">
           <div><span class="academy-kicker">GEI ACADEMY</span><h1>6-Day Water Blueprint</h1><p>Learn to observe, question &amp; discover.</p></div>
           <button class="academy-mascot gei-mascot-button gei-mascot-button--interactive" id="academy-mascot" type="button" aria-label="${MASCOT.academyLabel}" aria-controls="academy-guide" aria-expanded="false">

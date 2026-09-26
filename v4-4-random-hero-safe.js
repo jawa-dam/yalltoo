@@ -75,7 +75,7 @@
 
     const image = document.createElement("img");
     image.className = "ftl-hero-art-image";
-    image.alt = \`GEI Academy Day \${DAY} hero artwork\`;
+    image.alt = `GEI Academy Day ${DAY} hero artwork`;
     image.decoding = "async";
     image.loading = "eager";
 
@@ -91,6 +91,7 @@
 
     image.addEventListener("error", showFallback);
     image.addEventListener("load", () => {
+      image.classList.add("is-loaded");
       button.classList.add("is-loaded");
       button.classList.remove("is-failed");
     });

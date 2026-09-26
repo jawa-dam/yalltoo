@@ -1,0 +1,150 @@
+html.ftl .ftl-adam-stage {
+  width: min(100%, 520px);
+  min-height: 360px;
+}
+
+html.ftl .ftl-hero-art {
+  display: grid;
+  place-items: end center;
+  width: min(100%, 520px);
+  min-height: 360px;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+html.ftl .ftl-hero-art-image {
+  display: block;
+  width: min(100%, 520px);
+  max-width: 520px;
+  max-height: min(58vh, 520px);
+  height: auto;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 18px 34px rgba(0,0,0,.42));
+  opacity: 0;
+}
+
+html.ftl .ftl-hero-art-image.is-loaded {
+  opacity: 1;
+}
+
+html.ftl .ftl-hero-art.is-failed::before {
+  content: "GEI HERO";
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 220px;
+  color: #aebbd0;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+html.ftl .ftl-adam-hint {
+  right: 50%;
+  transform: translateX(50%);
+  bottom: 3%;
+  white-space: nowrap;
+}
+
+html.ftl .ftl-v44-hero[data-v44-fx="fade-rise"] .ftl-hero-art-image.is-loaded {
+  animation: ftl44FadeRise .9s cubic-bezier(.22,1,.36,1) both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="soft-zoom"] .ftl-hero-art-image.is-loaded {
+  animation: ftl44SoftZoom 1.05s cubic-bezier(.22,1,.36,1) both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="drift-left"] .ftl-hero-art-image.is-loaded {
+  animation: ftl44DriftLeft 1s cubic-bezier(.22,1,.36,1) both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="drift-right"] .ftl-hero-art-image.is-loaded {
+  animation: ftl44DriftRight 1s cubic-bezier(.22,1,.36,1) both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="gentle-tilt"] .ftl-hero-art-image.is-loaded {
+  animation: ftl44Tilt 1.1s ease-out both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="float"] .ftl-hero-art-image.is-loaded {
+  animation: ftl44Float 2.8s ease-in-out infinite;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="breathe"] .ftl-hero-art-image.is-loaded {
+  animation: ftl44Breathe 2.6s ease-in-out infinite;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="glow-pulse"] .ftl-hero-art-image.is-loaded {
+  animation: ftl44Glow 2.1s ease-in-out infinite;
+}
+
+@keyframes ftl44FadeRise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ftl44SoftZoom {
+  from { opacity: 0; transform: scale(.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes ftl44DriftLeft {
+  from { opacity: 0; transform: translateX(18px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes ftl44DriftRight {
+  from { opacity: 0; transform: translateX(-18px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes ftl44Tilt {
+  from { opacity: 0; transform: rotate(-3deg) scale(.96); }
+  to { opacity: 1; transform: rotate(0) scale(1); }
+}
+@keyframes ftl44Float {
+  0%, 100% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-7px); }
+}
+@keyframes ftl44Breathe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.025); }
+}
+@keyframes ftl44Glow {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 18px 34px rgba(0,0,0,.42)); }
+  50% { opacity: 1; filter: drop-shadow(0 18px 34px rgba(0,0,0,.42)) drop-shadow(0 0 24px var(--ftl-accent)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.ftl .ftl-hero-art-image.is-loaded {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 720px) {
+  html.ftl .ftl-adam-stage {
+    width: min(100%, 460px);
+    min-height: 320px;
+  }
+
+  html.ftl .ftl-hero-art {
+    width: min(100%, 460px);
+    min-height: 320px;
+  }
+
+  html.ftl .ftl-hero-art-image {
+    width: min(100%, 460px);
+    max-width: 460px;
+    max-height: 460px;
+  }
+}
+
+@media (max-width: 430px) {
+  html.ftl .ftl-adam-stage {
+    width: min(100%, 390px);
+    min-height: 290px;
+  }
+
+  html.ftl .ftl-hero-art {
+    width: min(100%, 390px);
+    min-height: 290px;
+  }
+
+  html.ftl .ftl-hero-art-image {
+    width: min(100%, 390px);
+    max-width: 390px;
+    max-height: 390px;
+  }
+}

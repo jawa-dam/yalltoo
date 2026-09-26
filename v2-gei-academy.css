@@ -891,3 +891,25 @@
 #screen-academy .academy-quick-slot #gei-quick-access{
   margin:0 !important;
 }
+
+/* V3.2.3 — final Academy visibility guard */
+#screen-academy.is-active{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+}
+#screen-academy.is-active .academy-view{
+  display:flex !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  position:relative !important;
+  z-index:1 !important;
+  min-height:100% !important;
+}
+#screen-academy.is-active .academy-quick-slot,
+#screen-academy.is-active .academy-topbar,
+#screen-academy.is-active .academy-hero,
+#screen-academy.is-active .academy-path{
+  visibility:visible !important;
+  opacity:1 !important;
+}

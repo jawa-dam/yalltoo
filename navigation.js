@@ -92,14 +92,6 @@
     if (!blueprint) return;
     ensureHomeProductStyles();
 
-    const homeStack = document.createElement("div");
-    homeStack.className = "home-experience-stack";
-
-    const dam = document.createElement("section");
-    dam.className = "home-dam-card";
-    dam.setAttribute("aria-label", "Interactive GEI dam release");
-    dam.innerHTML = `<span class="home-dam-label">GEI LIVE DAM • RELEASE WATER</span><iframe class="home-dam-frame" src="${HOME_DAM_URL}" title="Interactive GEI dam release" loading="eager" sandbox="allow-scripts"></iframe>`;
-
     const product = document.createElement("a");
     product.className = "home-product-card";
     product.href = HOME_STORE_URL;
@@ -108,8 +100,11 @@
     product.setAttribute("aria-label", "Open the GEI Discovery Guide store page");
     product.innerHTML = `<img src="${HOME_PRODUCT_URL}" alt="GEI Discovery Guide" loading="eager" decoding="async"><span class="home-product-cta"><span>GET THE GEI DISCOVERY GUIDE</span><b aria-hidden="true">→</b></span>`;
 
-    homeStack.append(product);
-    blueprint.replaceWith(homeStack);
+    product.classList.add("home-product-retired");
+    product.remove();
+    if (blueprint) {
+      blueprint.dataset.homeBlueprintRetained = "true";
+    }
     if (cta) cta.remove();
     screen.dataset.productReady = "true";
   }

@@ -1,13 +1,21 @@
 html.ftl .ftl-adam-stage {
-  width: min(100%, 520px);
-  min-height: 360px;
+  width: min(100%, 620px);
+  min-height: 430px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+html.ftl .ftl-adam {
+  min-height: 430px;
+  justify-items: center;
 }
 
 html.ftl .ftl-hero-art {
   display: grid;
   place-items: end center;
-  width: min(100%, 520px);
-  min-height: 360px;
+  width: min(100%, 620px);
+  min-height: 430px;
   margin: 0 auto;
   padding: 0;
   border: 0;
@@ -17,9 +25,9 @@ html.ftl .ftl-hero-art {
 
 html.ftl .ftl-hero-art-image {
   display: block;
-  width: min(100%, 520px);
-  max-width: 520px;
-  max-height: min(58vh, 520px);
+  width: min(100%, 620px);
+  max-width: 620px;
+  max-height: min(62vh, 620px);
   height: auto;
   object-fit: contain;
   object-position: center bottom;
@@ -115,36 +123,44 @@ html.ftl .ftl-v44-hero[data-v44-fx="glow-pulse"] .ftl-hero-art-image.is-loaded {
 
 @media (max-width: 720px) {
   html.ftl .ftl-adam-stage {
-    width: min(100%, 460px);
-    min-height: 320px;
+    width: min(100%, 560px);
+    min-height: 390px;
+  }
+
+  html.ftl .ftl-adam {
+    min-height: 390px;
   }
 
   html.ftl .ftl-hero-art {
-    width: min(100%, 460px);
-    min-height: 320px;
+    width: min(100%, 560px);
+    min-height: 390px;
   }
 
   html.ftl .ftl-hero-art-image {
-    width: min(100%, 460px);
-    max-width: 460px;
-    max-height: 460px;
+    width: min(100%, 560px);
+    max-width: 560px;
+    max-height: 560px;
   }
 }
 
 @media (max-width: 430px) {
   html.ftl .ftl-adam-stage {
-    width: min(100%, 390px);
-    min-height: 290px;
+    width: min(100%, 500px);
+    min-height: 360px;
+  }
+
+  html.ftl .ftl-adam {
+    min-height: 360px;
   }
 
   html.ftl .ftl-hero-art {
-    width: min(100%, 390px);
-    min-height: 290px;
+    width: min(100%, 500px);
+    min-height: 360px;
   }
 
   html.ftl .ftl-hero-art-image {
-    width: min(100%, 390px);
-    max-width: 390px;
-    max-height: 390px;
+    width: min(100%, 500px);
+    max-width: 500px;
+    max-height: 500px;
   }
 }

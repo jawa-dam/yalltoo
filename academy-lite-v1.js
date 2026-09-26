@@ -206,24 +206,6 @@
     document.head.appendChild(style);
   }
 
-  function menuMarkup() {
-    return `
-      <div class="gei-lite-menu">
-        <button class="gei-lite-menu-btn" type="button" id="gei-lite-menu-btn" aria-expanded="false">
-          <span>ACADEMY MENU</span><span>⌄</span>
-        </button>
-        <div class="gei-lite-menu-panel" id="gei-lite-menu-panel">
-          <a href="#academy">Academy Home</a>
-          <a href="day-1.html">Day 1 — Water &amp; Light</a>
-          <a href="day-2.html">Day 2 — The Firmament</a>
-          <a href="day-3.html">Day 3 — Reservoir &amp; Dry Land</a>
-          <a href="day-4.html">Day 4 — The Sluice</a>
-          <a href="day-5.html">Day 5 — The Waterwheel</a>
-          <a href="day-6.html">Day 6 — The Beast System</a>
-        </div>
-      </div>`;
-  }
-
   function render() {
     const screen = document.getElementById("screen-academy");
     if (!screen) return;
@@ -303,13 +285,6 @@
         dots.forEach((dot,i)=>dot.classList.toggle("is-active",i===index));
       }
     },{passive:true});
-
-    const menuButton=screen.querySelector("#gei-lite-menu-btn");
-    const panel=screen.querySelector("#gei-lite-menu-panel");
-    menuButton?.addEventListener("click",()=>{
-      const open=panel?.classList.toggle("is-open");
-      menuButton.setAttribute("aria-expanded",String(Boolean(open)));
-    });
 
     const count=screen.querySelector("[data-lite-count]");
     if(count)count.textContent=countCompleted()+" / 6";

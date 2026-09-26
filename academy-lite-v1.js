@@ -50,14 +50,17 @@
     style.textContent = `
       /* Hard containment: Lite owns only its own descendants. */
       #screen-academy.gei-academy-lite-screen{
-        position:absolute!important;inset:0!important;display:block!important;
+        position:absolute!important;inset:0!important;z-index:1!important;
+        display:block!important;grid-template-rows:none!important;
         width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;
         max-width:100%!important;max-height:100%!important;overflow:hidden!important;
         box-sizing:border-box!important;isolation:isolate!important;
         background:var(--skin-bg,#f7f9fc)!important;
+        padding:0!important;margin:0!important;
       }
       #screen-academy.gei-academy-lite-screen > .gei-lite-root{
-        position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+        position:absolute!important;inset:0!important;z-index:2!important;width:100%!important;height:100%!important;
+        grid-row:1!important;grid-column:1!important;
         min-width:0!important;min-height:0!important;max-width:100%!important;max-height:100%!important;
         display:grid!important;grid-template-rows:auto auto minmax(0,1fr)!important;
         gap:0!important;padding:12px 12px 86px!important;margin:0!important;

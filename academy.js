@@ -216,6 +216,39 @@
         ${mascotGuideMarkup()}
       </div>`;
 
+    const carousel = document.querySelector("#screen-academy .academy-day-carousel");
+    const track = carousel?.querySelector(".academy-day-carousel-track");
+    const prevStage = document.querySelector("#screen-academy [data-academy-carousel="prev"]");
+    const nextStage = document.querySelector("#screen-academy [data-academy-carousel="next"]");
+    const stageDots = Array.from(document.querySelectorAll("#screen-academy .academy-carousel-dots i"));
+    let stageIndex = 0;
+
+    const syncCarousel = (nextIndex) => {
+      if (!track || !carousel) return;
+      stageIndex = (nextIndex + ACADEMY_DAYS.length) % ACADEMY_DAYS.length;
+      const card = track.querySelectorAll(".academy-day-card")[stageIndex];
+      if (card) carousel.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: "smooth" });
+      stageDots.forEach((dot, i) => dot.classList.toggle("is-active", i === stageIndex));
+    };
+
+    prevStage?.addEventListener("click", () => syncCarousel(stageIndex - 1));
+    nextStage?.addEventListener("click", () => syncCarousel(stageIndex + 1));
+    carousel?.addEventListener("scroll", () => {
+      const cards = Array.from(track?.querySelectorAll(".academy-day-card") || []);
+      if (!cards.length) return;
+      const center = carousel.scrollLeft + carousel.clientWidth / 2;
+      let closest = 0, best = Infinity;
+      cards.forEach((card, i) => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const distance = Math.abs(center - cardCenter);
+        if (distance < best) { best = distance; closest = i; }
+      });
+      if (closest !== stageIndex) {
+        stageIndex = closest;
+        stageDots.forEach((dot, i) => dot.classList.toggle("is-active", i === stageIndex));
+      }
+    }, { passive: true });
+
     const rotor = document.getElementById("academy-wheel-rotor");
     const turnButton = document.getElementById("academy-wheel-tap");
     if (rotor && turnButton) {

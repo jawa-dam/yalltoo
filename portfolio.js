@@ -39,7 +39,7 @@
       <section class="gei-portfolio-guide" aria-label="Adam portfolio guide">
         <button class="gei-portfolio-mascot" type="button" aria-label="Open Adam research guide">
           <span class="gei-portfolio-mascot-glow" aria-hidden="true"></span>
-          <img src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/inshot_20260808_192709068-u7bYAfdJRGRfnEfC.gif" alt="Adam, the GEI guide" decoding="async">
+          <img src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/inshot_20260808_192709068-u7bYAfdJRGRfnEfC.gif" alt="Adam, the GEI guide" decoding="async" class="gei-portfolio-guide-gif">
           <span class="gei-portfolio-mascot-badge">ASK ADAM</span>
         </button>
         <div class="gei-portfolio-guide-copy">

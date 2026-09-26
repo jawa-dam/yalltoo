@@ -880,3 +880,14 @@
 #screen-academy .academy-guide[hidden]{
   display:none !important;
 }
+
+/* V3.1.7 — stable Academy composition after quick-access isolation */
+#screen-academy .academy-quick-slot{
+  flex:0 0 auto;
+  width:100%;
+  min-height:0;
+  display:block;
+}
+#screen-academy .academy-quick-slot #gei-quick-access{
+  margin:0 !important;
+}

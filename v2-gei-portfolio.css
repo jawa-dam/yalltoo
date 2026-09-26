@@ -311,3 +311,12 @@
 /* V2.4.6 override — dedicated store card replaces the old stacked guide */
 #screen-portfolio .gei-portfolio-guide{display:none !important;}
 #screen-portfolio .gei-portfolio-store-card{z-index:2;}
+
+/* V2.5 override — allow Portfolio carousel/card presentation to win over
+   legacy fixed-grid rules. The research carousel itself owns card spacing. */
+#screen-portfolio .research-work-grid{
+  display:none !important;
+}
+#screen-portfolio .gei-portfolio-guide{
+  display:none !important;
+}

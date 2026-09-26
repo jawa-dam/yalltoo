@@ -840,3 +840,43 @@
     padding-inline:10px !important;
   }
 }
+
+/* V3.1.2 — harden Academy screen against legacy grid collapse */
+#screen-academy .academy-view{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:stretch !important;
+  justify-content:flex-start !important;
+}
+#screen-academy .academy-topbar,
+#screen-academy .academy-hero,
+#screen-academy .academy-path{
+  width:100% !important;
+  flex:0 0 auto !important;
+}
+#screen-academy .academy-hero{
+  min-height:154px !important;
+}
+#screen-academy .academy-path{
+  display:block !important;
+}
+#screen-academy .academy-day-carousel{
+  display:block !important;
+  min-height:0 !important;
+}
+#screen-academy .academy-day-carousel-track{
+  display:flex !important;
+  width:max-content !important;
+}
+#screen-academy .academy-day-carousel .academy-day-card{
+  display:grid !important;
+}
+#screen-academy .gei-blueprint-status{
+  display:grid !important;
+}
+#screen-academy .academy-guide{
+  pointer-events:none;
+}
+#screen-academy .academy-guide[hidden]{
+  display:none !important;
+}

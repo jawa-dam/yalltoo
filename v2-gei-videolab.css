@@ -655,3 +655,98 @@
 @media (prefers-reduced-motion: reduce) {
   .music-disc { animation: none !important; }
 }
+
+/* V2.4.8 — Video Lab Adam Guide readability / viewport lock
+   Keep the guide fully visible above the fixed navigation. */
+
+#screen-video .video-root{
+  min-height:0 !important;
+  height:100% !important;
+  overflow:hidden !important;
+}
+
+#screen-video .video-lab{
+  min-height:0 !important;
+  height:100% !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  padding-bottom:calc(92px + env(safe-area-inset-bottom)) !important;
+}
+
+#screen-video .video-adam-guide{
+  position:relative !important;
+  z-index:3;
+  min-height:84px !important;
+  height:84px !important;
+  box-sizing:border-box;
+  padding:7px 40px 7px 8px !important;
+  display:grid !important;
+  grid-template-columns:58px minmax(0,1fr) !important;
+  align-items:center !important;
+  gap:9px !important;
+  overflow:hidden !important;
+}
+
+#screen-video .video-adam-ring{
+  left:6px !important;
+  top:7px !important;
+  width:58px !important;
+  height:58px !important;
+}
+
+#screen-video .video-adam-image{
+  width:54px !important;
+  height:64px !important;
+  object-fit:contain !important;
+  z-index:2 !important;
+}
+
+#screen-video .video-adam-copy{
+  min-width:0 !important;
+  display:grid !important;
+  gap:3px !important;
+  overflow:hidden !important;
+}
+
+#screen-video .video-adam-copy small{
+  display:block !important;
+  font-size:10px !important;
+  line-height:1.1 !important;
+}
+
+#screen-video .video-adam-copy strong{
+  display:block !important;
+  font-size:17px !important;
+  line-height:1.08 !important;
+  white-space:normal !important;
+}
+
+#screen-video .video-adam-guide::after{
+  right:11px !important;
+}
+
+@media(max-width:420px){
+  #screen-video .video-adam-guide{
+    min-height:82px !important;
+    height:82px !important;
+  }
+}
+
+@media(max-width:360px){
+  #screen-video .video-adam-guide{
+    min-height:76px !important;
+    height:76px !important;
+    grid-template-columns:50px minmax(0,1fr) !important;
+    gap:7px !important;
+  }
+  #screen-video .video-adam-image{
+    width:46px !important;
+    height:58px !important;
+  }
+  #screen-video .video-adam-copy small{
+    font-size:8px !important;
+  }
+  #screen-video .video-adam-copy strong{
+    font-size:14px !important;
+  }
+}

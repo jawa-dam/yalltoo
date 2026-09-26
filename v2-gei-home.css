@@ -592,3 +592,100 @@
     padding-bottom:calc(92px + env(safe-area-inset-bottom)) !important;
   }
 }
+
+/* V2.4.9 — Combine Day 1 Preview + 6-Day Blueprint into one fixed home module */
+
+#screen-home .dashboard-main{
+  align-content:start !important;
+  gap:12px !important;
+  overflow:hidden !important;
+  padding-bottom:4px !important;
+}
+
+#screen-home .day1-preview-card,
+#screen-home .gei-journey-card{
+  margin:0 !important;
+}
+
+/* The preview and blueprint become one visual module. */
+#screen-home .day1-preview-card{
+  border-radius:22px 22px 0 0 !important;
+  border-bottom-width:0 !important;
+  padding:14px 16px 10px !important;
+}
+
+#screen-home .gei-journey-card{
+  border-radius:0 0 22px 22px !important;
+  border-top:1px solid var(--v2-line) !important;
+  padding:10px 16px 13px !important;
+  box-shadow:var(--v2-shadow-1) !important;
+}
+
+#screen-home .gei-journey-card .blueprint-topline{
+  align-items:center;
+}
+
+#screen-home .gei-journey-card .blueprint-topline h2{
+  font-size:18px !important;
+  margin:4px 0 0 !important;
+}
+
+#screen-home .gei-journey-card .progress-track{
+  height:7px !important;
+  margin-top:8px !important;
+}
+
+#screen-home .gei-journey-card .day-grid{
+  gap:5px !important;
+  margin-top:8px !important;
+}
+
+#screen-home .gei-journey-card .day-pill{
+  min-height:32px !important;
+  border-radius:9px !important;
+  font-size:10px !important;
+}
+
+@media(max-width:520px){
+  #screen-home .day1-preview-card{
+    padding:12px 13px 8px !important;
+  }
+  #screen-home .gei-journey-card{
+    padding:8px 13px 10px !important;
+  }
+  #screen-home .day1-preview-copy strong{
+    font-size:18px !important;
+  }
+  #screen-home .day1-preview-copy small{
+    font-size:12px !important;
+    line-height:1.25 !important;
+  }
+  #screen-home .day1-preview-card audio{
+    height:42px !important;
+  }
+  #screen-home .gei-journey-card .blueprint-topline h2{
+    font-size:16px !important;
+  }
+}
+
+@media(max-width:360px){
+  #screen-home .day1-preview-card{
+    padding:10px 11px 6px !important;
+  }
+  #screen-home .gei-journey-card{
+    padding:7px 11px 9px !important;
+  }
+  #screen-home .day1-preview-copy strong{
+    font-size:16px !important;
+  }
+  #screen-home .day1-preview-copy small{
+    font-size:11px !important;
+  }
+  #screen-home .day1-preview-card audio{
+    height:38px !important;
+  }
+  #screen-home .gei-journey-card .day-pill{
+    min-height:29px !important;
+    font-size:9px !important;
+  }
+}

@@ -48,31 +48,44 @@
         </div>
       </a>
 
-      <div class="portfolio-main">
-        <article class="research-overview">
-          <div class="research-overview-top">
-            <h2>Research Publications</h2>
-            <span class="research-count">${RESEARCH_WORKS.length} Works</span>
+      <section class="research-carousel" aria-label="Featured GEI research papers">
+        <div class="research-carousel-head">
+          <div>
+            <span class="screen-kicker">FEATURED PAPERS</span>
+            <h2>Research Collector Deck</h2>
           </div>
-          <div class="research-work-grid">
+          <span class="research-carousel-count">10 CARDS</span>
+        </div>
+        <div class="research-carousel-viewport">
+          <div class="research-carousel-track">
             ${RESEARCH_WORKS.map((work, index) => `
-              <a class="research-work" href="${work.url}" target="_blank" rel="noopener noreferrer" aria-label="Open ${work.title} on ${work.source}">
-                <span class="research-work-number">${String(index + 1).padStart(2, "0")}</span>
-                <span class="research-work-copy">
-                  <strong>${work.title}</strong>
-                  <small>${work.source} <span aria-hidden="true">↗</span></small>
-                </span>
+              <a class="research-hero-card" href="${work.url}" target="_blank" rel="noopener noreferrer" aria-label="Open ${work.title} on ${work.source}">
+                <div class="research-hero-card-top">
+                  <span class="research-hero-number">${String(index + 1).padStart(2, "0")}</span>
+                  <span class="research-hero-source">${work.source}</span>
+                </div>
+                <div class="research-hero-card-art" aria-hidden="true"><span>GEI</span><b>${String(index + 1).padStart(2, "0")}</b></div>
+                <div class="research-hero-card-copy">
+                  <span>GENESIS ENGINEERED INTERPRETATIONS</span>
+                  <h3>${work.title}</h3>
+                  <small>Open publication ↗</small>
+                </div>
               </a>
             `).join("")}
           </div>
-        </article>
+        </div>
+        <div class="research-carousel-controls" aria-label="Research card controls">
+          <button type="button" class="research-carousel-arrow" data-direction="prev" aria-label="Previous research card">‹</button>
+          <div class="research-carousel-dots" aria-hidden="true">${RESEARCH_WORKS.map((_,i)=>`<i class="${i===0?"is-active":""}"></i>`).join("")}</div>
+          <button type="button" class="research-carousel-arrow" data-direction="next" aria-label="Next research card">›</button>
+        </div>
+      </section>
 
-        <aside class="portfolio-note" aria-label="GEI research source">
-          <span class="portfolio-note-mark" aria-hidden="true">GEI</span>
-          <p>Research records link directly to their external publication pages. The canonical project home is YallToo.com.</p>
-          <a class="portfolio-source-link" href="https://www.yalltoo.com" target="_blank" rel="noopener noreferrer">YallToo.com ↗</a>
-        </aside>
-      </div>
+      <aside class="portfolio-note" aria-label="GEI research source">
+        <span class="portfolio-note-mark" aria-hidden="true">GEI</span>
+        <p>Research records link directly to their external publication pages. The canonical project home is YallToo.com.</p>
+        <a class="portfolio-source-link" href="https://www.yalltoo.com" target="_blank" rel="noopener noreferrer">YallToo.com ↗</a>
+      </aside>
 
       <footer class="portfolio-footer">
         <span>Genesis Engineered Interpretations • Research &amp; Discovery</span>

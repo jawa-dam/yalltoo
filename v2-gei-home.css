@@ -567,3 +567,28 @@
     height:62px;
   }
 }
+
+/* V2.4.7 — Home bottom-safe composition
+   Keep the six-day journey above the fixed navigation. */
+
+#screen-home .dashboard-main{
+  padding-bottom:calc(88px + env(safe-area-inset-bottom)) !important;
+  scroll-padding-bottom:calc(88px + env(safe-area-inset-bottom));
+}
+
+#screen-home .gei-journey-card{
+  margin-bottom:4px !important;
+}
+
+@media(max-width:520px){
+  #screen-home .dashboard-main{
+    padding-bottom:calc(96px + env(safe-area-inset-bottom)) !important;
+    scroll-padding-bottom:calc(96px + env(safe-area-inset-bottom));
+  }
+}
+
+@media(max-width:360px){
+  #screen-home .dashboard-main{
+    padding-bottom:calc(92px + env(safe-area-inset-bottom)) !important;
+  }
+}

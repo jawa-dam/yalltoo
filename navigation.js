@@ -200,9 +200,13 @@
     screen.querySelectorAll(".support-method").forEach((link) => {
       link.addEventListener("click", () => window.GEI_SONIC_FX?.iconImmediate?.() || window.GEI_SONIC_FX?.icon?.());
     });
-    document.addEventListener("keydown", (event) => {
+    const escapeHandler = (event) => {
       if (event.key === "Escape" && popover && !popover.hidden) closeGoal();
+    };
+    popover?.addEventListener("click", (event) => {
+      if (event.target === popover) closeGoal();
     });
+    document.addEventListener("keydown", escapeHandler);
   }
 
   function replaceHomeMascot() {

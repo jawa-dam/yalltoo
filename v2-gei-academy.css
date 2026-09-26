@@ -91,130 +91,110 @@
 
 
 /* --------------------------------------------------------------------------
-   2. HERO — RESTORED ACADEMY CORE
-   The waterwheel interaction remains available in academy.js, but the Academy
-   now presents the hydraulic journey through the stage carousel.
+   2. HERO + WATERWHEEL
    -------------------------------------------------------------------------- */
 
 .academy-hero.academy-waterwheel-hero {
-  gap: var(--v2-s4);
-  padding: var(--v2-s4) !important;
-  border: var(--v2-bw) solid var(--v2-wash-cyan-2) !important;
-  border-radius: var(--v2-r-panel) !important;
-  background:
-    linear-gradient(150deg, rgba(47, 210, 255, 0.09), rgba(61, 61, 234, 0.06) 60%, rgba(4, 5, 10, 0)),
-    var(--v2-surface) !important;
-  box-shadow: var(--v2-shadow-2) !important;
-}
-.academy-section-label {
-  font-size: var(--v2-t-label) !important;
-  letter-spacing: var(--v2-track-label);
-  color: var(--v2-cyan);
-}
-.academy-primary-action {
-  min-height: var(--v2-tap) !important;
-  font-size: var(--v2-t-body) !important;
-  border: var(--v2-bw) solid var(--v2-cyan) !important;
-  border-radius: var(--v2-r-instr) !important;
-  background: linear-gradient(160deg, rgba(47, 210, 255, 0.2), rgba(61, 61, 234, 0.18)) !important;
-  color: var(--v2-white) !important;
-  box-shadow: var(--v2-glow-flow);
-}
-.academy-primary-action:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 3px; }
-
-/* Core Academy path / card styling is restored below. The rendered page uses
-   the carousel variant, which overrides the legacy vertical grid. */
-.academy-path {
-  min-height: 0;
-}
-.academy-day-grid.gei-hydraulic-path {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) !important;
-  grid-auto-rows: auto !important;
-  gap: var(--v2-s3) !important;
-  min-height: 0 !important;
-}
-.academy-day-card.gei-stage-link {
-  position: relative;
-  display: grid;
-  gap: var(--v2-s2);
-  min-height: 0 !important;
-  padding: var(--v2-s4) !important;
-  border: var(--v2-bw) solid var(--v2-line) !important;
-  border-radius: var(--v2-r-instr) !important;
-  background: var(--v2-surface) !important;
-  box-shadow: var(--v2-shadow-1) !important;
-  color: var(--v2-text);
-  text-decoration: none;
-}
-.academy-day-card.gei-stage-link.is-active {
-  border-color: var(--v2-wash-cyan-2) !important;
-  background: var(--v2-elevated) !important;
-  box-shadow: var(--v2-shadow-2), var(--v2-glow-flow) !important;
-}
-.academy-day-card.gei-stage-link.is-locked { opacity: .52; }
-.academy-day-card.gei-stage-link.is-complete { border-color: var(--v2-success) !important; }
-.gei-stage-top { display:flex; align-items:center; justify-content:space-between; gap:var(--v2-s2); }
-.academy-day-number {
-  font-family: var(--v2-font-mono);
-  font-size: var(--v2-t-label) !important;
-  font-weight: 700;
-  letter-spacing:.12em;
-  color:var(--v2-muted);
-}
-.gei-stage-icon { font-size:20px; line-height:1; }
-.academy-day-card h3 {
-  margin:0;
-  font-family:var(--v2-font-display);
-  font-size:var(--v2-t-h3) !important;
-  font-weight:700;
-  color:var(--v2-text);
-}
-.academy-day-status {
-  justify-self:start;
-  padding:3px var(--v2-s2);
-  border:var(--v2-bw) solid var(--v2-line);
-  border-radius:var(--v2-r-sharp);
-  font-size:var(--v2-t-label) !important;
-  font-weight:800;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:var(--v2-muted);
-}
-.gei-stage-achievement {
-  display:flex;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 150px;
+  gap:var(--v2-s4);
   align-items:center;
-  gap:var(--v2-s2);
-  padding:var(--v2-s2) var(--v2-s3);
-  border:var(--v2-bw) solid var(--v2-line);
-  border-radius:var(--v2-r-sharp);
-  background:var(--v2-void) !important;
-}
-.gei-stage-achievement b,.gei-stage-achievement strong {
-  font-size:var(--v2-t-label) !important;
-}
-.gei-stage-flow { display:none !important; }
-
-/* Blueprint status readout */
-#gei-blueprint-status {
-  display:grid !important;
-  grid-template-columns:1fr 1fr;
-  gap:var(--v2-s2);
-  padding:var(--v2-s3) !important;
-  border:var(--v2-bw) solid var(--v2-line) !important;
+  min-height:168px;
+  padding:var(--v2-s4) !important;
+  border:var(--v2-bw) solid var(--v2-wash-cyan-2) !important;
   border-radius:var(--v2-r-panel) !important;
-  background:var(--v2-surface) !important;
+  background:
+    linear-gradient(150deg,rgba(47,210,255,.09),rgba(61,61,234,.06) 60%,rgba(4,5,10,0)),
+    var(--v2-surface) !important;
+  box-shadow:var(--v2-shadow-2) !important;
 }
-#gei-blueprint-status span {
-  display:block;
-  font-size:var(--v2-t-label) !important;
+.academy-hero-copy{min-width:0}
+.academy-hero-copy h2{
+  margin:5px 0 7px;
+  font-family:var(--v2-font-display);
+  font-size:var(--v2-t-h2) !important;
+  font-weight:800;
+  line-height:1.02;
+  letter-spacing:-.03em;
+  color:var(--v2-text) !important;
+}
+.academy-hero-copy p{
+  margin:0 0 10px;
+  max-width:260px;
+  font-size:var(--v2-t-body) !important;
+  line-height:var(--v2-lh-body);
   color:var(--v2-muted);
 }
-#gei-blueprint-status strong {
+.academy-primary-action{
+  display:inline-flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  width:min(100%,190px);
+  min-height:var(--v2-tap) !important;
+  padding:0 13px;
+  border:var(--v2-bw) solid var(--v2-cyan) !important;
+  border-radius:var(--v2-r-instr) !important;
+  background:linear-gradient(160deg,rgba(47,210,255,.2),rgba(61,61,234,.18)) !important;
+  color:var(--v2-white) !important;
+  font-size:var(--v2-t-body) !important;
+  font-weight:800;
+  text-decoration:none;
+  box-shadow:var(--v2-glow-flow);
+}
+.academy-primary-action strong{color:var(--v2-cyan);font-size:18px}
+.academy-waterwheel-wrap{
+  display:grid;
+  place-items:center;
+  position:relative;
+  min-width:0;
+  padding:6px;
+  border:var(--v2-bw) solid var(--v2-line);
+  border-radius:var(--v2-r-instr);
+  background:
+    repeating-linear-gradient(0deg,var(--v2-grid-line) 0 1px,transparent 1px 12px),
+    var(--v2-void);
+}
+.academy-waterwheel-glow{
   display:block;
-  font-family:var(--v2-font-mono);
-  font-size:var(--v2-t-lead) !important;
-  color:var(--v2-cyan);
+  position:absolute;
+  width:135px;height:135px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(47,210,255,.18),transparent 68%);
+  filter:blur(10px);
+}
+.academy-waterwheel{
+  position:relative;z-index:1;display:block;
+  width:150px;max-width:100%;height:auto;
+}
+.academy-wheel-tap{
+  position:absolute;right:7px;bottom:6px;z-index:2;
+  min-height:40px !important;min-width:60px;padding:0 10px;
+  border:var(--v2-bw) solid var(--v2-wash-cyan-2) !important;
+  border-radius:999px !important;
+  background:var(--v2-elevated) !important;
+  color:var(--v2-cyan) !important;
+  font-size:var(--v2-t-label) !important;
+  font-weight:900;
+}
+@media(max-width:420px){
+  .academy-hero.academy-waterwheel-hero{
+    grid-template-columns:minmax(0,1fr) 112px;
+    min-height:154px;
+    padding:var(--v2-s3) !important;
+  }
+  .academy-waterwheel{width:116px}
+  .academy-waterwheel-glow{width:108px;height:108px}
+  .academy-hero-copy p{font-size:var(--v2-t-small) !important}
+}
+@media(max-width:360px){
+  .academy-hero.academy-waterwheel-hero{
+    grid-template-columns:minmax(0,1fr) 100px;
+    min-height:146px;
+  }
+  .academy-waterwheel{width:100px}
+  .academy-hero-copy h2{font-size:21px !important}
+  .academy-hero-copy p{font-size:10px !important}
 }
 
 /* --------------------------------------------------------------------------

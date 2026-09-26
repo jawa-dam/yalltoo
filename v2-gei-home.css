@@ -713,3 +713,71 @@
     min-height:170px !important;
   }
 }
+
+/* V2.4.11 — Unified Day 1 + blueprint module */
+#screen-home .dashboard-main{
+  overflow:hidden !important;
+  gap:11px !important;
+  padding-bottom:2px !important;
+}
+#screen-home .gei-start-module{
+  display:grid;
+  grid-template-rows:auto auto;
+  gap:0;
+  border:1px solid var(--v2-line);
+  border-radius:22px;
+  background:var(--v2-surface);
+  box-shadow:var(--v2-shadow-1);
+  overflow:hidden;
+}
+#screen-home .gei-start-preview{
+  display:grid;
+  gap:8px;
+  padding:11px 12px 9px;
+  border-bottom:1px solid var(--v2-line);
+}
+#screen-home .gei-start-preview .day1-preview-copy{
+  padding:8px 10px !important;
+  border-radius:13px;
+}
+#screen-home .gei-start-preview .day1-preview-copy strong{
+  font-size:18px !important;
+}
+#screen-home .gei-start-preview .day1-preview-copy small{
+  font-size:11px !important;
+}
+#screen-home .gei-start-preview audio{
+  width:100%;
+  height:40px !important;
+}
+#screen-home .gei-start-journey{
+  padding:9px 12px 11px;
+}
+#screen-home .gei-start-journey .blueprint-topline h2{
+  font-size:16px !important;
+  margin:3px 0 0 !important;
+}
+#screen-home .gei-start-journey .progress-track{
+  height:7px !important;
+  margin-top:7px !important;
+}
+#screen-home .gei-start-journey .day-grid{
+  gap:4px !important;
+  margin-top:7px !important;
+}
+#screen-home .gei-start-journey .day-pill{
+  min-height:30px !important;
+  font-size:9px !important;
+  border-radius:8px !important;
+}
+@media(max-width:360px){
+  #screen-home .gei-start-module{border-radius:18px}
+  #screen-home .gei-start-preview{padding:8px 9px 7px;gap:6px}
+  #screen-home .gei-start-preview .day1-preview-copy{padding:7px 8px !important}
+  #screen-home .gei-start-preview .day1-preview-copy strong{font-size:15px !important}
+  #screen-home .gei-start-preview .day1-preview-copy small{font-size:10px !important}
+  #screen-home .gei-start-preview audio{height:36px !important}
+  #screen-home .gei-start-journey{padding:7px 9px 9px}
+  #screen-home .gei-start-journey .blueprint-topline h2{font-size:14px !important}
+  #screen-home .gei-start-journey .day-pill{min-height:27px !important;font-size:8px !important}
+}

@@ -29,18 +29,15 @@
     "gentle-tilt", "float", "breathe", "glow-pulse"
   ];
 
-  const legacyAdam = root.querySelector("#gei-day-avatar-button, img.day-mascot");
-  if (!legacyAdam) return;
-
-  const currentHero = root.querySelector(".ftl-hero");
-  if (!currentHero) return;
-
-  const oldImage = legacyAdam.matches("img") ? legacyAdam : legacyAdam.querySelector("img");
+  // Capture Adam's transparent asset BEFORE replacing the V4.3 avatar node.
+  const oldButton = currentHero.querySelector("#gei-day-avatar-button");
+  const oldImage = oldButton?.querySelector("img") || currentHero.querySelector("img.day-mascot");
   const fallbackSrc = oldImage?.getAttribute("src") || "";
 
   const readSession = (key) => {
     try { return sessionStorage.getItem(key) || ""; } catch (_) { return ""; }
   };
+
   const writeSession = (key, value) => {
     try { sessionStorage.setItem(key, value); } catch (_) {}
   };
@@ -63,16 +60,16 @@
   const stage = currentHero.querySelector(".ftl-adam-stage");
   const hint = currentHero.querySelector(".ftl-adam-hint");
   const effectHost = currentHero.querySelector(".ftl-adam");
-
   if (!stage || !effectHost) return;
 
+  // Replace only the V4.3 Adam presentation node; the fallback image is preserved above.
   let button = stage.querySelector("#ftl-hero-art");
   if (!button) {
     button = document.createElement("button");
     button.type = "button";
     button.id = "ftl-hero-art";
     button.className = "ftl-hero-art";
-    button.setAttribute("aria-label", "Tap Adam's guide image for a Day-specific clue");
+    button.setAttribute("aria-label", "Tap hero artwork for a Day-specific clue");
     stage.replaceChildren(button);
   }
 
@@ -82,19 +79,21 @@
   image.decoding = "async";
   image.loading = "eager";
 
+  let fallbackUsed = false;
   const showFallback = () => {
-    if (fallbackSrc && image.src !== fallbackSrc) {
+    if (!fallbackUsed && fallbackSrc && image.getAttribute("src") !== fallbackSrc) {
+      fallbackUsed = true;
       image.src = fallbackSrc;
       return;
     }
     button.classList.add("is-failed");
   };
 
-  image.addEventListener("error", showFallback, { once: true });
+  image.addEventListener("error", showFallback);
   image.addEventListener("load", () => {
     button.classList.add("is-loaded");
     button.classList.remove("is-failed");
-  }, { once: true });
+  });
 
   image.src = imageSrc;
   button.replaceChildren(image);
@@ -106,7 +105,7 @@
 
   button.addEventListener("click", (event) => {
     event.preventDefault();
-    event.stopPropagation();
+    event.stopImmediatePropagation();
     window.GEI_FOLLOW_THE_LIGHT?.openGuide?.();
   });
 

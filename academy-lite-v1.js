@@ -64,6 +64,16 @@
         box-sizing:border-box!important;overflow:hidden!important;
         color:var(--skin-text,#102a43)!important;background:transparent!important;
       }
+      /* Neutralize legacy Academy selector families while Lite is active. */
+      #screen-academy.gei-academy-lite-screen .academy-view,
+      #screen-academy.gei-academy-lite-screen .academy-topbar,
+      #screen-academy.gei-academy-lite-screen .academy-hero,
+      #screen-academy.gei-academy-lite-screen .academy-path,
+      #screen-academy.gei-academy-lite-screen .academy-guide,
+      #screen-academy.gei-academy-lite-screen .academy-carousel-controls,
+      #screen-academy.gei-academy-lite-screen [class*="academy-"]{
+        all:revert!important;
+      }
       #screen-academy.gei-academy-lite-screen .gei-lite-header,
       #screen-academy.gei-academy-lite-screen .gei-lite-menu,
       #screen-academy.gei-academy-lite-screen .gei-lite-carousel-wrap,

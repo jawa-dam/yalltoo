@@ -97,6 +97,41 @@
     if (state.initialized) return;
     state.initialized = true;
     render();
+
+    const root = getRoot();
+    if (!root) return;
+    const track = root.querySelector(".research-carousel-track");
+    const viewport = root.querySelector(".research-carousel-viewport");
+    const prev = root.querySelector('[data-direction="prev"]');
+    const next = root.querySelector('[data-direction="next"]');
+    const dots = Array.from(root.querySelectorAll(".research-carousel-dots i"));
+    let index = 0;
+
+    const go = (nextIndex) => {
+      if (!track || !viewport) return;
+      index = (nextIndex + RESEARCH_WORKS.length) % RESEARCH_WORKS.length;
+      const card = track.querySelectorAll(".research-hero-card")[index];
+      if (card) viewport.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: "smooth" });
+      dots.forEach((dot, i) => dot.classList.toggle("is-active", i === index));
+    };
+
+    prev?.addEventListener("click", () => go(index - 1));
+    next?.addEventListener("click", () => go(index + 1));
+    viewport?.addEventListener("scroll", () => {
+      const cards = Array.from(track.querySelectorAll(".research-hero-card"));
+      if (!cards.length) return;
+      let closest = 0, best = Infinity;
+      const center = viewport.scrollLeft + viewport.clientWidth / 2;
+      cards.forEach((card, i) => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const distance = Math.abs(center - cardCenter);
+        if (distance < best) { best = distance; closest = i; }
+      });
+      if (closest !== index) {
+        index = closest;
+        dots.forEach((dot, i) => dot.classList.toggle("is-active", i === index));
+      }
+    }, { passive: true });
   }
 
   if (document.readyState === "loading") {

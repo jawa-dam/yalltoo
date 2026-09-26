@@ -36,6 +36,20 @@
         <img class="portfolio-logo" src="${GEI_LOGO_URL}" alt="G.E.I. logo" decoding="async">
       </header>
 
+      <section class="gei-portfolio-guide" aria-label="Adam portfolio guide">
+        <button class="gei-portfolio-mascot" type="button" aria-label="Open Adam research guide">
+          <span class="gei-portfolio-mascot-glow" aria-hidden="true"></span>
+          <img src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/inshot_20260808_192709068-u7bYAfdJRGRfnEfC.gif" alt="Adam, the GEI guide" decoding="async">
+          <span class="gei-portfolio-mascot-badge">ASK ADAM</span>
+        </button>
+        <div class="gei-portfolio-guide-copy">
+          <span class="screen-kicker">RESEARCH GUIDE</span>
+          <h2>Follow the evidence trail.</h2>
+          <p>Browse the GEI research record, from hydraulic interpretation to linguistic analysis.</p>
+          <span class="gei-portfolio-guide-hint">TAP ADAM FOR THE RESEARCH MAP</span>
+        </div>
+      </section>
+
       <div class="portfolio-main">
         <article class="research-overview">
           <div class="research-overview-top">

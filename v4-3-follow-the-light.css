@@ -152,8 +152,11 @@ html.ftl .ftl-adam {
 html.ftl .ftl-adam-stage {
   position: relative;
   z-index: 2;
-  display: block;
-  width: min(100%, 305px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: min(100%, 420px);
+  min-height: 290px;
 }
 
 html.ftl .ftl-adam-stage .gei-avatar-button {
@@ -170,9 +173,9 @@ html.ftl .ftl-adam-stage img,
 html.ftl .ftl-adam-stage .day-mascot,
 html.ftl .ftl-adam-stage .ftl-guide-art {
   display: block;
-  width: 100%;
-  max-width: 305px;
-  max-height: 310px;
+  width: min(100%, 420px);
+  max-width: 420px;
+  max-height: 420px;
   height: auto;
   object-fit: contain;
   object-position: center bottom;
@@ -821,7 +824,15 @@ html.ftl .ftl-guide-card small {
   }
 
   html.ftl .ftl-adam-stage {
-    width: min(100%, 260px);
+    width: min(100%, 380px);
+    min-height: 300px;
+  }
+
+  html.ftl .ftl-adam-stage img,
+  html.ftl .ftl-adam-stage .day-mascot {
+    width: min(100%, 380px);
+    max-width: 380px;
+    max-height: 380px;
   }
 
   html.ftl .ftl-brand {

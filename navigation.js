@@ -166,6 +166,12 @@
           <section class="support-methods" aria-label="Ways to support GEI">
             ${SUPPORT_LINKS.map((item) => `<a class="support-method ${item.className}" href="${item.href}" target="_blank" rel="noopener noreferrer"><span class="support-icon"><img src="${item.image}" alt="${item.imageAlt}" loading="lazy" decoding="async" /></span><span><strong>${item.label}</strong><span>${item.detail}</span></span><span class="support-arrow" aria-hidden="true">→</span></a>`).join("")}
           </section>
+        <section class="support-gei-blueprint" aria-label="Explore the GEI Water Blueprint">
+          <span class="support-gei-blueprint-kicker">EXPLORE THE WATER BLUEPRINT</span>
+          <h2>See how the six-stage system fits together.</h2>
+          <p>Explore the GEI blueprint from water and walls to flow, power, and the complete system.</p>
+          <a href="dam-release.html" class="support-gei-blueprint-action">EXPLORE THE BLUEPRINT ↗</a>
+        </section>
           <div class="support-contact">
             <div class="support-contact-copy"><strong>Contact GEI</strong><span>Questions, collaboration or research support</span></div>
             <a class="support-email" href="mailto:Contact@yalltoo.com">Contact@yalltoo.com</a>

@@ -750,3 +750,53 @@
     font-size:14px !important;
   }
 }
+
+/* V2.4.9 — Video guide override after legacy V1 styles */
+#screen-video .video-adam-guide{
+  min-height:92px !important;
+  height:92px !important;
+  grid-template-columns:62px minmax(0,1fr) !important;
+  align-items:center !important;
+}
+#screen-video .video-adam-image{
+  width:58px !important;
+  height:68px !important;
+  object-fit:contain !important;
+}
+#screen-video .video-adam-copy{
+  align-self:center !important;
+}
+#screen-video .video-adam-copy small{
+  font-size:10px !important;
+  line-height:1.15 !important;
+}
+#screen-video .video-adam-copy strong{
+  font-size:18px !important;
+  line-height:1.1 !important;
+  white-space:nowrap;
+}
+#screen-video .video-adam-action{
+  position:absolute;
+  right:11px;
+  top:50%;
+  transform:translateY(-50%);
+  width:32px;
+  height:32px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:var(--v2-wash-cyan-2);
+  color:var(--v2-cyan);
+  font-size:26px;
+}
+@media(max-width:360px){
+  #screen-video .video-adam-guide{
+    min-height:84px !important;
+    height:84px !important;
+    grid-template-columns:54px minmax(0,1fr) !important;
+  }
+  #screen-video .video-adam-image{width:50px !important;height:62px !important}
+  #screen-video .video-adam-copy small{font-size:8px !important}
+  #screen-video .video-adam-copy strong{font-size:15px !important}
+  #screen-video .video-adam-action{width:28px;height:28px;font-size:22px}
+}

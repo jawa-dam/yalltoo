@@ -108,7 +108,7 @@
     product.setAttribute("aria-label", "Open the GEI Discovery Guide store page");
     product.innerHTML = `<img src="${HOME_PRODUCT_URL}" alt="GEI Discovery Guide" loading="eager" decoding="async"><span class="home-product-cta"><span>GET THE GEI DISCOVERY GUIDE</span><b aria-hidden="true">→</b></span>`;
 
-    homeStack.append(dam, product);
+    homeStack.append(product);
     blueprint.replaceWith(homeStack);
     if (cta) cta.remove();
     screen.dataset.productReady = "true";

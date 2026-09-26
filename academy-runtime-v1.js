@@ -1,18 +1,19 @@
-/* GEI Academy Runtime V1
+/* GEI Academy Runtime V1.1
    Single-owner Academy rendering.
-   Keeps identity + presentation in one state flow.
+   Day 1–6 presented as a horizontal game-style celebration carousel.
+   Custom card artwork can be added later without changing the state model.
 */
 (() => {
   "use strict";
   if (window.GEI_ACADEMY_RUNTIME_V1) return;
 
   const DAYS = Object.freeze([
-    { id: 1, title: "Water & Light", icon: "💧", url: "day-1.html" },
-    { id: 2, title: "The Firmament", icon: "🧱", url: "day-2.html" },
-    { id: 3, title: "Reservoir & Dry Land", icon: "🌊", url: "day-3.html" },
-    { id: 4, title: "The Sluice", icon: "🚪", url: "day-4.html" },
-    { id: 5, title: "The Waterwheel", icon: "⚙️", url: "day-5.html" },
-    { id: 6, title: "The Beast System", icon: "🏗️", url: "day-6.html" }
+    { id: 1, title: "Water & Light", icon: "💧", url: "day-1.html", accent: "DAY 1" },
+    { id: 2, title: "The Firmament", icon: "🧱", url: "day-2.html", accent: "DAY 2" },
+    { id: 3, title: "Reservoir & Dry Land", icon: "🌊", url: "day-3.html", accent: "DAY 3" },
+    { id: 4, title: "The Sluice", icon: "🚪", url: "day-4.html", accent: "DAY 4" },
+    { id: 5, title: "The Waterwheel", icon: "⚙️", url: "day-5.html", accent: "DAY 5" },
+    { id: 6, title: "The Beast System", icon: "🏗️", url: "day-6.html", accent: "DAY 6" }
   ]);
 
   const identity = () => window.GEI_IDENTITY;
@@ -36,16 +37,27 @@
   }
 
   function card(day, complete) {
+    const mastered = complete.some((d) => d.id === day.id);
     const unlocked = day.id === 1 || complete.some((d) => d.id === day.id - 1);
-    const status = complete.some((d) => d.id === day.id) ? "MASTERED" : unlocked ? (day.id === 1 ? "START HERE" : "UNLOCKED") : "LOCKED";
+    const status = mastered ? "MASTERED" : unlocked ? (day.id === 1 ? "READY TO PLAY" : "UNLOCKED") : "LOCKED";
+
     return `
-      <a class="gei-academy-v1-card ${unlocked ? "" : "is-locked"} ${status === "MASTERED" ? "is-complete" : ""}"
-         data-day="${day.id}" href="${day.url}" aria-disabled="${String(!unlocked)}">
-        <span class="gei-academy-v1-card-top"><span>DAY ${day.id}</span><b>${status}</b></span>
-        <span class="gei-academy-v1-card-icon" aria-hidden="true">${day.icon}</span>
-        <strong>${esc(day.title)}</strong>
-        <span class="gei-academy-v1-card-note">${unlocked ? "Enter this stage" : "Complete the previous stage"}</span>
-      </a>`;
+      <article class="gei-academy-v1-card${unlocked ? "" : " is-locked"}${mastered ? " is-complete" : ""}" data-day="${day.id}" aria-label="Day ${day.id}: ${esc(day.title)}">
+        <div class="gei-academy-v1-card-art">
+          <div class="gei-academy-v1-placeholder">
+            <span class="gei-academy-v1-art-day">DAY ${day.id}</span>
+            <strong>${day.icon}</strong>
+            <span>ADD CUSTOM ART LATER</span>
+          </div>
+          <span class="gei-academy-v1-state">${status}</span>
+        </div>
+        <div class="gei-academy-v1-card-body">
+          <div class="gei-academy-v1-card-top"><span>${day.accent}</span><b>${mastered ? "🏆" : unlocked ? "▶" : "🔒"}</b></div>
+          <h3>${esc(day.title)}</h3>
+          <p>${mastered ? "Stage mastered. Replay whenever you want." : unlocked ? "Your next GEI stage is ready." : "Complete the previous day to unlock this stage."}</p>
+          <a class="gei-academy-v1-play" href="${day.url}" aria-disabled="${String(!unlocked)}">${mastered ? "PLAY AGAIN" : unlocked ? "PLAY DAY " + day.id : "LOCKED"} <span>→</span></a>
+        </div>
+      </article>`;
   }
 
   function renderStyles() {
@@ -53,39 +65,53 @@
     const style = document.createElement("style");
     style.id = "gei-academy-runtime-v1-style";
     style.textContent = `
-      #screen-academy.gei-academy-v1 { display:block!important; visibility:visible!important; opacity:1!important; overflow:hidden!important; }
-      #screen-academy.gei-academy-v1 .gei-academy-v1-root { width:100%; height:100%; box-sizing:border-box; overflow:auto; padding:12px 12px 110px; font-family:Plus Jakarta Sans,Inter,system-ui,sans-serif; color:var(--skin-text,#102a43); background:var(--skin-bg,#f7f9fc); }
-      .gei-academy-v1-root * { box-sizing:border-box; }
-      .gei-academy-v1-head { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:center; margin-bottom:12px; }
-      .gei-academy-v1-kicker { font-size:11px; font-weight:900; letter-spacing:.12em; color:var(--skin-accent,#2fd2ff); }
-      .gei-academy-v1-head h1 { margin:5px 0 0; font-size:clamp(28px,8vw,38px); line-height:1; }
-      .gei-academy-v1-head p { margin:6px 0 0; color:var(--skin-muted,#526b82); font-size:14px; line-height:1.35; }
-      .gei-academy-v1-avatar { width:58px; height:58px; border-radius:18px; overflow:hidden; border:2px solid var(--skin-accent,#2fd2ff); background:var(--skin-surface,#fff); padding:0; }
-      .gei-academy-v1-avatar img { width:100%; height:100%; object-fit:cover; }
-      .gei-academy-v1-hero { display:grid; gap:10px; padding:16px; margin-bottom:12px; border:1px solid color-mix(in srgb,var(--skin-accent,#2fd2ff) 32%,transparent); border-radius:22px; background:var(--skin-surface,#fff); }
-      .gei-academy-v1-hero h2 { margin:0; font-size:24px; line-height:1.05; }
-      .gei-academy-v1-hero p { margin:0; color:var(--skin-muted,#526b82); font-size:15px; line-height:1.4; }
-      .gei-academy-v1-cta { display:flex; align-items:center; justify-content:space-between; min-height:50px; padding:0 14px; border-radius:14px; background:var(--skin-accent,#2fd2ff); color:#061018; font-weight:900; text-decoration:none; }
-      .gei-academy-v1-progress { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; padding:12px 14px; border-radius:16px; background:var(--skin-soft,#f1f4f8); }
-      .gei-academy-v1-progress strong { font-size:19px; }
-      .gei-academy-v1-progress span { color:var(--skin-muted,#526b82); font-size:12px; }
-      .gei-academy-v1-track { grid-column:1/-1; height:9px; border-radius:999px; background:rgba(0,0,0,.08); overflow:hidden; }
-      .gei-academy-v1-fill { height:100%; width:0; background:linear-gradient(90deg,#3d3dea,#2fd2ff); }
-      .gei-academy-v1-grid { display:grid; gap:10px; }
-      .gei-academy-v1-card { display:grid; gap:7px; min-height:168px; padding:15px; border:1px solid color-mix(in srgb,var(--skin-accent,#2fd2ff) 24%,transparent); border-radius:20px; background:var(--skin-surface,#fff); color:inherit; text-decoration:none; }
-      .gei-academy-v1-card-top { display:flex; justify-content:space-between; gap:8px; font-size:11px; font-weight:900; letter-spacing:.08em; }
-      .gei-academy-v1-card-top b { color:var(--skin-accent,#2fd2ff); }
-      .gei-academy-v1-card-icon { font-size:40px; }
-      .gei-academy-v1-card strong { font-size:25px; line-height:1.05; }
-      .gei-academy-v1-card-note { color:var(--skin-muted,#526b82); font-size:13px; }
-      .gei-academy-v1-card.is-locked { opacity:.48; pointer-events:auto; }
-      .gei-academy-v1-card.is-complete { border-color:#22c55e; }
-      .gei-academy-v1-locked { margin:0 0 12px; padding:11px 13px; border:1px solid rgba(255,20,147,.28); border-radius:15px; background:rgba(255,20,147,.08); color:var(--skin-text,#102a43); font-size:13px; font-weight:800; }
-      .gei-academy-v1-name { color:var(--skin-accent,#2fd2ff); }
+      #screen-academy.gei-academy-v1{display:block!important;visibility:visible!important;opacity:1!important;overflow:hidden!important}
+      #screen-academy.gei-academy-v1 .gei-academy-v1-root{width:100%;height:100%;box-sizing:border-box;overflow:auto;padding:12px 0 108px;font-family:Plus Jakarta Sans,Inter,system-ui,sans-serif;color:var(--skin-text,#102a43);background:var(--skin-bg,#f7f9fc)}
+      .gei-academy-v1-root *{box-sizing:border-box}
+      .gei-academy-v1-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:0 12px;margin-bottom:10px}
+      .gei-academy-v1-kicker{display:block;font-size:11px;font-weight:900;letter-spacing:.13em;color:var(--skin-accent,#2fd2ff)}
+      .gei-academy-v1-head h1{margin:4px 0 0;font-size:clamp(29px,8vw,38px);line-height:1}
+      .gei-academy-v1-head p{margin:5px 0 0;color:var(--skin-muted,#526b82);font-size:14px;line-height:1.3}
+      .gei-academy-v1-avatar{width:58px;height:58px;border-radius:18px;overflow:hidden;border:2px solid var(--skin-accent,#2fd2ff);background:var(--skin-surface,#fff);padding:0;display:grid;place-items:center}
+      .gei-academy-v1-avatar img{width:100%;height:100%;object-fit:cover}
+      .gei-academy-v1-hero{display:grid;gap:7px;padding:16px 12px 12px;margin-bottom:11px}
+      .gei-academy-v1-hero h2{margin:0;font-size:25px;line-height:1.03}
+      .gei-academy-v1-hero p{margin:0;color:var(--skin-muted,#526b82);font-size:14px;line-height:1.35}
+      .gei-academy-v1-cta{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:0 14px;border-radius:14px;background:var(--skin-accent,#2fd2ff);color:#061018;font-weight:900;text-decoration:none}
+      .gei-academy-v1-progress{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:12px 14px;margin:0 12px 13px;border-radius:17px;background:var(--skin-soft,#f1f4f8)}
+      .gei-academy-v1-progress strong{font-size:18px}.gei-academy-v1-progress span{color:var(--skin-muted,#526b82);font-size:12px}
+      .gei-academy-v1-track{grid-column:1/-1;height:9px;border-radius:999px;background:rgba(0,0,0,.08);overflow:hidden}
+      .gei-academy-v1-fill{height:100%;width:0;background:linear-gradient(90deg,#3d3dea,#2fd2ff)}
+      .gei-academy-v1-locked{margin:0 12px 12px;padding:10px 13px;border:1px solid rgba(255,20,147,.28);border-radius:15px;background:rgba(255,20,147,.08);font-size:13px;font-weight:800}
+      .gei-academy-v1-carousel-label{padding:0 12px;margin-bottom:7px;display:flex;justify-content:space-between;gap:12px;align-items:end}
+      .gei-academy-v1-carousel-label strong{font-size:21px;line-height:1.05}.gei-academy-v1-carousel-label span{color:var(--skin-muted,#526b82);font-size:11px;font-weight:800;letter-spacing:.06em}
+      .gei-academy-v1-carousel{width:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:2px 12px 12px}
+      .gei-academy-v1-carousel::-webkit-scrollbar{display:none}
+      .gei-academy-v1-track-cards{display:flex;gap:13px;width:max-content}
+      .gei-academy-v1-card{flex:0 0 min(84vw,355px);overflow:hidden;border:1px solid color-mix(in srgb,var(--skin-accent,#2fd2ff) 30%,transparent);border-radius:25px;background:var(--skin-surface,#fff);box-shadow:0 15px 38px rgba(0,0,0,.10);scroll-snap-align:center}
+      .gei-academy-v1-card.is-locked{opacity:.55}
+      .gei-academy-v1-card.is-complete{border-color:#22c55e}
+      .gei-academy-v1-card-art{position:relative;height:225px;background:linear-gradient(145deg,#07111c,#10283a);overflow:hidden}
+      .gei-academy-v1-placeholder{height:100%;display:grid;place-items:center;align-content:center;gap:7px;color:#fff;text-align:center}
+      .gei-academy-v1-placeholder strong{font-size:74px;line-height:1}
+      .gei-academy-v1-art-day{font-size:12px;font-weight:900;letter-spacing:.18em;color:#2fd2ff}
+      .gei-academy-v1-placeholder span:last-child{font-size:9px;letter-spacing:.1em;opacity:.65}
+      .gei-academy-v1-state{position:absolute;right:10px;top:10px;padding:6px 9px;border-radius:999px;background:rgba(4,8,14,.76);color:#fff;font-size:10px;font-weight:900;letter-spacing:.08em}
+      .gei-academy-v1-card.is-complete .gei-academy-v1-state{background:rgba(22,101,52,.90)}
+      .gei-academy-v1-card-body{display:grid;gap:7px;padding:15px}
+      .gei-academy-v1-card-top{display:flex;justify-content:space-between;gap:10px;font-size:11px;font-weight:900;letter-spacing:.1em;color:var(--skin-accent,#2fd2ff)}
+      .gei-academy-v1-card h3{margin:0;font-size:28px;line-height:1.03}
+      .gei-academy-v1-card-body p{margin:0;color:var(--skin-muted,#526b82);font-size:14px;line-height:1.3}
+      .gei-academy-v1-play{display:flex;align-items:center;justify-content:space-between;min-height:48px;margin-top:3px;padding:0 13px;border-radius:13px;background:var(--skin-soft,#f1f4f8);color:var(--skin-text,#102a43);font-size:12px;font-weight:900;text-decoration:none}
+      .gei-academy-v1-card:not(.is-locked) .gei-academy-v1-play{background:var(--skin-accent,#2fd2ff);color:#061018}
+      .gei-academy-v1-dots{display:flex;align-items:center;justify-content:center;gap:5px;padding:1px 0 8px}
+      .gei-academy-v1-dot{width:7px;height:7px;border-radius:50%;background:rgba(82,107,130,.25)}
+      .gei-academy-v1-dot.is-active{width:22px;border-radius:999px;background:var(--skin-accent,#2fd2ff)}
       @media(max-width:360px){
-        #screen-academy.gei-academy-v1 .gei-academy-v1-root{padding:9px 9px 102px}
-        .gei-academy-v1-card{min-height:145px;padding:13px}
-        .gei-academy-v1-card strong{font-size:22px}
+        #screen-academy.gei-academy-v1 .gei-academy-v1-root{padding-bottom:100px}
+        .gei-academy-v1-card{flex-basis:87vw}
+        .gei-academy-v1-card-art{height:190px}
+        .gei-academy-v1-card h3{font-size:24px}
       }
     `;
     document.head.appendChild(style);
@@ -141,48 +167,88 @@
       return;
     }
 
+    const artworkMessage = "Custom Day artwork can be added later.";
     screen.innerHTML = `
       <div class="gei-academy-v1-root" role="region" aria-label="GEI Academy">
         <header class="gei-academy-v1-head">
-          <div><span class="gei-academy-v1-kicker">GEI ACADEMY • LEARNER</span><h1>${esc(name ? "@" + name : "GEI Academy")}</h1><p>6-Day Water Blueprint · Water, Engineering & Interpretation</p></div>
+          <div><span class="gei-academy-v1-kicker">GEI ACADEMY • LEARNER</span><h1>${esc("@"+name)}</h1><p>Choose a stage. Play. Master it. Unlock the next.</p></div>
           <div class="gei-academy-v1-avatar" aria-label="Learner avatar">${identity()?.avatarMarkup?.({className:"gei-academy-v1-avatar-image",alt:"GEI learner avatar"}) || "🦫"}</div>
         </header>
-        <section class="gei-academy-v1-hero">
-          <h2>Explore the Water Blueprint.</h2>
-          <p>Move through six hydraulic stages, one day at a time.</p>
-          <a class="gei-academy-v1-cta" href="day-${next}.html"><span>CONTINUE DAY ${next}</span><span>→</span></a>
-        </section>
+
         <section class="gei-academy-v1-progress">
           <div><span>BLUEPRINT PROGRESS</span><strong>${done.length} / 6</strong></div>
           <div style="text-align:right"><span>XP</span><strong>${xp()}</strong></div>
           <div class="gei-academy-v1-track"><div class="gei-academy-v1-fill" style="width:${(done.length / 6) * 100}%"></div></div>
         </section>
-        ${done.length < 6 ? `<p class="gei-academy-v1-locked">Next stage: Day ${next}. Complete each lesson's audio requirement before the following stage unlocks.</p>` : ""}
-        <section class="gei-academy-v1-grid" aria-label="Six-day Academy stages">
-          ${DAYS.map((day) => card(day, done)).join("")}
-        </section>
+
+        <div class="gei-academy-v1-carousel-label">
+          <strong>YOUR SIX DAYS</strong>
+          <span>${done.length < 6 ? "SWIPE →" : "ALL STAGES UNLOCKED"}</span>
+        </div>
+
+        <div class="gei-academy-v1-carousel" id="gei-academy-v1-carousel" aria-label="GEI Academy Day 1 through Day 6 carousel">
+          <div class="gei-academy-v1-track-cards">
+            ${DAYS.map((day) => card(day, done)).join("")}
+          </div>
+        </div>
+        <div class="gei-academy-v1-dots" id="gei-academy-v1-dots" aria-label="Current Academy stage">
+          ${DAYS.map((_, i) => `<i class="gei-academy-v1-dot${i === Math.min(done.length, 5) ? " is-active" : ""}"></i>`).join("")}
+        </div>
+        ${done.length < 6 ? `<p class="gei-academy-v1-locked">Day ${next} is your next checkpoint. Complete the current stage to unlock it.</p>` : ""}
       </div>`;
 
-    screen.querySelectorAll(".gei-academy-v1-card").forEach((link) => {
-      link.addEventListener("click", (event) => {
-        if (link.classList.contains("is-locked")) {
+    const carousel = document.getElementById("gei-academy-v1-carousel");
+    const dots = Array.from(document.querySelectorAll(".gei-academy-v1-dot"));
+    const cards = Array.from(screen.querySelectorAll(".gei-academy-v1-card"));
+
+    function focusCard(index) {
+      const card = cards[index];
+      if (!card || !carousel) return;
+      carousel.scrollTo({left: card.offsetLeft - 12, behavior: "smooth"});
+      dots.forEach((dot, i) => dot.classList.toggle("is-active", i === index));
+    }
+
+    carousel?.addEventListener("scroll", () => {
+      const center = carousel.scrollLeft + carousel.clientWidth / 2;
+      let closest = 0;
+      let distance = Infinity;
+      cards.forEach((card, i) => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const delta = Math.abs(center - cardCenter);
+        if (delta < distance) { distance = delta; closest = i; }
+      });
+      dots.forEach((dot, i) => dot.classList.toggle("is-active", i === closest));
+    }, {passive:true});
+
+    cards.forEach((card) => {
+      card.addEventListener("click", (event) => {
+        const link = event.target.closest?.(".gei-academy-v1-play");
+        if (!link) return;
+        const day = Number(card.dataset.day);
+        const allowed = day === 1 || done.some((d) => d.id === day - 1);
+        if (!allowed) {
           event.preventDefault();
-          window.dispatchEvent(new CustomEvent("gei:day-locked", { detail: { day: Number(link.dataset.day) } }));
+          window.dispatchEvent(new CustomEvent("gei:day-locked", {detail:{day}}));
         }
       });
     });
+
+    const activeIndex = Math.min(done.length, DAYS.length - 1);
+    requestAnimationFrame(() => focusCard(activeIndex));
   }
 
   function init() {
-    window.GEI_ACADEMY_RUNTIME_V1 = Object.freeze({ version:"1.0", render });
+    window.GEI_ACADEMY_RUNTIME_V1 = Object.freeze({version:"1.1", render});
     render();
 
     ["gei:identity-updated","gei:learner-identity-ready","gei:progress-updated","gei:day-completion","gei:badges-updated","gei:achievement-earned"].forEach((eventName) => {
       window.addEventListener(eventName, render);
     });
+
     window.addEventListener("gei:navigation", (event) => {
       if (event.detail?.id === "academy") render();
     });
+
     window.addEventListener("gei:academy-render", render);
   }
 

@@ -42,6 +42,7 @@
         <span class="video-adam-ring" aria-hidden="true"></span>
         <img src="${VIDEO_ADAM_URL}" alt="Adam, the YallToo Video Lab mascot" class="video-adam-image">
         <span class="video-adam-copy"><small>ADAM • VIDEO GUIDE</small><strong>Tap Adam for help</strong></span>
+        <span class="video-adam-action" aria-hidden="true">›</span>
       </button>
       <article class="video-feature">
         <div class="video-feature-art" aria-hidden="true"><span>GEI</span></div>

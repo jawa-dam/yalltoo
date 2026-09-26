@@ -64,7 +64,7 @@ html.ftl .ftl-xp i {
 html.ftl .ftl-hero {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(230px, .75fr);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, .95fr);
   grid-template-areas:
     "copy adam"
     "question question";

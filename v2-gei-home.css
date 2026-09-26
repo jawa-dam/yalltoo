@@ -368,3 +368,74 @@
   .mascot-orbit { min-height: 176px !important; }
   .home-mascot-image, .gei-mascot-image { max-width: 132px; }
 }
+
+/* ==========================================================================
+   V2.4 — HOMEPAGE INFORMATION HIERARCHY
+   Entrance → Introduction → Day 1 experience → Six-day journey
+   ========================================================================== */
+
+#screen-home .dashboard-main{
+  gap:12px !important;
+}
+
+#screen-home .gei-home-hero{
+  display:block;
+}
+
+#screen-home .gei-home-hero .welcome-card{
+  grid-template-columns:minmax(0,1fr) 132px !important;
+  align-items:center;
+}
+
+#screen-home .gei-home-hero .academy-cta{
+  min-height:64px;
+  margin-top:14px;
+  padding:12px 14px;
+  border-radius:18px;
+  box-shadow:0 14px 30px rgba(0,0,0,.22);
+}
+
+#screen-home .gei-home-hero .cta-kicker{
+  font-size:10px;
+}
+
+#screen-home .gei-home-hero .cta-copy strong{
+  font-size:20px;
+}
+
+#screen-home .gei-home-hero .cta-copy small{
+  font-size:12px;
+}
+
+#screen-home .day1-preview-card{
+  margin:0;
+}
+
+#screen-home .gei-journey-card{
+  margin:0;
+}
+
+#screen-home .gei-journey-card .blueprint-topline h2{
+  max-width:260px;
+}
+
+@media(max-width:360px){
+  #screen-home .gei-home-hero .welcome-card{
+    grid-template-columns:minmax(0,1fr) 108px !important;
+  }
+  #screen-home .gei-home-hero .academy-cta{
+    min-height:60px;
+    margin-top:11px;
+    padding:10px 12px;
+  }
+  #screen-home .gei-home-hero .cta-copy strong{
+    font-size:18px;
+  }
+  #screen-home .gei-home-hero .cta-copy small{
+    font-size:11px;
+  }
+  #screen-home .gei-journey-card .blueprint-topline h2{
+    max-width:220px;
+    font-size:18px;
+  }
+}

@@ -115,6 +115,73 @@ html.ftl .ftl-v44-hero[data-v44-fx="glow-pulse"] .ftl-hero-art-image.is-loaded {
   50% { opacity: 1; filter: drop-shadow(0 18px 34px rgba(0,0,0,.42)) drop-shadow(0 0 24px var(--ftl-accent)); }
 }
 
+
+/* V4.5 extra random effects */
+html.ftl .ftl-v44-hero[data-v44-fx="drop-bounce"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45Drop 1.1s cubic-bezier(.3,1.6,.5,1) both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="spin-in"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45Spin 1s cubic-bezier(.22,1,.36,1) both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="flip-x"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45FlipX 1s ease-out both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="flip-y"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45FlipY 1s ease-out both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="swing"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45Swing 1.4s ease-out both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="blur-focus"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45Blur 1.1s ease-out both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="pop"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45Pop .7s cubic-bezier(.34,1.8,.64,1) both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="rise-from-water"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45Rise 1.3s cubic-bezier(.22,1,.36,1) both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="wave-sway"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45Wave 3.4s ease-in-out infinite;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="light-sweep"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45Sweep 1.2s ease-out both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="ripple"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45Ripple 1.3s ease-out both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="shimmer"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45Shimmer 2.4s ease-in-out infinite;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="rock"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45Rock 3s ease-in-out infinite;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="zoom-out"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45ZoomOut 1.1s cubic-bezier(.22,1,.36,1) both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="slide-up-spin"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45SlideSpin 1.1s cubic-bezier(.22,1,.36,1) both;
+}
+html.ftl .ftl-v44-hero[data-v44-fx="heartbeat"] .ftl-hero-art-image.is-loaded {
+  animation: ftl45Heart 1.8s ease-in-out infinite;
+}
+@keyframes ftl45Drop { from{opacity:0;transform:translateY(-60px)}60%{opacity:1;transform:translateY(8px)}to{opacity:1;transform:translateY(0)} }
+@keyframes ftl45Spin { from{opacity:0;transform:rotate(-180deg) scale(.4)}to{opacity:1;transform:rotate(0) scale(1)} }
+@keyframes ftl45FlipX { from{opacity:0;transform:perspective(800px) rotateY(90deg)}to{opacity:1;transform:perspective(800px) rotateY(0)} }
+@keyframes ftl45FlipY { from{opacity:0;transform:perspective(800px) rotateX(-90deg)}to{opacity:1;transform:perspective(800px) rotateX(0)} }
+@keyframes ftl45Swing { 0%{opacity:0;transform:rotate(12deg)}30%{opacity:1;transform:rotate(-8deg)}55%{transform:rotate(5deg)}75%{transform:rotate(-2deg)}100%{opacity:1;transform:rotate(0)} }
+@keyframes ftl45Blur { from{opacity:0;filter:blur(18px) drop-shadow(0 18px 34px rgba(0,0,0,.42))}to{opacity:1;filter:blur(0) drop-shadow(0 18px 34px rgba(0,0,0,.42))} }
+@keyframes ftl45Pop { from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)} }
+@keyframes ftl45Rise { from{opacity:0;transform:translateY(70px);clip-path:inset(100% 0 0 0)}to{opacity:1;transform:translateY(0);clip-path:inset(0 0 0 0)} }
+@keyframes ftl45Wave { 0%,100%{opacity:1;transform:translateX(0) rotate(0)}25%{opacity:1;transform:translateX(-6px) rotate(-1.5deg)}75%{opacity:1;transform:translateX(6px) rotate(1.5deg)} }
+@keyframes ftl45Sweep { from{opacity:0;clip-path:inset(0 100% 0 0)}to{opacity:1;clip-path:inset(0 0 0 0)} }
+@keyframes ftl45Ripple { 0%{opacity:0;transform:scale(.85)}40%{opacity:1;transform:scale(1.06)}65%{transform:scale(.97)}85%{transform:scale(1.02)}100%{opacity:1;transform:scale(1)} }
+@keyframes ftl45Shimmer { 0%,100%{opacity:1;filter:brightness(1) drop-shadow(0 18px 34px rgba(0,0,0,.42))}50%{opacity:1;filter:brightness(1.25) saturate(1.2) drop-shadow(0 18px 34px rgba(0,0,0,.42))} }
+@keyframes ftl45Rock { 0%,100%{opacity:1;transform:rotate(-2deg)}50%{opacity:1;transform:rotate(2deg)} }
+@keyframes ftl45ZoomOut { from{opacity:0;transform:scale(1.35)}to{opacity:1;transform:scale(1)} }
+@keyframes ftl45SlideSpin { from{opacity:0;transform:translateY(50px) rotate(-12deg)}to{opacity:1;transform:translateY(0) rotate(0)} }
+@keyframes ftl45Heart { 0%,100%{opacity:1;transform:scale(1)}14%{opacity:1;transform:scale(1.05)}28%{opacity:1;transform:scale(1)}42%{opacity:1;transform:scale(1.04)}70%{opacity:1;transform:scale(1)} }
+
 @media (prefers-reduced-motion: reduce) {
   html.ftl .ftl-hero-art-image.is-loaded {
     animation: none !important;

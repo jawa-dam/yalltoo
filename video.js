@@ -52,7 +52,6 @@
         <div class="video-section-head"><h2 id="video-library-title">Media Library</h2><span>FOUNDATION</span></div>
         <div class="video-cards">${videos.map((item,index)=>`<article class="video-card"><div class="video-thumb" aria-hidden="true"><span>${String(index+1).padStart(2,'0')}</span><b>▶</b></div><div><span class="video-card-meta">${item.meta}</span><h3>${item.title}</h3><p>${item.description}</p></div></article>`).join('')}</div>
       </section>
-      <button class="music-lab-entry" id="music-lab-open" type="button"><span><small>GEI MEDIA</small><strong>GEI Dam Music</strong></span><b>Open Lab ›</b></button>
     </div>
 
     <div class="video-adam-modal" id="video-adam-modal" hidden>
@@ -116,7 +115,7 @@
     current=(i+tracks.length)%tracks.length; const t=tracks[current]; audio.src=t.src; title.textContent=t.title; group.textContent=t.group; seek.value=0; render(); if(autoplay) audio.play().catch(()=>{}); updatePlay(); }
   function updatePlay(){play.textContent=audio.paused?'▶':'Ⅱ'; play.setAttribute('aria-label',audio.paused?'Play':'Pause'); render();}
 
-  root.querySelector('#music-lab-open').addEventListener('click',()=>{musicModal.hidden=false;load(current,false);root.querySelector('#music-lab-close').focus()});
+  root.querySelector('#music-lab-open')?.addEventListener('click',()=>{musicModal.hidden=false;load(current,false);root.querySelector('#music-lab-close').focus()});
   root.querySelector('#music-lab-close').addEventListener('click',()=>{musicModal.hidden=true;audio.pause()});
   musicModal.addEventListener('click',e=>{if(e.target===musicModal){musicModal.hidden=true;audio.pause()}});
   root.querySelector('#music-play').addEventListener('click',()=>{if(!audio.src)load(current,false); audio.paused?audio.play().catch(()=>{}):audio.pause()});

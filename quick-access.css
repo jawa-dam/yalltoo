@@ -32,3 +32,6 @@
 #gei-quick-access .gei-quick-button[data-gei-popout="gei-dam-reset"] .gei-quick-label{
   color:#155eef;
 }
+
+/* Removed from home: Learning Momentum and Learner Identity / Achievement History cards */
+#gei-streak-card,#gei-vault-card{display:none !important}

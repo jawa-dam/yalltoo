@@ -396,7 +396,7 @@
 }
 
 #screen-home .gei-home-hero .cta-kicker{
-  font-size:10px;
+  font-size:12px;
 }
 
 #screen-home .gei-home-hero .cta-copy strong{
@@ -432,7 +432,7 @@
     font-size:18px;
   }
   #screen-home .gei-home-hero .cta-copy small{
-    font-size:11px;
+    font-size:12px;
   }
   #screen-home .gei-journey-card .blueprint-topline h2{
     max-width:220px;
@@ -482,7 +482,7 @@
   gap:6px;
   margin-top:10px;
   font-family:var(--v2-font-mono);
-  font-size:8px;
+  font-size:12px;
   font-weight:800;
   letter-spacing:.1em;
   color:var(--v2-muted);
@@ -510,7 +510,7 @@
   right:10px;
   bottom:8px;
   font-family:var(--v2-font-mono);
-  font-size:7px;
+  font-size:12px;
   font-weight:800;
   letter-spacing:.12em;
   color:var(--v2-muted);
@@ -528,7 +528,7 @@
   z-index:2;
   width:100%;
   border:1px solid var(--v2-cyan) !important;
-  background:linear-gradient(135deg,var(--v2-cyan),var(--v2-indigo, #3730a3)) !important;
+  background:linear-gradient(135deg,var(--v2-cyan),var(--v2-indigo, #3d3dea)) !important;
   color:#fff !important;
 }
 #screen-home .gei-home-hero .academy-cta .cta-kicker,
@@ -555,7 +555,7 @@
     min-height:190px;
   }
   #screen-home .gei-home-signal{
-    font-size:7px;
+    font-size:12px;
     gap:4px;
     margin-top:8px;
   }
@@ -643,7 +643,7 @@
 #screen-home .gei-journey-card .day-pill{
   min-height:32px !important;
   border-radius:9px !important;
-  font-size:10px !important;
+  font-size:12px !important;
 }
 
 @media(max-width:520px){
@@ -679,14 +679,14 @@
     font-size:16px !important;
   }
   #screen-home .day1-preview-copy small{
-    font-size:11px !important;
+    font-size:12px !important;
   }
   #screen-home .day1-preview-card audio{
     height:38px !important;
   }
   #screen-home .gei-journey-card .day-pill{
     min-height:29px !important;
-    font-size:9px !important;
+    font-size:12px !important;
   }
 }
 
@@ -744,7 +744,7 @@
   font-size:18px !important;
 }
 #screen-home .gei-start-preview .day1-preview-copy small{
-  font-size:11px !important;
+  font-size:12px !important;
 }
 #screen-home .gei-start-preview audio{
   width:100%;
@@ -767,7 +767,7 @@
 }
 #screen-home .gei-start-journey .day-pill{
   min-height:30px !important;
-  font-size:9px !important;
+  font-size:12px !important;
   border-radius:8px !important;
 }
 @media(max-width:360px){
@@ -775,9 +775,9 @@
   #screen-home .gei-start-preview{padding:8px 9px 7px;gap:6px}
   #screen-home .gei-start-preview .day1-preview-copy{padding:7px 8px !important}
   #screen-home .gei-start-preview .day1-preview-copy strong{font-size:15px !important}
-  #screen-home .gei-start-preview .day1-preview-copy small{font-size:10px !important}
+  #screen-home .gei-start-preview .day1-preview-copy small{font-size:12px !important}
   #screen-home .gei-start-preview audio{height:36px !important}
   #screen-home .gei-start-journey{padding:7px 9px 9px}
   #screen-home .gei-start-journey .blueprint-topline h2{font-size:14px !important}
-  #screen-home .gei-start-journey .day-pill{min-height:27px !important;font-size:8px !important}
+  #screen-home .gei-start-journey .day-pill{min-height:27px !important;font-size:12px !important}
 }

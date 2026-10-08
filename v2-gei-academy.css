@@ -194,7 +194,7 @@
   }
   .academy-waterwheel{width:100px}
   .academy-hero-copy h2{font-size:21px !important}
-  .academy-hero-copy p{font-size:10px !important}
+  .academy-hero-copy p{font-size:12px !important}
 }
 
 /* --------------------------------------------------------------------------
@@ -699,7 +699,7 @@
   background:var(--v2-void);
   color:var(--v2-muted);
   font-family:var(--v2-font-mono);
-  font-size:8px;
+  font-size:12px;
   line-height:1;
   content:"LOCKED";
 }

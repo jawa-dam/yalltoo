@@ -7,6 +7,10 @@
    Load order matters: v2 sheets are appended AFTER the V1 stylesheets so they
    win the cascade without editing them.
 
+   NOTE: the colour VALUES below are the original dark instrument palette and are
+   superseded by the one YallToo brand in yalltoo-theme.css, which re-points every
+   --v2-* token at the light brand system. Keep the names; change values there.
+
    Design thesis: the interface IS the machine. Structural grid, measurement
    ticks, chamfered instrument panels, monospace telemetry. Cyan / indigo /
    magenta are signal colours on near-black, never decorative gradient wash.
@@ -136,8 +140,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Default the skin variables to the hydraulic palette so a page is dark before
-   skin.js runs and on pages that never load skin.js (Day pages, Simulator). */
+/* Legacy --skin-* names resolve through the V2 tokens. There are no skins:
+   yalltoo-theme.css (loaded last) is the single source of the brand values. */
 :root {
   --skin-bg:     var(--v2-bg);
   --skin-surface: var(--v2-surface);
@@ -606,27 +610,3 @@ body {
   .v2-readout-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
-
-/* ==========================================================================
-   14. GEI HYDRAULIC SKIN — the V2 default identity
-   --------------------------------------------------------------------------
-   skin.js registers "gei-hydraulic" as the first skin and the new default.
-   The four original skins (academic, pink, blue, green, dark) remain fully
-   selectable and gei-academy-skin-v1 is untouched, so a learner who already
-   chose one keeps it. Only the default changed.
-   ========================================================================== */
-
-:root[data-skin="gei-hydraulic"] .app-frame {
-  background:
-    linear-gradient(180deg, var(--v2-elevated) 0%, var(--v2-bg) 42%, var(--v2-void) 100%) !important;
-}
-
-:root[data-skin="gei-hydraulic"] .app-shell::after {
-  border-color: var(--v2-hairline);
-}
-
-/* Swatch in the skin picker. */
-.skin-swatch-gei-hydraulic {
-  background: linear-gradient(135deg, #2fd2ff, #3d3dea 52%, #04050a) !important;
-  box-shadow: inset 0 0 0 1px rgba(47, 210, 255, 0.5);
-}

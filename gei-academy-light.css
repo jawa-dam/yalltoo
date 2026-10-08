@@ -8,93 +8,19 @@
    <head> later than any <link>, so each rule here carries one extra type
    selector — `html` — to out-rank it without touching it).
 
-   Scope: #screen-academy (+ the bottom navigation while Academy is the active
-   screen). The simulator, Home, Day pages and every other experience keep the
-   dark hydraulic identity. The Academy is ALWAYS light by default: there is no
-   prefers-color-scheme query anywhere in this file and `color-scheme: light`
-   is pinned, so a phone in dark mode never flips the classroom.
+   Scope: #screen-academy. It is the visual reference implementation of the
+   one YallToo brand (yalltoo-theme.css): there is no prefers-color-scheme
+   query anywhere and `color-scheme: light` is pinned.
 
    GEI signal colours stay: cyan #2fd2ff, indigo #3d3dea, magenta #f310ba,
    pink #ff9df2. They become borders, fills and glows. Where they would be
    small text on white they use an "-ink" shade so contrast stays >= 4.5:1.
    ========================================================================== */
 
-#screen-academy,
-.app-shell:has(#screen-academy.is-active) .bottom-navigation {
-  /* surfaces */
-  --academy-bg:         #f5fbff;
-  --academy-surface:    #ffffff;
-  --academy-surface-2:  #eef7fd;
-  --academy-surface-3:  #e5f2fa;
-  --academy-locked-bg:  #eef2f6;
-  --academy-locked-ln:  #c3d1de;
+/* Colour, neutral and elevation tokens (--academy-*) are aliases of the
+   --yt-* brand tokens defined once in yalltoo-theme.css. */
 
-  /* text */
-  --academy-text:        #10233f;
-  --academy-text-strong: #0b1d35;
-  --academy-body:        #24364f;
-  --academy-muted:       #5d7088;
-
-  /* lines + elevation */
-  --academy-line:        #cfe3ef;
-  --academy-line-strong: #add5e8;
-  --academy-shadow:      0 8px 24px rgba(26, 74, 104, 0.10);
-  --academy-shadow-soft: 0 3px 10px rgba(26, 74, 104, 0.08);
-  --academy-glow-cyan:   0 0 0 3px rgba(47, 210, 255, 0.18), 0 10px 28px rgba(47, 210, 255, 0.28);
-
-  /* GEI signal colours */
-  --academy-cyan:     #2fd2ff;
-  --academy-indigo:   #3d3dea;
-  --academy-magenta:  #f310ba;
-  --academy-pink:     #ff9df2;
-  --academy-hotpink:  #ff1493;
-  --academy-success:  #3ddc97;
-
-  /* readable "ink" shades of the signal colours (text on light surfaces) */
-  --academy-cyan-ink:    #0a6f93;
-  --academy-indigo-ink:  #3535c9;
-  --academy-magenta-ink: #b10d8c;
-  --academy-success-ink: #0d7650;
-  --academy-xp-ink:      #8a5800;
-
-  /* tinted washes */
-  --academy-wash-cyan:    rgba(47, 210, 255, 0.14);
-  --academy-wash-magenta: rgba(243, 16, 186, 0.08);
-  --academy-wash-success: rgba(61, 220, 151, 0.16);
-  --academy-track:        #dbebf5;
-
-  --academy-gradient: linear-gradient(90deg, #2fd2ff, #3d3dea 52%, #ff1493);
-  --academy-sky:
-    radial-gradient(circle at 85% 10%, rgba(47, 210, 255, 0.10), transparent 28%),
-    radial-gradient(circle at 10% 65%, rgba(61, 61, 234, 0.05), transparent 30%),
-    linear-gradient(180deg, #ffffff 0%, #f5fbff 48%, #edf8fd 100%);
-
-  color-scheme: light;
-}
-
-/* Re-map the V2 design-system tokens inside the Academy so every V2 Academy
-   rule (legacy hero / path / hub / guide) that reads var(--v2-*) turns light
-   without being rewritten. Nothing outside #screen-academy is affected. */
-html #screen-academy {
-  --v2-void:      var(--academy-surface-2);
-  --v2-bg:        var(--academy-bg);
-  --v2-surface:   var(--academy-surface);
-  --v2-elevated:  var(--academy-surface);
-  --v2-line:      var(--academy-line);
-  --v2-text:      var(--academy-text);
-  --v2-muted:     var(--academy-muted);
-  --v2-white:     var(--academy-text-strong);
-  --v2-cyan:      var(--academy-cyan-ink);
-  --v2-success:   var(--academy-success-ink);
-  --v2-wash-cyan-2: var(--academy-line-strong);
-  --v2-shadow-1:  var(--academy-shadow-soft);
-  --v2-shadow-2:  var(--academy-shadow);
-  --v2-shadow-3:  var(--academy-shadow);
-  --v2-glow-flow: var(--academy-glow-cyan);
-  --v2-grid-line: rgba(47, 210, 255, 0.08);
-  --v2-tick:      rgba(93, 112, 136, 0.22);
-  color: var(--academy-text);
-}
+html #screen-academy { color: var(--academy-text); color-scheme: light; }
 
 /* --------------------------------------------------------------------------
    1. ACADEMY BACKGROUND
@@ -457,45 +383,9 @@ html #screen-academy.gei-academy-lite-screen .gei-lite-guide-close {
 }
 
 /* --------------------------------------------------------------------------
-   7. BOTTOM NAVIGATION — light while the Academy is the active screen
-   -------------------------------------------------------------------------- */
-/* v2-gei-skin-readability.css pins nav colours behind two stacked id-weights
-   (:root:not(#_r):not(#_r)); these rules stack three so the light bar wins. */
-
-:root:not(#_r):not(#_r):not(#_r) .app-shell:has(#screen-academy.is-active) .bottom-navigation {
-  border: 1px solid var(--academy-line-strong) !important;
-  background: rgba(255, 255, 255, 0.97) !important;
-  box-shadow: 0 -2px 18px rgba(26, 74, 104, 0.12), 0 8px 24px rgba(26, 74, 104, 0.12) !important;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-:root:not(#_r):not(#_r):not(#_r) .app-shell:has(#screen-academy.is-active) .bottom-navigation .nav-button {
-  color: var(--academy-body) !important;
-  background: transparent !important;
-}
-:root:not(#_r):not(#_r):not(#_r) .app-shell:has(#screen-academy.is-active) .bottom-navigation .nav-button:hover {
-  background: var(--academy-surface-2) !important;
-  color: var(--academy-text-strong) !important;
-}
-:root:not(#_r):not(#_r):not(#_r) .app-shell:has(#screen-academy.is-active) .bottom-navigation .nav-button.active {
-  color: var(--academy-cyan-ink) !important;
-  background: var(--academy-wash-cyan) !important;
-  box-shadow: inset 0 0 0 1px var(--academy-cyan) !important;
-}
-:root:not(#_r):not(#_r):not(#_r) .app-shell:has(#screen-academy.is-active) .bottom-navigation .nav-button.active::before {
-  background: var(--academy-cyan);
-  box-shadow: 0 0 8px rgba(47, 210, 255, 0.7);
-}
-:root:not(#_r):not(#_r):not(#_r) .app-shell:has(#screen-academy.is-active) .bottom-navigation .nav-button:focus-visible {
-  outline: 3px solid var(--academy-indigo) !important;
-  outline-offset: -3px;
-}
-:root:not(#_r):not(#_r):not(#_r) .app-shell:has(#screen-academy.is-active) .bottom-navigation .nav-label { font-size: 12px !important; }
-
-/* --------------------------------------------------------------------------
-   8. LEGACY ACADEMY MARKUP (academy.js / v2-gei-academy.css) — kept legible
+   7. LEGACY ACADEMY MARKUP (academy.js / v2-gei-academy.css) — kept legible
    --------------------------------------------------------------------------
-   Most surfaces already flipped through the --v2-* token map above. These are
+   Most surfaces already flipped through the --v2-* aliases in yalltoo-theme.css. These are
    the few places where the V2 sheet hard-codes ink or a dark gradient tail. */
 
 html #screen-academy .academy-hero.academy-waterwheel-hero {

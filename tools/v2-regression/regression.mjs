@@ -561,36 +561,35 @@ if (v2Files.length) {
 }
 
 /* ------------------------------------------------------------------ *
- * 11b. SKIN SYSTEM (V2 changed the DEFAULT, not the data)
+ * 11b. ONE BRAND (the skin system is retired — YallToo has a single look)
  * ------------------------------------------------------------------ */
-section("11b. Skin system");
-const skinDefault = loadPage("index.html");
-check("6 skins registered (5 original + gei-hydraulic)",
-  skinDefault.d.querySelectorAll("[data-skin-option]").length === 6,
-  `found ${skinDefault.d.querySelectorAll("[data-skin-option]").length}`);
-check("default skin is gei-hydraulic when nothing is saved",
-  skinDefault.d.documentElement.dataset.skin === "gei-hydraulic",
-  `got ${skinDefault.d.documentElement.dataset.skin}`);
-check("hydraulic palette resolves to the dark surface",
-  skinDefault.d.documentElement.style.getPropertyValue("--skin-bg").trim() === "#06070d",
-  `--skin-bg=${skinDefault.d.documentElement.style.getPropertyValue("--skin-bg")}`);
-check("hydraulic accent is brand cyan",
-  skinDefault.d.documentElement.style.getPropertyValue("--skin-accent").trim() === "#2fd2ff");
-check("gei-hydraulic persisted to gei-academy-skin-v1",
-  skinDefault.w.localStorage.getItem("gei-academy-skin-v1") === "gei-hydraulic",
-  `stored=${skinDefault.w.localStorage.getItem("gei-academy-skin-v1")}`);
-
-// A learner who already picked a light skin must keep it. No forced reset.
-for (const legacy of ["academic", "pink", "blue", "green", "dark"]) {
-  const pg = loadPage("index.html", "", (w) => w.localStorage.setItem("gei-academy-skin-v1", legacy));
-  check(`saved skin "${legacy}" is honoured, not reset`,
-    pg.d.documentElement.dataset.skin === legacy,
-    `got ${pg.d.documentElement.dataset.skin}`);
+section("11b. One brand, no skins");
+const brand = loadPage("index.html", "", (w) => {
+  // A learner who once picked a skin must NOT get it back.
+  for (const k of ["gei-academy-skin-v1", "skin", "theme", "selectedSkin"]) w.localStorage.setItem(k, "dark");
+});
+check("no skin picker in the DOM",
+  !brand.d.querySelector("[data-skin-option], #skin-control, #skin-trigger, #skin-panel, .skin-trigger, .skin-panel"));
+check("no data-skin attribute on <html> or <body>",
+  !brand.d.documentElement.hasAttribute("data-skin") && !brand.d.body.hasAttribute("data-skin"));
+check("legacy skin preference keys are retired",
+  ["gei-academy-skin-v1", "skin", "theme", "selectedSkin"].every((k) => brand.w.localStorage.getItem(k) === null));
+check("skin files are gone",
+  ["skin.js", "skin.css", "skin-theme.css", "v2-gei-skin-follow.js", "v2-gei-skin-readability.css"]
+    .every((f) => !fs.existsSync(path.join(ROOT, f))));
+check("master theme sheet is linked on every page",
+  ["index.html", "day-1.html", "day-6.html", "simulator.html"]
+    .every((f) => /href="yalltoo-theme\.css"/.test(fs.readFileSync(path.join(ROOT, f), "utf8"))));
+{
+  const theme = fs.readFileSync(path.join(ROOT, "yalltoo-theme.css"), "utf8");
+  check("brand tokens: cyan / indigo / magenta / pink",
+    ["#2fd2ff", "#3d3dea", "#f310ba", "#ff9df2"].every((c) => new RegExp(`:\\s*${c}\\b`).test(theme)));
+  check("no prefers-color-scheme override anywhere in the theme layer",
+    !/prefers-color-scheme/.test((theme + fs.readFileSync(path.join(ROOT, "gei-academy-light.css"), "utf8")).replace(/\/\*[\s\S]*?\*\//g, "")));
+  check("no data-skin selectors left in any stylesheet",
+    cssFiles.every((f) => !/data-skin|\.skin-/.test(fs.readFileSync(path.join(ROOT, f), "utf8"))));
 }
-const legacyBg = loadPage("index.html", "", (w) => w.localStorage.setItem("gei-academy-skin-v1", "academic"));
-check("saved academic skin still resolves light (#f7f9fc)",
-  legacyBg.d.documentElement.style.getPropertyValue("--skin-bg").trim() === "#f7f9fc",
-  `--skin-bg=${legacyBg.d.documentElement.style.getPropertyValue("--skin-bg")}`);
+check("home logo lockup still built", !!brand.d.querySelector("#screen-home .home-gei-logo"));
 
 /* ------------------------------------------------------------------ *
  * 12. RUNTIME ERRORS

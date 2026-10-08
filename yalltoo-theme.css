@@ -1,0 +1,728 @@
+/* ============================================================================
+   YALLTOO — ONE BRAND VISUAL SYSTEM  (yalltoo-theme.css)
+   ----------------------------------------------------------------------------
+   WATER • ENGINEERING • LEARNING • DISCOVERY
+
+   The single, authoritative source for colour, neutrals, borders, shadows,
+   radii, type scale, buttons and states across every YallToo page (Home,
+   Academy, Day lessons, Dam release, Simulator / game, Video, Portfolio,
+   Support). There are no skins: no selector, no alternate palette, no
+   persisted preference. Load this sheet LAST.
+
+   Signature colours come from the YallToo logo and are signals, not wallpaper:
+     cyan #2fd2ff    primary actions, water flow, active state
+     indigo #3d3dea  structure, navigation, blueprint lines
+     magenta #f310ba achievement + milestone
+     pink #ff9df2    special highlight
+
+   The site is always light. There is deliberately no prefers-color-scheme
+   query here or anywhere else, and `color-scheme: light` is pinned, so a
+   phone in system dark mode still shows YallToo.
+
+   Older sheets read a few historical variable names (--v2-*, --skin-*,
+   --academy-*, and V1's --text / --surface). They are kept as ALIASES of the
+   --yt-* tokens below so legacy components inherit the one brand without
+   being rewritten. They are not themes.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* ---- brand signal --------------------------------------------------- */
+  --yt-cyan:     #2fd2ff;
+  --yt-indigo:   #3d3dea;
+  --yt-magenta:  #f310ba;
+  --yt-pink:     #ff9df2;
+  --yt-hotpink:  #ff1493;
+
+  /* readable "ink" shades of the signal colours, for text on light surfaces */
+  --yt-cyan-ink:    #0a6f93;
+  --yt-cyan-deep:   #085a78;
+  --yt-indigo-ink:  #3535c9;
+  --yt-magenta-ink: #b10d8c;
+
+  /* ---- neutrals ------------------------------------------------------- */
+  --yt-bg:          #f5fbff;
+  --yt-surface:     #ffffff;
+  --yt-surface-2:   #eef7fd;
+  --yt-surface-3:   #e5f2fa;
+  --yt-locked-bg:   #eef2f6;
+  --yt-locked-line: #c3d1de;
+  --yt-text:        #10233f;
+  --yt-text-strong: #0b1d35;
+  --yt-body:        #24364f;
+  --yt-muted:       #5d7088;
+  --yt-line:        #cfe3ef;
+  --yt-line-strong: #add5e8;
+  --yt-track:       #dbebf5;
+
+  /* ---- status --------------------------------------------------------- */
+  --yt-success:     #3ddc97;
+  --yt-success-ink: #0d7650;
+  --yt-warning-ink: #8a5800;
+  --yt-danger:      #c4163a;
+
+  /* ---- washes + elevation --------------------------------------------- */
+  --yt-wash-cyan:    rgba(47, 210, 255, 0.14);
+  --yt-wash-cyan-2:  rgba(47, 210, 255, 0.30);
+  --yt-wash-indigo:  rgba(61, 61, 234, 0.10);
+  --yt-wash-magenta: rgba(243, 16, 186, 0.08);
+  --yt-wash-pink:    rgba(255, 157, 242, 0.22);
+  --yt-wash-success: rgba(61, 220, 151, 0.16);
+  --yt-shadow:       0 8px 24px rgba(26, 74, 104, 0.10);
+  --yt-shadow-soft:  0 3px 10px rgba(26, 74, 104, 0.08);
+  --yt-shadow-lift:  0 14px 40px rgba(26, 74, 104, 0.18);
+  --yt-glow-cyan:    0 0 0 3px rgba(47, 210, 255, 0.18), 0 10px 28px rgba(47, 210, 255, 0.28);
+
+  /* ---- gradients: ONLY for water flow, progress, achievement, hero ------ */
+  --yt-gradient-progress: linear-gradient(90deg, #2fd2ff, #3d3dea 52%, #ff1493);
+  --yt-gradient-flow:     linear-gradient(90deg, #2fd2ff, #3d3dea);
+  --yt-gradient-sky:
+    radial-gradient(circle at 85% 10%, rgba(47, 210, 255, 0.10), transparent 28%),
+    radial-gradient(circle at 10% 65%, rgba(61, 61, 234, 0.05), transparent 30%),
+    linear-gradient(180deg, #ffffff 0%, #f5fbff 48%, #edf8fd 100%);
+
+  /* ---- shape ---------------------------------------------------------- */
+  --yt-radius-sm: 10px;
+  --yt-radius-md: 16px;
+  --yt-radius-lg: 24px;
+
+  /* ---- type scale (mobile floor 12px for any meaningful text) ---------- */
+  --yt-font: 'Plus Jakarta Sans', Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --yt-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  --yt-t-label: 12px;
+  --yt-t-small: 13px;
+  --yt-t-body:  15px;
+  --yt-t-lead:  17px;
+  --yt-t-h3:    20px;
+  --yt-t-h2:    26px;
+  --yt-tap:     48px;
+}
+
+/* --------------------------------------------------------------------------
+   LEGACY ALIASES — the one palette under every historical variable name
+   -------------------------------------------------------------------------- */
+:root {
+  /* V2 design system */
+  --v2-void:       var(--yt-surface-2);
+  --v2-bg:         var(--yt-bg);
+  --v2-surface:    var(--yt-surface);
+  --v2-elevated:   var(--yt-surface);
+  --v2-line:       var(--yt-line);
+  --v2-text:       var(--yt-text);
+  --v2-muted:      var(--yt-muted);
+  --v2-white:      var(--yt-text-strong);
+  --v2-cyan:       var(--yt-cyan-ink);
+  --v2-cyan-foam:  var(--yt-cyan-deep);
+  --v2-cyan-deep:  var(--yt-line-strong);
+  --v2-cyan-abyss: var(--yt-surface-3);
+  --v2-indigo:     var(--yt-indigo);
+  --v2-magenta:    var(--yt-magenta-ink);
+  --v2-hotpink:    var(--yt-hotpink);
+  --v2-success:    var(--yt-success-ink);
+  --v2-warning:    var(--yt-warning-ink);
+  --v2-danger:     var(--yt-danger);
+  --v2-wash-cyan:    var(--yt-wash-cyan);
+  --v2-wash-cyan-2:  var(--yt-wash-cyan-2);
+  --v2-wash-indigo:  var(--yt-wash-indigo);
+  --v2-wash-magenta: var(--yt-wash-magenta);
+  --v2-hairline:   rgba(16, 35, 63, 0.08);
+  --v2-hairline-2: rgba(16, 35, 63, 0.14);
+  --v2-shadow-1:   var(--yt-shadow-soft);
+  --v2-shadow-2:   var(--yt-shadow);
+  --v2-shadow-3:   var(--yt-shadow-lift);
+  --v2-glow-idle:     0 0 0 rgba(47, 210, 255, 0);
+  --v2-glow-flow:     var(--yt-glow-cyan);
+  --v2-glow-pressure: 0 0 0 3px var(--yt-wash-magenta);
+  --v2-glow-release:  0 0 0 4px var(--yt-wash-cyan-2);
+  --v2-grid-line:  rgba(47, 210, 255, 0.10);
+  --v2-tick:       rgba(93, 112, 136, 0.25);
+
+  /* Components that used to read the picked skin */
+  --skin-bg:      var(--yt-bg);
+  --skin-surface: var(--yt-surface);
+  --skin-soft:    var(--yt-surface-2);
+  --skin-text:    var(--yt-text);
+  --skin-muted:   var(--yt-muted);
+  --skin-border:  var(--yt-line);
+  --skin-accent:  var(--yt-cyan-ink);
+  --skin-shadow:  rgba(26, 74, 104, 0.12);
+
+  /* V1 base sheet (styles.css) */
+  --near-black: var(--yt-bg);
+  --surface:    var(--yt-surface);
+  --surface-soft: var(--yt-surface-2);
+  --text:       var(--yt-text);
+  --muted:      var(--yt-muted);
+  --border:     var(--yt-line);
+
+  /* Academy light layer */
+  --academy-bg:         var(--yt-bg);
+  --academy-surface:    var(--yt-surface);
+  --academy-surface-2:  var(--yt-surface-2);
+  --academy-surface-3:  var(--yt-surface-3);
+  --academy-locked-bg:  var(--yt-locked-bg);
+  --academy-locked-ln:  var(--yt-locked-line);
+  --academy-text:       var(--yt-text);
+  --academy-text-strong:var(--yt-text-strong);
+  --academy-body:       var(--yt-body);
+  --academy-muted:      var(--yt-muted);
+  --academy-line:       var(--yt-line);
+  --academy-line-strong:var(--yt-line-strong);
+  --academy-shadow:     var(--yt-shadow);
+  --academy-shadow-soft:var(--yt-shadow-soft);
+  --academy-glow-cyan:  var(--yt-glow-cyan);
+  --academy-cyan:       var(--yt-cyan);
+  --academy-indigo:     var(--yt-indigo);
+  --academy-magenta:    var(--yt-magenta);
+  --academy-pink:       var(--yt-pink);
+  --academy-hotpink:    var(--yt-hotpink);
+  --academy-success:    var(--yt-success);
+  --academy-cyan-ink:   var(--yt-cyan-ink);
+  --academy-indigo-ink: var(--yt-indigo-ink);
+  --academy-magenta-ink:var(--yt-magenta-ink);
+  --academy-success-ink:var(--yt-success-ink);
+  --academy-xp-ink:     var(--yt-warning-ink);
+  --academy-wash-cyan:  var(--yt-wash-cyan);
+  --academy-wash-magenta: var(--yt-wash-magenta);
+  --academy-wash-success: var(--yt-wash-success);
+  --academy-track:      var(--yt-track);
+  --academy-gradient:   var(--yt-gradient-progress);
+  --academy-sky:        var(--yt-gradient-sky);
+}
+
+/* --------------------------------------------------------------------------
+   GLOBAL SURFACE — daylight, water, blueprint grid
+   -------------------------------------------------------------------------- */
+html { background: var(--yt-bg) !important; color-scheme: light; }
+body {
+  background:
+    radial-gradient(circle at 85% 8%, rgba(47, 210, 255, 0.10), transparent 30%),
+    radial-gradient(circle at 8% 70%, rgba(61, 61, 234, 0.05), transparent 32%),
+    var(--yt-bg) !important;
+  color: var(--yt-text) !important;
+  font-family: var(--yt-font);
+}
+.app-frame { background: linear-gradient(180deg, #ffffff 0%, var(--yt-bg) 40%, #edf8fd 100%) !important; }
+.app-shell::before {
+  background:
+    repeating-linear-gradient(90deg, rgba(47, 210, 255, 0.07) 0 1px, transparent 1px 44px),
+    repeating-linear-gradient(0deg,  rgba(47, 210, 255, 0.07) 0 1px, transparent 1px 44px) !important;
+}
+.app-shell::after { border-color: var(--yt-line) !important; }
+.shell-glow, .dashboard-watermark { display: none !important; }
+.app-screen.is-active { color: var(--yt-text); }
+
+/* ==========================================================================
+   LEGACY TEXT COLOURS → BRAND TOKENS
+   --------------------------------------------------------------------------
+   Older V1 sheets pin ink colours with `#screen-x … !important`. The prefix
+   `:root:not(#_r):not(#_r)` adds two id-weights so these token rules win
+   without editing the V1 files.
+   ========================================================================== */
+
+/* ---- Academy: headings and body ink ---- */
+:root:not(#_r):not(#_r) #screen-academy .academy-topbar h1,
+:root:not(#_r):not(#_r) #screen-academy .gei-path-title h2,
+:root:not(#_r):not(#_r) #screen-academy .academy-day-card h3,
+:root:not(#_r):not(#_r) #screen-academy .gei-stage-link h3 {
+  color: var(--v2-text) !important;
+  -webkit-text-fill-color: var(--v2-text) !important;
+}
+:root:not(#_r):not(#_r) #screen-academy .gei-path-progress-status,
+:root:not(#_r):not(#_r) #screen-academy .gei-path-progress-summary span,
+:root:not(#_r):not(#_r) #screen-academy .academy-day-number,
+:root:not(#_r):not(#_r) #screen-academy .academy-day-status,
+:root:not(#_r):not(#_r) #screen-academy .gei-stage-achievement b,
+:root:not(#_r):not(#_r) #screen-academy .gei-stage-achievement strong,
+:root:not(#_r):not(#_r) #gei-blueprint-status span {
+  color: var(--v2-muted) !important;
+  -webkit-text-fill-color: var(--v2-muted) !important;
+}
+:root:not(#_r):not(#_r) #screen-academy .academy-kicker,
+:root:not(#_r):not(#_r) #screen-academy .academy-section-label,
+:root:not(#_r):not(#_r) #screen-academy .gei-path-progress-summary strong,
+:root:not(#_r):not(#_r) #screen-academy .academy-day-card.is-active .academy-day-number,
+:root:not(#_r):not(#_r) #screen-academy .academy-day-card.is-active .academy-day-status,
+:root:not(#_r):not(#_r) #screen-academy .gei-stage-link.is-active .academy-day-number,
+:root:not(#_r):not(#_r) #screen-academy .gei-stage-link.is-active .academy-day-status,
+:root:not(#_r):not(#_r) #gei-blueprint-status #gei-blueprint-xp {
+  color: var(--v2-cyan) !important;
+  -webkit-text-fill-color: var(--v2-cyan) !important;
+}
+:root:not(#_r):not(#_r) #gei-blueprint-status #gei-blueprint-achievements {
+  color: var(--v2-magenta) !important;
+  -webkit-text-fill-color: var(--v2-magenta) !important;
+}
+
+/* ---- Quick-access tiles (Profile / XP / Vault…) follow the surface ---- */
+:root:not(#_r):not(#_r) .gei-quick-button {
+  background: var(--v2-surface) !important;
+  border-color: var(--v2-line) !important;
+  color: var(--v2-text) !important;
+}
+:root:not(#_r):not(#_r) .gei-quick-label { color: var(--v2-text) !important; }
+
+
+/* ---- Video Lab ---- */
+:root:not(#_r):not(#_r) #screen-video .gei-video-feature-copy h2,
+:root:not(#_r):not(#_r) #screen-video .gei-video-section-head h2,
+:root:not(#_r):not(#_r) #screen-video .video-section-head h2,
+:root:not(#_r):not(#_r) #screen-video .gei-video-save,
+:root:not(#_r):not(#_r) #screen-video .gei-video-watch-link {
+  color: var(--v2-text) !important;
+  -webkit-text-fill-color: var(--v2-text) !important;
+}
+:root:not(#_r):not(#_r) #screen-video .gei-video-watch-link { background: var(--v2-wash-cyan-2) !important; }
+:root:not(#_r):not(#_r) #screen-video .gei-video-feature-copy p,
+:root:not(#_r):not(#_r) #screen-video .gei-video-section-head p,
+:root:not(#_r):not(#_r) #screen-video .video-section-head p {
+  color: var(--v2-muted) !important;
+  -webkit-text-fill-color: var(--v2-muted) !important;
+}
+
+/* ---- Home ---- */
+:root .eyebrow,
+:root .card-label,
+:root .cta-kicker {
+  color: var(--v2-cyan) !important;
+}
+/* Discovery Guide banner text sits on the cover photo: guarantee a dark scrim. */
+:root:not(#_r):not(#_r) #screen-home .home-product-cta {
+  background: linear-gradient(0deg, rgba(4, 5, 10, 0.86), rgba(4, 5, 10, 0.55)) !important;
+  color: #ffffff !important;
+}
+
+/* ---- Portfolio ---- */
+:root:not(#_r):not(#_r) .research-work-number { color: var(--v2-cyan) !important; }
+
+/* ---- Bottom navigation ---- */
+:root .bottom-navigation {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-color: var(--v2-line) !important;
+  box-shadow: 0 -1px 0 var(--v2-line), 0 10px 28px rgba(16, 42, 67, 0.10) !important;
+}
+:root:not(#_r):not(#_r) .bottom-navigation .nav-button { color: var(--v2-muted) !important; }
+:root:not(#_r):not(#_r) .bottom-navigation .nav-button.active { color: var(--v2-cyan) !important; }
+
+/* ---- Day lessons ---- */
+:root:not(#_r):not(#_r) #v1-49-question h3,
+:root:not(#_r):not(#_r) .v1-49-question h3 {
+  color: var(--v2-text) !important;
+  -webkit-text-fill-color: var(--v2-text) !important;
+}
+/* Locked / not-yet-available controls stay visibly dimmed but legible. */
+:root:not(#_r):not(#_r) .completion button:disabled { opacity: 0.72 !important; }
+:root:not(#_r):not(#_r) .completion button { color: var(--v2-text) !important; }
+
+/* ---- Locked stages: say "locked" with ink and border, not by fading the
+        whole card to 45% (which made titles unreadable). ---- */
+:root:not(#_r):not(#_r) #screen-academy .academy-day-card.is-locked,
+:root:not(#_r):not(#_r) #screen-academy .gei-stage-link.is-locked {
+  opacity: 1 !important;
+  border-style: dashed !important;
+  filter: saturate(0.55) !important;
+}
+:root:not(#_r):not(#_r) #screen-academy .academy-topbar p {
+  color: var(--v2-muted) !important;
+  -webkit-text-fill-color: var(--v2-muted) !important;
+}
+
+/* ---- Academy hero "Continue Day 1" button ---- */
+:root #screen-academy .academy-primary-action {
+  color: var(--v2-text) !important;
+  border-color: var(--v2-cyan) !important;
+}
+:root:not(#_r):not(#_r) #screen-academy .academy-primary-action strong { color: var(--v2-cyan-foam) !important; }
+:root:not(#_r):not(#_r) #screen-academy .gei-stage-achievement.is-locked { opacity: 1 !important; }
+
+/* ---- Home: Discovery Guide arrow chip ---- */
+:root:not(#_r):not(#_r) #screen-home .home-product-cta b {
+  background: var(--v2-cyan) !important;
+  color: var(--v2-void) !important;
+}
+
+/* ---- Small labels on tinted chips: step up to the deeper accent ---- */
+:root:not(#_r):not(#_r) .research-work-number { color: var(--v2-cyan-foam) !important; }
+:root:not(#_r):not(#_r) .research-work-copy small { color: var(--v2-muted) !important; }
+:root .video-thumb { color: var(--v2-text) !important; }
+:root .video-label { color: var(--v2-cyan-foam) !important; }
+
+/* ---- Day lessons: diagnostics + locked "next day" link ---- */
+:root:not(#_r):not(#_r) .day4-audio-diagnostics strong { color: var(--v2-text) !important; }
+:root:not(#_r):not(#_r) .day-nav a.next.is-locked { opacity: 1 !important; color: var(--v2-muted) !important; border-style: dashed !important; }
+
+
+
+/* ==========================================================================
+   SHARED COMPONENT LANGUAGE
+   --------------------------------------------------------------------------
+   One button system, one focus ring, one disabled state, one type floor.
+   Pages keep their own layout; they do not invent their own button styles.
+   ========================================================================== */
+
+:root { --yt-btn-primary: linear-gradient(180deg, #6fe3ff, var(--yt-cyan) 60%, #25b9ee); }
+
+/* PRIMARY — cyan fill, dark readable text */
+:root:not(#_r):not(#_r) .academy-cta,
+:root:not(#_r):not(#_r) .splash-enter,
+:root:not(#_r):not(#_r) .gei-simulator-enter,
+:root:not(#_r):not(#_r) .gei-game-btn.primary,
+:root:not(#_r):not(#_r) .gei-control.release,
+:root:not(#_r):not(#_r) .ftl-clue,
+:root:not(#_r):not(#_r) .ftl-guide-go,
+:root:not(#_r):not(#_r) .video-primary,
+:root:not(#_r):not(#_r) #v1-53-gate-save,
+:root:not(#_r):not(#_r) .academy-guide-action,
+:root:not(#_r):not(#_r) .gei-video-continue,
+:root:not(#_r):not(#_r) .gei-video-academy-link {
+  background: var(--yt-btn-primary) !important;
+  border: 1px solid var(--yt-cyan) !important;
+  color: var(--yt-text-strong) !important;
+  -webkit-text-fill-color: var(--yt-text-strong) !important;
+  box-shadow: 0 3px 0 #1b86b4, 0 8px 16px rgba(47, 210, 255, 0.28) !important;
+  text-shadow: none !important;
+}
+:root:not(#_r):not(#_r) .academy-cta *,
+:root:not(#_r):not(#_r) .splash-enter * { color: var(--yt-text-strong) !important; -webkit-text-fill-color: var(--yt-text-strong) !important; }
+:root:not(#_r):not(#_r) .cta-arrow { background: rgba(255, 255, 255, 0.55) !important; border-color: rgba(11, 29, 53, 0.25) !important; color: var(--yt-text-strong) !important; }
+
+/* SECONDARY — white, cyan/indigo border */
+:root:not(#_r):not(#_r) .splash-skip,
+:root:not(#_r):not(#_r) .gei-simulator-top-actions button,
+:root:not(#_r):not(#_r) .gei-simulator-return,
+:root:not(#_r):not(#_r) .gei-game-btn:not(.primary),
+:root:not(#_r):not(#_r) .gei-game-complete-card button,
+:root:not(#_r):not(#_r) .gei-mission button,
+:root:not(#_r):not(#_r) .ftl-guide-close {
+  background: var(--yt-surface) !important;
+  border: 1.5px solid var(--yt-line-strong) !important;
+  color: var(--yt-indigo-ink) !important;
+  -webkit-text-fill-color: var(--yt-indigo-ink) !important;
+  box-shadow: var(--yt-shadow-soft) !important;
+}
+
+/* Focus: indigo ring + cyan halo, visible on white */
+:root :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--yt-indigo) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 6px var(--yt-wash-cyan);
+}
+
+/* Disabled: readable, clearly not interactive */
+:root button:disabled,
+:root [aria-disabled="true"] { cursor: not-allowed; }
+
+/* Type floor: nothing meaningful below 12px on a phone */
+:root:not(#_r):not(#_r) .splash-kicker,
+:root:not(#_r):not(#_r) .splash-meta,
+:root:not(#_r):not(#_r) .gei-simulator-kicker,
+:root:not(#_r):not(#_r) .gei-simulator-stat span,
+:root:not(#_r):not(#_r) .gei-simulator-stage-day,
+:root:not(#_r):not(#_r) .gei-simulator-stage small,
+:root:not(#_r):not(#_r) .gei-simulator-bottom-copy span,
+:root:not(#_r):not(#_r) .gei-simulator-panel-head span,
+:root:not(#_r):not(#_r) .gei-simulator-eyebrow,
+:root:not(#_r):not(#_r) .gei-game-brand small,
+:root:not(#_r):not(#_r) .gei-game-kicker,
+:root:not(#_r):not(#_r) .gei-game-stat small,
+:root:not(#_r):not(#_r) .gei-mission-head small,
+:root:not(#_r):not(#_r) .gei-mission b,
+:root:not(#_r):not(#_r) .gei-mission p,
+:root:not(#_r):not(#_r) .gei-game-footer span,
+:root:not(#_r):not(#_r) .gei-pressure label,
+:root:not(#_r):not(#_r) .gei-source-label,
+:root:not(#_r):not(#_r) .gei-target,
+:root:not(#_r):not(#_r) .music-lab-entry small,
+:root:not(#_r):not(#_r) .nav-label { font-size: max(12px, 1em) !important; }
+:root:not(#_r):not(#_r) .gei-game-btn,
+:root:not(#_r):not(#_r) .gei-control,
+:root:not(#_r):not(#_r) .gei-simulator-enter,
+:root:not(#_r):not(#_r) .gei-simulator-top-actions button,
+:root:not(#_r):not(#_r) .gei-simulator-return,
+:root:not(#_r):not(#_r) .gei-mission button { font-size: 12px !important; min-height: 44px; }
+:root:not(#_r):not(#_r) .gei-mission strong,
+:root:not(#_r):not(#_r) .gei-simulator-stage strong { font-size: 13px !important; }
+:root:not(#_r):not(#_r) .gei-simulator-stage small,
+:root:not(#_r):not(#_r) .gei-game-stat small,
+:root:not(#_r):not(#_r) .gei-simulator-bottom-copy span { font-size: 12px !important; }
+
+/* ==========================================================================
+   SPLASH — the artwork stays natural; the UI chrome is daylight
+   ========================================================================== */
+:root:not(#_r):not(#_r) .splash-layer { background: var(--yt-bg); }
+:root:not(#_r):not(#_r) .splash-artwork { background-color: var(--yt-surface-3); }
+:root:not(#_r):not(#_r) .splash-scrim {
+  background:
+    linear-gradient(180deg, rgba(245, 251, 255, 0) 0%, rgba(245, 251, 255, 0) 38%, rgba(245, 251, 255, 0.90) 66%, var(--yt-bg) 100%),
+    linear-gradient(120deg, rgba(47, 210, 255, 0.12), transparent 44%, rgba(243, 16, 186, 0.08));
+}
+:root:not(#_r):not(#_r) .splash-brand {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: var(--yt-line-strong);
+  box-shadow: var(--yt-shadow);
+}
+:root:not(#_r):not(#_r) .splash-brand-logo { filter: none; }
+:root:not(#_r):not(#_r) .splash-kicker { color: var(--yt-cyan-ink); font-size: 12px; }
+:root:not(#_r):not(#_r) .splash-title { color: var(--yt-text); }
+:root:not(#_r):not(#_r) .splash-subtitle { color: var(--yt-body); font-size: 15px; }
+:root:not(#_r):not(#_r) .splash-meta { color: var(--yt-muted); font-size: 12px; }
+:root:not(#_r):not(#_r) .splash-meta-dot { box-shadow: none; }
+:root:not(#_r):not(#_r) .splash-progress { background: var(--yt-track); }
+:root:not(#_r):not(#_r) .splash-progress > span { background: var(--yt-gradient-progress); }
+
+/* ==========================================================================
+   HOME
+   ========================================================================== */
+:root:not(#_r):not(#_r) .gei-start-preview {
+  background: linear-gradient(160deg, var(--yt-surface), var(--yt-surface-2)) !important;
+  border-color: var(--yt-line) !important;
+  color: var(--yt-text) !important;
+  box-shadow: var(--yt-shadow-soft) !important;
+}
+:root:not(#_r):not(#_r) .gei-start-preview .day1-preview-copy strong,
+:root:not(#_r):not(#_r) .gei-start-preview strong { color: var(--yt-text) !important; }
+:root:not(#_r):not(#_r) .gei-start-preview small { color: var(--yt-muted) !important; font-size: 13px !important; }
+:root:not(#_r):not(#_r) .music-lab-entry small { color: var(--yt-muted); }
+
+/* ==========================================================================
+   DAY LESSONS (Follow the Light)
+   --------------------------------------------------------------------------
+   Each day used to carry its own accent colour. One brand: every day uses the
+   YallToo signal colours. Day progress is shown by state, not by new hues. */
+html.ftl .ftl-guide, html.ftl .day-app.ftl-day { --ftl-accent: var(--yt-cyan-ink) !important; --ftl-accent-2: var(--yt-indigo) !important; }
+html.ftl .ftl-node { --node: var(--yt-cyan-ink) !important; }
+html.ftl .ftl-node.is-locked { background: var(--yt-locked-bg); border-style: dashed; }
+html.ftl .ftl-celebrate:empty { display: none; }
+html.ftl .ftl-adam-fx i { background: var(--yt-cyan); box-shadow: 0 0 15px var(--yt-cyan); }
+
+/* ==========================================================================
+   SIMULATOR WALL + GAME — same brand, different experience
+   --------------------------------------------------------------------------
+   Chrome (panels, text, buttons) is the YallToo light system. The water scene
+   inside the game canvas is artwork and keeps its deep-water palette. */
+:root {
+  --bg: var(--yt-bg);
+  --panel: var(--yt-surface);
+  --line: var(--yt-line-strong);
+}
+.gei-simulator-wall, .gei-game { --cyan: var(--yt-cyan-ink); --hotpink: var(--yt-magenta-ink); color: var(--yt-text); }
+html .gei-simulator-wall { background: var(--yt-gradient-sky); }
+html .gei-simulator-wall:before {
+  background-image:
+    linear-gradient(rgba(47, 210, 255, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(47, 210, 255, 0.10) 1px, transparent 1px);
+}
+.gei-simulator-glow { opacity: 0.12; }
+.gei-simulator-mark { background: var(--yt-surface) !important; border-color: var(--yt-line-strong) !important; }
+.gei-simulator-hero, .gei-simulator-panel {
+  background: linear-gradient(150deg, var(--yt-surface), var(--yt-surface-2)) !important;
+  border-color: var(--yt-line-strong) !important;
+  box-shadow: var(--yt-shadow) !important;
+}
+.gei-simulator-hero h1 { color: var(--yt-text); }
+.gei-simulator-hero p { color: var(--yt-body); }
+.gei-simulator-stat, .gei-simulator-stage {
+  background: var(--yt-surface) !important;
+  border-color: var(--yt-line) !important;
+  box-shadow: var(--yt-shadow-soft);
+}
+.gei-simulator-stage strong { color: var(--yt-text); }
+.gei-simulator-stage.is-live { border-color: var(--yt-cyan) !important; }
+.gei-simulator-bottom {
+  background: var(--yt-surface) !important;
+  border-color: var(--yt-line-strong) !important;
+  box-shadow: var(--yt-shadow-soft);
+}
+.gei-simulator-bottom-copy strong { color: var(--yt-text); }
+.gei-simulator-enter:disabled { opacity: 1; background: var(--yt-locked-bg) !important; color: var(--yt-muted) !important; -webkit-text-fill-color: var(--yt-muted) !important; box-shadow: inset 0 0 0 1.5px var(--yt-locked-line) !important; border-color: transparent !important; }
+.gei-simulator-locked, .gei-game-complete { background: rgba(214, 233, 245, 0.72) !important; }
+.gei-simulator-lock-card, .gei-game-complete-card {
+  background: var(--yt-surface) !important;
+  border: 1.5px solid var(--yt-magenta) !important;
+  box-shadow: var(--yt-shadow-lift) !important;
+  color: var(--yt-text);
+}
+.gei-simulator-lock-card p, .gei-game-complete-card p { color: var(--yt-body) !important; font-size: 15px !important; }
+.gei-game-complete-card { border-color: var(--yt-cyan) !important; }
+
+html .gei-game { background: var(--yt-gradient-sky); color: var(--yt-text); }
+.gei-game-brand strong { color: var(--yt-text); }
+.gei-game-field, .gei-game-missions, .gei-game-footer {
+  background: var(--yt-surface) !important;
+  border-color: var(--yt-line-strong) !important;
+  box-shadow: var(--yt-shadow) !important;
+}
+.gei-game-field h1 { color: var(--yt-text); }
+.gei-game-stat, .gei-mission { background: var(--yt-surface-2) !important; border-color: var(--yt-line) !important; }
+.gei-game-stat small, .gei-mission p, .gei-game-footer span { color: var(--yt-muted) !important; }
+.gei-game-stat strong, .gei-mission strong { color: var(--yt-text); }
+.gei-mission.is-active { border-color: var(--yt-cyan) !important; box-shadow: 0 0 0 3px var(--yt-wash-cyan) !important; }
+.gei-mission.is-done { border-color: var(--yt-success) !important; background: var(--yt-wash-success) !important; opacity: 1; }
+.gei-mission-head small, .gei-mission b, .gei-game-footer strong, .gei-game-brand small { color: var(--yt-cyan-ink) !important; }
+.gei-game-kicker { color: var(--yt-magenta-ink) !important; }
+.gei-game-field h1 span { color: var(--yt-cyan-ink); }
+/* The field is a daylight blueprint schematic: pale water, ink labels. */
+.gei-game-canvas { border: 1px solid var(--yt-line-strong); box-shadow: var(--yt-shadow-soft) !important; }
+.gei-game-canvas::before, .gei-game-canvas::after { color: var(--yt-muted) !important; font-size: 12px !important; }
+.gei-game-canvas::before { border-top-color: var(--yt-line-strong) !important; }
+.gei-control:not(.release) { background: rgba(255, 255, 255, 0.94) !important; border-color: var(--yt-line-strong) !important; color: var(--yt-text-strong) !important; }
+@media (max-width: 480px) {
+  .gei-target { top: 38% !important; right: 4% !important; width: 84px !important; height: 84px !important; }
+}
+
+/* ==========================================================================
+   TYPE FLOOR + LEGACY SMALL TEXT — meaningful text is never below 12px
+   ========================================================================== */
+:root:not(#_r):not(#_r) .day-pill,
+:root:not(#_r):not(#_r) .screen-kicker,
+:root:not(#_r):not(#_r) .gei-portfolio-store-action,
+:root:not(#_r):not(#_r) .research-carousel-count,
+:root:not(#_r):not(#_r) .research-hero-number,
+:root:not(#_r):not(#_r) .research-hero-source,
+:root:not(#_r):not(#_r) .research-hero-card-copy span,
+:root:not(#_r):not(#_r) .research-hero-card-copy small,
+:root:not(#_r):not(#_r) .video-adam-copy small,
+:root:not(#_r):not(#_r) .video-thumb span,
+:root:not(#_r):not(#_r) .video-label,
+:root:not(#_r):not(#_r) .video-card-meta,
+:root:not(#_r):not(#_r) .video-card p,
+:root:not(#_r):not(#_r) .support-gei-blueprint-kicker,
+:root:not(#_r):not(#_r) .support-gei-blueprint-action,
+:root:not(#_r):not(#_r) .support-contact-copy span,
+:root:not(#_r):not(#_r) .support-email,
+:root:not(#_r):not(#_r) .ftl-lesson span,
+:root:not(#_r):not(#_r) .ftl-mini,
+:root:not(#_r):not(#_r) .ftl-guide-next span,
+:root:not(#_r):not(#_r) .mascot-caption,
+:root:not(#_r):not(#_r) .home-adam-assistant-kicker,
+:root:not(#_r):not(#_r) .home-adam-assistant-next-label,
+:root:not(#_r):not(#_r) .home-adam-assistant-label,
+:root:not(#_r):not(#_r) .home-adam-assistant-footer,
+:root:not(#_r):not(#_r) .home-adam-assistant-next-value,
+:root:not(#_r):not(#_r) .home-adam-adaptive-reason-label,
+:root:not(#_r):not(#_r) .home-adam-adaptive-reason > span:last-child,
+:root:not(#_r):not(#_r) .gei-quick-label,
+:root:not(#_r):not(#_r) .cta-kicker,
+:root:not(#_r):not(#_r) .member-status-copy small,
+:root:not(#_r):not(#_r) .member-status-copy strong { font-size: max(12px, 1em) !important; }
+/* explicit 12px where the legacy rule is expressed as an absolute small size */
+:root:not(#_r):not(#_r) .day-pill,
+:root:not(#_r):not(#_r) .video-card p,
+:root:not(#_r):not(#_r) .video-thumb span { font-size: 12px !important; }
+
+/* Home tiles that still painted a dark glass well */
+:root:not(#_r):not(#_r) .day1-preview-copy {
+  background: var(--yt-surface-2) !important;
+  border: 1px solid var(--yt-line) !important;
+  color: var(--yt-text) !important;
+}
+:root:not(#_r):not(#_r) .blueprint-count,
+:root:not(#_r):not(#_r) .day-pill.is-current { color: var(--yt-cyan-ink) !important; }
+:root:not(#_r):not(#_r) .day-pill { color: var(--yt-muted); }
+:root:not(#_r):not(#_r) .day-pill.is-current { background: var(--yt-wash-cyan) !important; border-color: var(--yt-cyan) !important; }
+:root:not(#_r):not(#_r) .gei-start-preview .card-label { color: var(--yt-cyan-ink) !important; }
+
+/* ==========================================================================
+   DIALOGS, OVERLAYS + CELEBRATIONS — one modal language
+   --------------------------------------------------------------------------
+   Frosted daylight scrim, white card, indigo-blue border, navy text, cyan
+   primary action, white secondary action. Danger only where it is destructive.
+   Achievement moments (reward reveal, mastery, milestones) get the magenta
+   accent on a pale wash. */
+:root:not(#_r):not(#_r) :is(.gei-reset-confirm, .gei-gate-ceremony, .gei-gate-ceremony.is-success, .v1-46-modal-backdrop, .gei-day-avatar-popout, .gei-feedback, .v1-53-gate-backdrop, .gei-portfolio-dialog-backdrop, .video-adam-modal, .music-lab-modal, .v2-dialog, .academy-guide-backdrop) {
+  background: rgba(214, 233, 245, 0.72) !important;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+:root:not(#_r):not(#_r) :is(.gei-reset-dialog, .gei-gate-ceremony-dialog, .v1-46-achievement-dialog, .gei-day-avatar-popout-card, .gei-feedback-card, .video-adam-panel, .music-lab-panel, .gei-state-verification, .gei-dam-gate) {
+  background: var(--yt-surface) !important;
+  border: 1.5px solid var(--yt-line-strong) !important;
+  border-top: 4px solid var(--yt-cyan) !important;
+  box-shadow: var(--yt-shadow-lift) !important;
+  color: var(--yt-text) !important;
+}
+:root:not(#_r):not(#_r) :is(.gei-reset-dialog, .gei-gate-ceremony-dialog, .v1-46-achievement-dialog, .gei-day-avatar-popout-card, .gei-feedback-card, .video-adam-panel, .music-lab-panel, .gei-state-verification, .gei-dam-gate) :is(h1, h2, h3, strong, b):not(button *) {
+  color: var(--yt-text) !important;
+  -webkit-text-fill-color: var(--yt-text) !important;
+}
+:root:not(#_r):not(#_r) :is(.gei-reset-dialog, .gei-gate-ceremony-dialog, .v1-46-achievement-dialog, .gei-day-avatar-popout-card, .gei-feedback-card, .video-adam-panel, .music-lab-panel, .gei-state-verification, .gei-dam-gate) :is(p, small, li, label, time, .gei-gate-success-copy, .gei-feedback-copy) {
+  color: var(--yt-body) !important;
+  -webkit-text-fill-color: var(--yt-body) !important;
+  font-size: max(13px, 1em);
+}
+:root:not(#_r):not(#_r) :is(.gei-reset-dialog-kicker, .gei-gate-ceremony-kicker, .gei-feedback-kicker, .gei-day-avatar-popout-kicker, .gei-reset-dialog > strong, .gei-gate-success-copy strong, .gei-state-head span) {
+  color: var(--yt-cyan-ink) !important;
+  font-size: 12px !important;
+}
+:root:not(#_r):not(#_r) .gei-reset-dialog-kicker { color: var(--yt-magenta-ink) !important; }
+
+/* Destructive confirm = the one place danger colour is used */
+:root:not(#_r):not(#_r) .gei-reset-confirm-action {
+  background: var(--yt-danger) !important;
+  border: 1px solid var(--yt-danger) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+:root:not(#_r):not(#_r) .gei-reset-warning {
+  background: var(--yt-wash-magenta) !important;
+  border: 1px solid var(--yt-magenta) !important;
+}
+:root:not(#_r):not(#_r) .gei-reset-warning :is(span, strong, small) { color: var(--yt-text) !important; -webkit-text-fill-color: var(--yt-text) !important; font-size: 12px; }
+:root:not(#_r):not(#_r) .gei-reset-warning strong { font-size: 22px; }
+
+/* Secondary / primary actions inside dialogs */
+:root:not(#_r):not(#_r) :is(.gei-reset-cancel, .gei-gate-keep, .gei-feedback-action:not(.primary), .gei-day-avatar-close, .gei-feedback-close) {
+  background: var(--yt-surface) !important;
+  border: 1.5px solid var(--yt-line-strong) !important;
+  color: var(--yt-indigo-ink) !important;
+  -webkit-text-fill-color: var(--yt-indigo-ink) !important;
+  min-height: 44px;
+}
+:root:not(#_r):not(#_r) :is(.gei-gate-open-confirm, .gei-feedback-action.primary, .gei-gate-simulator-link, .gei-dam-gate-open) {
+  background: var(--yt-btn-primary) !important;
+  border: 1px solid var(--yt-cyan) !important;
+  color: var(--yt-text-strong) !important;
+  -webkit-text-fill-color: var(--yt-text-strong) !important;
+  box-shadow: 0 3px 0 #1b86b4 !important;
+}
+:root:not(#_r):not(#_r) .gei-dam-gate-open strong { color: var(--yt-text-strong) !important; }
+:root:not(#_r):not(#_r) :is(.gei-gate-ceremony-cost, .gei-feedback-stat, .gei-feedback-next, .gei-state-item, .gei-state-history, .gei-history-entry) {
+  background: var(--yt-surface-2) !important;
+  border-color: var(--yt-line) !important;
+}
+:root:not(#_r):not(#_r) :is(.gei-state-item b, .gei-state-note, .gei-history-note, .gei-history-empty, .gei-history-copy small, .gei-feedback-stat span, .gei-state-overall, .gei-history-count, .gei-history-entry time) {
+  color: var(--yt-muted) !important;
+  font-size: 12px !important;
+}
+:root:not(#_r):not(#_r) :is(.gei-state-item strong, .gei-history-copy strong, .gei-state-history-summary b, .gei-state-head h2, .gei-feedback-stat strong) { color: var(--yt-text) !important; font-size: 13px; }
+
+/* Achievement / milestone moments: magenta signal on a pale wash */
+:root:not(#_r):not(#_r) :is(.v1-47-reward-reveal, .adam-reward-unlock, .adam-mastery-rewards, .gei-mastery-milestone-pop, .gei-blueprint-finale, .v1-45-achievement-vault) {
+  background: linear-gradient(135deg, var(--yt-wash-magenta), var(--yt-wash-pink)) !important;
+  border: 1.5px solid var(--yt-magenta) !important;
+  box-shadow: var(--yt-shadow) !important;
+  color: var(--yt-text) !important;
+}
+:root:not(#_r):not(#_r) :is(.v1-47-reward-reveal, .adam-reward-unlock, .adam-mastery-rewards, .gei-mastery-milestone-pop, .v1-45-achievement-vault) :is(h1, h2, h3, strong, b) { color: var(--yt-text) !important; -webkit-text-fill-color: var(--yt-text) !important; }
+:root:not(#_r):not(#_r) :is(.v1-47-reward-reveal, .adam-reward-unlock, .adam-mastery-rewards, .gei-mastery-milestone-pop, .v1-45-achievement-vault) :is(p, small, span) { color: var(--yt-body) !important; -webkit-text-fill-color: var(--yt-body) !important; }
+
+/* Forms: one input language */
+:root:not(#_r):not(#_r) :is(input, textarea, select):not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
+  background: var(--yt-surface) !important;
+  border: 1.5px solid var(--yt-line-strong) !important;
+  border-radius: var(--yt-radius-sm);
+  color: var(--yt-text) !important;
+  -webkit-text-fill-color: var(--yt-text) !important;
+  font-size: max(16px, 1em);
+}
+:root:not(#_r):not(#_r) :is(input, textarea)::placeholder { color: var(--yt-muted) !important; -webkit-text-fill-color: var(--yt-muted) !important; opacity: 1; }
+:root:not(#_r):not(#_r) :is(input, textarea, select):focus { border-color: var(--yt-indigo) !important; box-shadow: 0 0 0 4px var(--yt-wash-cyan) !important; }
+
+/* Quick-access / profile pop-out headings never clip */
+:root:not(#_r):not(#_r) .gei-popout-header h2 { overflow-wrap: anywhere; font-size: clamp(22px, 7vw, 28px) !important; }
+:root:not(#_r):not(#_r) .gei-popout-dialog { max-height: calc(100dvh - 24px); overflow-y: auto; }
+
+/* Video + portfolio leftovers that painted near-black chips */
+:root:not(#_r):not(#_r) :is(.gei-portfolio-mascot-badge, .gei-portfolio-dialog-close, .gei-video-input-card textarea) { background: var(--yt-surface) !important; color: var(--yt-text) !important; }
+:root:not(#_r):not(#_r) :is(.card-label, .support-kicker, .support-goal-label, .support-moses-copy span, .support-method span, .support-contact-copy span) { font-size: max(12px, 1em) !important; }

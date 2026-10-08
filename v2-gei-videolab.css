@@ -710,7 +710,7 @@
 
 #screen-video .video-adam-copy small{
   display:block !important;
-  font-size:10px !important;
+  font-size:12px !important;
   line-height:1.1 !important;
 }
 
@@ -744,7 +744,7 @@
     height:58px !important;
   }
   #screen-video .video-adam-copy small{
-    font-size:8px !important;
+    font-size:12px !important;
   }
   #screen-video .video-adam-copy strong{
     font-size:14px !important;
@@ -767,7 +767,7 @@
   align-self:center !important;
 }
 #screen-video .video-adam-copy small{
-  font-size:10px !important;
+  font-size:12px !important;
   line-height:1.15 !important;
 }
 #screen-video .video-adam-copy strong{
@@ -796,7 +796,7 @@
     grid-template-columns:54px minmax(0,1fr) !important;
   }
   #screen-video .video-adam-image{width:50px !important;height:62px !important}
-  #screen-video .video-adam-copy small{font-size:8px !important}
+  #screen-video .video-adam-copy small{font-size:12px !important}
   #screen-video .video-adam-copy strong{font-size:15px !important}
   #screen-video .video-adam-action{width:28px;height:28px;font-size:22px}
 }

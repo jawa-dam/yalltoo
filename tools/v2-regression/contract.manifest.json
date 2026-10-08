@@ -1,6 +1,5 @@
 {
   "storageKeys": [
-    "gei-academy-skin-v1",
     "gei-member-since-v1",
     "gei-splash-image-deck-v1",
     "gei-splash-last-image-v1",
@@ -235,8 +234,6 @@
       "academy.css",
       "mascot.css",
       "portfolio.css",
-      "skin.css",
-      "skin-theme.css",
       "video.css",
       "progress.css",
       "feedback.css",
@@ -277,7 +274,6 @@
       "adam-context.js",
       "feedback.js",
       "portfolio.js",
-      "skin.js",
       "member.js",
       "video.js",
       "profile.js",

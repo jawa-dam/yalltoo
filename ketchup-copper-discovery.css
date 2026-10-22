@@ -5,6 +5,13 @@
    Reads --yt-* brand tokens from yalltoo-theme.css.
    ========================================================================== */
 
+.kc-page,
+.kc-page *,
+.kc-page *::before,
+.kc-page *::after {
+  box-sizing: border-box;
+}
+
 .kc-page {
   --kc-ketchup:       #d93025;
   --kc-ketchup-light: #fbe9e7;
@@ -15,6 +22,7 @@
   --kc-copper-wash:   rgba(184, 115, 51, 0.10);
   --kc-copper-shine:  linear-gradient(135deg, #d4a06a, #b87333 40%, #8c5a2a 70%, #d4a06a);
 
+  margin: 0;
   min-height: 100dvh;
   background: var(--yt-bg);
   color: var(--yt-text);

@@ -215,6 +215,29 @@
   color: var(--yt-text-strong);
 }
 
+.kc-story-figure {
+  margin: 28px 0 0;
+  padding: 0;
+  border-radius: var(--yt-radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--yt-line);
+  box-shadow: var(--yt-shadow-soft);
+}
+.kc-story-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.kc-story-figure figcaption {
+  padding: 10px 16px;
+  background: var(--yt-surface-2);
+  border-top: 1px solid var(--yt-line);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--yt-muted);
+  text-align: center;
+}
+
 /* ==========================================================================
    VIDEO SECTION
    ========================================================================== */
@@ -312,6 +335,25 @@
   color: var(--yt-muted);
   font-size: 12px;
   opacity: 0.7;
+}
+
+.kc-video-status-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  margin-bottom: 12px;
+  border-radius: 999px;
+  background: var(--yt-wash-cyan);
+  border: 1px solid rgba(47, 210, 255, 0.25);
+  color: var(--yt-cyan-ink);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.kc-video-status-badge.is-error {
+  background: var(--kc-ketchup-wash);
+  border-color: rgba(217, 48, 37, 0.2);
+  color: var(--kc-ketchup);
 }
 
 .kc-video-info {

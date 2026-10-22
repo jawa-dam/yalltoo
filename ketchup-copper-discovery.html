@@ -21,6 +21,8 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Can Ketchup Clean Copper? The Surprising 20-Minute Test" />
   <meta name="twitter:description" content="Can ketchup clean tarnished copper? Watch a surprising copper-sink experiment, explore penny and jewelry tests, and try the ketchup cleaning challenge." />
+  <meta property="og:image" content="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/ketchup-cleans-copper_-before-after-8Hr1l91EM77SM0D5.png" />
+  <meta name="twitter:image" content="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/ketchup-cleans-copper_-before-after-8Hr1l91EM77SM0D5.png" />
 
   <link rel="stylesheet" href="yalltoo-theme.css" />
   <link rel="stylesheet" href="ketchup-copper-discovery.css" />
@@ -51,8 +53,8 @@
         <h1 id="kc-hero-heading">Can Ketchup Clean <span>Copper</span>?</h1>
         <p class="kc-hero-subtitle">One kitchen accident. One surprising rinse. An experiment worth investigating.</p>
         <div class="kc-hero-ctas">
-          <a class="kc-btn-primary" href="#video-evidence" id="kc-watch-cta">
-            &#9654; WATCH THE ORIGINAL EXPERIMENT
+          <a class="kc-btn-primary" href="#kc-story-heading" id="kc-watch-cta">
+            &#128214; READ THE DISCOVERY STORY
           </a>
           <a class="kc-btn-secondary" href="#challenges">
             &#129514; TRY THE KETCHUP CHALLENGE
@@ -77,6 +79,11 @@
           <p>That unexpected observation made me curious: could ordinary ketchup help remove tarnish from copper?</p>
           <p>Ketchup contains acidic ingredients that may react with some tarnished copper surfaces, but this is based on a single accidental observation — not a controlled scientific study. Results may vary by material, finish, and ketchup brand.</p>
         </div>
+
+        <figure class="kc-story-figure">
+          <img src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/ketchup-cleans-copper_-before-after-8Hr1l91EM77SM0D5.png" alt="Before and after comparison showing a copper surface before and after ketchup was rinsed away" loading="lazy" />
+          <figcaption>Before and after: the original observation that started the discovery</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -95,9 +102,9 @@
             <div class="kc-video-embed">
               <div class="kc-video-placeholder" id="video-original-placeholder">
                 <div>
-                  <div class="kc-video-placeholder-icon" aria-hidden="true">&#9654;</div>
-                  <p>Original experiment video coming soon</p>
-                  <small>The owner will add the video URL here</small>
+                  <span class="kc-video-status-badge">Coming Soon</span>
+                  <div class="kc-video-placeholder-icon" aria-hidden="true">&#127909;</div>
+                  <p>Original experiment video is being prepared</p>
                 </div>
               </div>
             </div>
@@ -115,8 +122,9 @@
             <div class="kc-video-embed">
               <div class="kc-video-placeholder">
                 <div>
-                  <div class="kc-video-placeholder-icon" aria-hidden="true">&#9654;</div>
-                  <p>Penny test video coming soon</p>
+                  <span class="kc-video-status-badge">Coming Soon</span>
+                  <div class="kc-video-placeholder-icon" aria-hidden="true">&#127909;</div>
+                  <p>Penny test video is being prepared</p>
                 </div>
               </div>
             </div>
@@ -131,8 +139,9 @@
             <div class="kc-video-embed">
               <div class="kc-video-placeholder">
                 <div>
-                  <div class="kc-video-placeholder-icon" aria-hidden="true">&#9654;</div>
-                  <p>Jewelry test video coming soon</p>
+                  <span class="kc-video-status-badge">Coming Soon</span>
+                  <div class="kc-video-placeholder-icon" aria-hidden="true">&#127909;</div>
+                  <p>Jewelry test video is being prepared</p>
                 </div>
               </div>
             </div>
@@ -147,8 +156,9 @@
             <div class="kc-video-embed">
               <div class="kc-video-placeholder">
                 <div>
-                  <div class="kc-video-placeholder-icon" aria-hidden="true">&#9654;</div>
-                  <p>Before &amp; after comparison coming soon</p>
+                  <span class="kc-video-status-badge">Coming Soon</span>
+                  <div class="kc-video-placeholder-icon" aria-hidden="true">&#127909;</div>
+                  <p>Comparison video is being prepared</p>
                 </div>
               </div>
             </div>
@@ -163,8 +173,9 @@
             <div class="kc-video-embed">
               <div class="kc-video-placeholder">
                 <div>
-                  <div class="kc-video-placeholder-icon" aria-hidden="true">&#9654;</div>
-                  <p>Sink follow-up video coming soon</p>
+                  <span class="kc-video-status-badge">Coming Soon</span>
+                  <div class="kc-video-placeholder-icon" aria-hidden="true">&#127909;</div>
+                  <p>Follow-up video is being prepared</p>
                 </div>
               </div>
             </div>
@@ -389,28 +400,62 @@
   </footer>
 
   <!-- ================================================================
-       VIDEO CONFIGURATION SCRIPT
+       VIDEO CONFIGURATION
        ================================================================
-       To add a video, set the `url` field for the relevant entry below.
-       For YouTube: use the embed URL format: https://www.youtube.com/embed/VIDEO_ID
-       For direct video files: use a direct URL to an .mp4 or supported format.
+       HOW TO ACTIVATE A VIDEO:
+
+       1. Find the entry below for the video you want to publish.
+       2. Set  published: true
+       3. Set  url  to the real, public video URL:
+            YouTube:  "https://www.youtube.com/embed/VIDEO_ID"
+            Direct:   "https://your-host.com/path/to/video.mp4"
+       4. Save the file and deploy.
+
+       The page renders the player automatically — no other edits needed.
+       If a video is marked published but the URL is missing or invalid,
+       the page shows an error placeholder instead of a broken player.
        ================================================================ -->
   <script>
     (function () {
       "use strict";
 
       var VIDEO_CONFIG = {
-        original:    { id: "video-original",    url: "", type: "youtube", title: "Original Copper Sink Observation" },
-        penny:       { id: "video-penny",       url: "", type: "youtube", title: "Penny Demonstration" },
-        jewelry:     { id: "video-jewelry",     url: "", type: "youtube", title: "Copper Jewelry Test" },
-        beforeafter: { id: "video-beforeafter",  url: "", type: "youtube", title: "Before & After Comparison" },
-        sink:        { id: "video-sink",         url: "", type: "youtube", title: "Copper Sink Follow-Up" }
+        original:    { id: "video-original",   published: false, url: "", type: "youtube", title: "Original Copper Sink Observation" },
+        penny:       { id: "video-penny",      published: false, url: "", type: "youtube", title: "Penny Demonstration" },
+        jewelry:     { id: "video-jewelry",    published: false, url: "", type: "youtube", title: "Copper Jewelry Test" },
+        beforeafter: { id: "video-beforeafter", published: false, url: "", type: "youtube", title: "Before & After Comparison" },
+        sink:        { id: "video-sink",       published: false, url: "", type: "youtube", title: "Copper Sink Follow-Up" }
       };
 
+      var YOUTUBE_RE = /^https:\/\/www\.(youtube\.com|youtube-nocookie\.com)\/embed\/[\w-]+/;
+      var VIDEO_RE = /^https:\/\/.+\.(mp4|webm|ogg)(\?[^#]*)?$/i;
+
+      function isValidUrl(url, type) {
+        if (!url || typeof url !== "string") return false;
+        if (type === "youtube") return YOUTUBE_RE.test(url);
+        if (type === "video") return VIDEO_RE.test(url);
+        return false;
+      }
+
+      function showError(placeholder) {
+        while (placeholder.firstChild) placeholder.firstChild.remove();
+        var wrap = document.createElement("div");
+        var badge = document.createElement("span");
+        badge.className = "kc-video-status-badge is-error";
+        badge.textContent = "Configuration Error";
+        var msg = document.createElement("p");
+        msg.textContent = "This video is marked as published but the URL is missing or invalid.";
+        wrap.appendChild(badge);
+        wrap.appendChild(msg);
+        placeholder.appendChild(wrap);
+      }
+
       function renderVideos() {
+        var originalReady = false;
+
         Object.keys(VIDEO_CONFIG).forEach(function (key) {
           var config = VIDEO_CONFIG[key];
-          if (!config.url) return;
+          if (!config.published) return;
 
           var card = document.getElementById(config.id);
           if (!card) return;
@@ -419,6 +464,11 @@
           if (!embed) return;
 
           var placeholder = embed.querySelector(".kc-video-placeholder");
+
+          if (!isValidUrl(config.url, config.type)) {
+            if (placeholder) showError(placeholder);
+            return;
+          }
 
           if (config.type === "youtube") {
             var iframe = document.createElement("iframe");
@@ -441,7 +491,17 @@
             if (placeholder) placeholder.remove();
             embed.appendChild(video);
           }
+
+          if (key === "original") originalReady = true;
         });
+
+        if (originalReady) {
+          var cta = document.getElementById("kc-watch-cta");
+          if (cta) {
+            cta.href = "#video-evidence";
+            cta.textContent = "▶ WATCH THE ORIGINAL EXPERIMENT";
+          }
+        }
       }
 
       if (document.readyState === "loading") {

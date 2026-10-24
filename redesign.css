@@ -545,9 +545,6 @@ button:focus-visible {
 }
 
 .audio-preview-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-bottom: var(--sp-16);
 }
 
@@ -555,9 +552,16 @@ button:focus-visible {
   margin-bottom: 0;
 }
 
-.audio-preview-header h3 {
+.audio-preview-header h2 {
   font-size: var(--fs-lg);
   margin-top: var(--sp-4);
+}
+
+.audio-preview-header p {
+  font-size: var(--fs-sm);
+  color: var(--yt-muted);
+  line-height: 1.5;
+  margin-top: var(--sp-8);
 }
 
 /* Audio Player */
@@ -1341,12 +1345,17 @@ button:focus-visible {
   padding: var(--sp-8);
 }
 
-.support-method h3 {
-  font-size: var(--fs-base);
-  margin-bottom: var(--sp-2);
+.support-method div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
 }
 
-.support-method p {
+.support-method strong {
+  font-size: var(--fs-base);
+}
+
+.support-method span {
   font-size: var(--fs-sm);
   color: var(--yt-muted);
 }

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090b13">
+<meta name="description" content="You've reached MAD-BRO-ADAM — the secret headquarters of Adam the DAM. Call the DAM Master at 623-276-2326.">
+<meta property="og:title" content="MAD-BRO-ADAM | The DAM Master Is Watching">
+<meta property="og:description" content="Secret hydraulic operations. One very suspicious chair. One unforgettable phone number.">
+<title>MAD-BRO-ADAM | Secret DAM Headquarters</title>
+<style>
+:root{--ink:#f7f8ff;--muted:#aab3c8;--red:#ff3e4d;--gold:#ffd36a;--cyan:#38d8f5;--panel:#111827;--line:rgba(255,255,255,.12)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#080a11;color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;background:radial-gradient(ellipse at 50% 5%,rgba(153,16,32,.28),transparent 42%),radial-gradient(ellipse at 80% 65%,rgba(20,105,133,.14),transparent 38%),linear-gradient(145deg,#080a11,#101523 55%,#070910)}
+.scanlines{position:fixed;inset:0;z-index:5;pointer-events:none;opacity:.12;background:repeating-linear-gradient(to bottom,transparent 0 3px,rgba(255,255,255,.07) 4px)}
+.topbar{max-width:1120px;margin:auto;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-weight:950;letter-spacing:.13em;font-size:.88rem}.brand span{color:var(--red)}.status{font:700 .68rem/1.2 ui-monospace,monospace;letter-spacing:.12em;color:#ff8b94;border:1px solid rgba(255,62,77,.4);padding:8px 11px;border-radius:99px;background:rgba(255,62,77,.08)}
+main{max-width:1120px;margin:auto;padding:10px 22px 70px}.hero{text-align:center;padding:24px 0 34px}.eyebrow{font:800 .72rem/1.4 ui-monospace,monospace;letter-spacing:.22em;color:var(--cyan);text-transform:uppercase}.hero h1{font-size:clamp(2.65rem,8vw,6.5rem);line-height:.92;letter-spacing:-.065em;margin:13px 0 10px;font-weight:1000;text-shadow:0 0 34px rgba(255,62,77,.24)}.hero h1 em{font-style:normal;color:var(--red)}.subtitle{max-width:670px;margin:18px auto 0;color:#c2c9d7;font-size:clamp(1rem,2.5vw,1.18rem);line-height:1.65}
+.stage{position:relative;max-width:850px;margin:25px auto 0;padding:clamp(12px,3vw,24px);border:1px solid rgba(255,62,77,.38);border-radius:24px;background:linear-gradient(145deg,rgba(22,27,42,.96),rgba(8,11,19,.96));box-shadow:0 25px 80px rgba(0,0,0,.48),inset 0 0 55px rgba(255,62,77,.06);overflow:hidden}
+.stage:before,.stage:after{content:"";position:absolute;width:120px;height:120px;border:1px solid rgba(56,216,245,.22);transform:rotate(45deg);pointer-events:none}.stage:before{top:-85px;left:-65px}.stage:after{bottom:-90px;right:-65px}
+.stage-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px;font:700 .67rem ui-monospace,monospace;letter-spacing:.12em;color:#ff858d}.live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ff3949;box-shadow:0 0 12px #ff3949;margin-right:7px;animation:pulse 1.5s infinite}
+.photo-frame{position:relative;max-width:590px;margin:auto;border-radius:15px;overflow:hidden;background:#141a26;border:1px solid rgba(255,255,255,.18);box-shadow:0 12px 45px rgba(0,0,0,.5)}
+.photo-frame:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,40,60,.12),transparent 28%,transparent 70%,rgba(3,8,15,.3));mix-blend-mode:screen}
+.chair-photo{display:block;width:100%;height:auto;max-height:740px;object-fit:contain;animation:reveal 1.2s ease both}
+.photo-caption{position:absolute;left:12px;bottom:12px;z-index:2;padding:8px 11px;border-radius:8px;background:rgba(5,8,14,.82);border:1px solid rgba(255,211,106,.45);color:var(--gold);font:900 .75rem ui-monospace,monospace;letter-spacing:.13em}
+.monitor-row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}.monitor{min-height:67px;padding:10px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(145deg,#101a29,#090d16);font:700 .64rem/1.4 ui-monospace,monospace;color:#9fb2c8;text-align:left}.monitor b{display:block;color:var(--cyan);font-size:.76rem;margin-bottom:4px}.meter{height:5px;border-radius:10px;background:#273447;overflow:hidden;margin-top:8px}.meter i{display:block;width:76%;height:100%;background:linear-gradient(90deg,var(--cyan),var(--red));animation:meter 3.5s ease-in-out infinite alternate}
+.transmission{max-width:760px;margin:26px auto 0;padding:22px clamp(16px,4vw,30px);border-left:3px solid var(--red);border-radius:0 15px 15px 0;background:rgba(255,255,255,.045);text-align:left}.transmission .label{font:800 .68rem ui-monospace,monospace;letter-spacing:.15em;color:var(--red)}.transmission p{font-size:clamp(1rem,2.5vw,1.16rem);line-height:1.8;color:#e3e7ef;margin:12px 0 0}.transmission strong{color:var(--gold)}
+.call-card{max-width:760px;margin:22px auto 0;padding:clamp(20px,5vw,34px);text-align:center;border:1px solid rgba(255,211,106,.4);border-radius:20px;background:linear-gradient(145deg,rgba(42,31,25,.72),rgba(16,19,29,.96));box-shadow:0 18px 55px rgba(0,0,0,.25)}
+.call-card h2{margin:0 0 8px;font-size:clamp(1.25rem,4vw,2rem);letter-spacing:.02em}.phone{display:block;color:var(--gold);font-size:clamp(2rem,7vw,3.7rem);font-weight:950;letter-spacing:.025em;text-decoration:none;margin:9px 0 2px}.vanity{font:900 .9rem ui-monospace,monospace;letter-spacing:.3em;color:#ff7c87}.buttons{display:flex;justify-content:center;flex-wrap:wrap;gap:11px;margin-top:22px}.btn{display:inline-flex;justify-content:center;align-items:center;gap:9px;min-height:52px;padding:14px 20px;border-radius:12px;text-decoration:none;border:1px solid transparent;font:900 .88rem system-ui;letter-spacing:.045em;cursor:pointer;transition:transform .18s,filter .18s}.btn:hover{transform:translateY(-2px);filter:brightness(1.12)}.btn-call{background:linear-gradient(135deg,#ff5361,#c91832);color:white;box-shadow:0 9px 28px rgba(255,45,66,.24)}.btn-text{background:#18283a;color:#dff9ff;border-color:rgba(56,216,245,.35)}.btn-control{background:#1a1e2b;color:#ffd5d8;border-color:rgba(255,62,77,.35)}
+.controls{max-width:760px;margin:24px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:12px}.control{padding:18px;border:1px solid var(--line);border-radius:15px;background:rgba(15,21,33,.88);text-align:left}.control h3{font-size:.98rem;margin:0 0 7px}.control p{font-size:.86rem;color:var(--muted);line-height:1.55;margin:0 0 13px}.control button{width:100%;min-height:46px;border-radius:10px;border:1px solid rgba(255,255,255,.17);background:#202a3b;color:white;font-weight:850;cursor:pointer}.control button.danger{background:linear-gradient(135deg,#641827,#32121b);border-color:rgba(255,62,77,.45);color:#ffdce0}
+.warning{min-height:26px;margin:13px auto 0;text-align:center;color:var(--gold);font:700 .75rem ui-monospace,monospace;letter-spacing:.04em}
+.footer{text-align:center;padding:34px 10px 0;color:#77839a;font-size:.76rem;line-height:1.7}.footer b{color:#b5c1d5}.water-flash{position:fixed;inset:auto 0 -110% 0;height:70vh;z-index:8;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,rgba(90,235,255,.8),rgba(0,122,190,.7) 35%,rgba(0,40,100,.94) 75%);border-radius:48% 48% 0 0;transition:bottom 1s cubic-bezier(.2,.7,.2,1);box-shadow:0 -20px 80px rgba(42,214,255,.3)}.water-flash.active{bottom:-12%}.water-label{position:absolute;top:18%;width:100%;text-align:center;font:1000 clamp(2rem,9vw,5rem) ui-monospace,monospace;color:white;text-shadow:0 5px 20px #003b66}
+@keyframes pulse{50%{opacity:.35;box-shadow:0 0 2px #ff3949}}@keyframes meter{to{width:96%}}@keyframes reveal{from{opacity:0;transform:scale(1.025);filter:brightness(.55)}to{opacity:1;transform:scale(1);filter:brightness(1)}}
+@media(max-width:560px){.topbar{padding:14px 16px}.status{font-size:.58rem}main{padding:4px 14px 48px}.hero{padding-top:22px}.stage{padding:11px;border-radius:17px}.monitor-row{gap:6px}.monitor{padding:8px 7px;font-size:.57rem;min-height:64px}.controls{grid-template-columns:1fr}.buttons{display:grid}.btn{width:100%}.photo-caption{font-size:.62rem}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="scanlines" aria-hidden="true"></div>
+<header class="topbar"><div class="brand">Y'ALL <span>TOO</span> // SPECIAL OPERATIONS</div><div class="status">● CLASSIFIED DAM ACCESS</div></header>
+<main>
+<section class="hero">
+<div class="eyebrow">TRANSMISSION INCOMING // HYDRAULIC DIVISION</div>
+<h1>MAD-BRO-<em>ADAM</em></h1>
+<p class="subtitle" id="tagline">You've reached the secret headquarters. The DAM Master has been expecting... somebody. Probably you.</p>
+</section>
+<section class="stage" aria-label="Secret DAM headquarters">
+<div class="stage-head"><span><i class="live-dot"></i>LIVE SURVEILLANCE FEED</span><span>CAM 06 // THE DAM CHAIR</span></div>
+<div class="photo-frame">
+<img class="chair-photo" src="chair-photo.jpg" alt="The DAM Master seated backwards in a chair with a handmade DAM sign" fetchpriority="high">
+<div class="photo-caption">SUBJECT: THE DAM MASTER</div>
+</div>
+<div class="monitor-row">
+<div class="monitor"><b>RESERVOIR STATUS</b>Suspiciously full<div class="meter"><i></i></div></div>
+<div class="monitor"><b>BEAVER ALERT</b>One boss detected<div class="meter"><i style="width:88%"></i></div></div>
+<div class="monitor"><b>VISITOR STATUS</b>Under observation<div class="meter"><i style="width:63%"></i></div></div>
+</div>
+</section>
+<section class="transmission">
+<div class="label">◆ MESSAGE FROM BEHIND THE DAM CHAIR</div>
+<p>“Well, well, well... another curious visitor. I see you've discovered my secret number. <strong>MAD-BRO-ADAM!</strong><br><br>I've been monitoring the situation. The water is contained, the beavers are nervous, and my chair is facing the correct direction. Mostly.<br><br>Now listen carefully... if you wish to speak with the mastermind, you know what to do. And don't touch that red button. <strong>I MEAN IT.</strong><br><br><strong>MWA-HA-HA-HA!</strong>”</p>
+<div class="buttons"><button class="btn btn-control" id="voiceBtn" type="button">🔊 HEAR THE TRANSMISSION</button></div>
+</section>
+<section class="call-card" id="call">
+<div class="eyebrow">OPEN A DIRECT LINE TO THE HEADQUARTERS</div>
+<h2>THE DAM MASTER'S PRIVATE LINE</h2>
+<a class="phone" href="tel:+16232762326">623-276-2326</a>
+<div class="vanity">MAD • BRO • ADAM</div>
+<div class="buttons">
+<a class="btn btn-call" href="tel:+16232762326">☎ CALL THE DAM MASTER</a>
+<a class="btn btn-text" href="sms:+16232762326">✉ SEND A DAM MESSAGE</a>
+</div>
+<div class="warning" id="callWarning">Calls may be monitored by highly unqualified beavers.</div>
+</section>
+<section class="controls" aria-label="Interactive secret controls">
+<article class="control"><h3>🚨 THE FORBIDDEN BUTTON</h3><p>Headquarters policy says not to press it. Headquarters policy was written by a nervous beaver.</p><button class="danger" id="forbidden" type="button">DO NOT PRESS</button></article>
+<article class="control"><h3>🌊 EMERGENCY WATER RELEASE</h3><p>Only the DAM Master can authorize this. Visitors are strongly discouraged from trying.</p><button id="release" type="button">PULL THE DAM LEVER</button></article>
+</section>
+<div class="warning" id="surprise" aria-live="polite"></div>
+<footer class="footer"><b>MAD-BRO-ADAM</b> // An independent Y'all Too experience.<br>All systems are under control. The chair disagrees.<br><a href="/" style="color:#6ddff4">Return to Y'all Too headquarters</a></footer>
+</main>
+<div class="water-flash" id="waterFlash" aria-hidden="true"><div class="water-label">RELEASE THE WATER!</div></div>
+<script>
+(() => {
+const lines = [
+  "I KNOW YOU'RE THERE. THE DAM SENSORS DETECTED YOU.",
+  "THE DAM IS UNDER CONTROL. MOSTLY.",
+  "WHO GAVE YOU ACCESS TO MY WATER SUPPLY?",
+  "MY BEAVER ASSISTANTS HAVE BEEN EXPECTING YOUR CALL.",
+  "THIS OPERATION IS 100% WATER-TIGHT. PLEASE IGNORE THE DRIP."
+];
+const pick = lines[Math.floor(Math.random()*lines.length)];
+document.getElementById("tagline").textContent = pick;
+const surprise = document.getElementById("surprise");
+const speak = (text) => {
+  if (!("speechSynthesis" in window)) { surprise.textContent = "Your browser does not support voice playback. The DAM Master is silently disappointed."; return; }
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = 0.86; utterance.pitch = 0.62; utterance.volume = 1;
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v => /en-US/i.test(v.lang) && /male|david|mark|daniel/i.test(v.name)) || voices.find(v => /en-US/i.test(v.lang));
+  if (preferred) utterance.voice = preferred;
+  window.speechSynthesis.speak(utterance);
+};
+document.getElementById("voiceBtn").addEventListener("click", () => speak("Well, well, well. Another curious visitor. You've discovered my secret number. Mad Bro Adam. I've been monitoring the situation. The water is contained, the beavers are nervous, and my chair is facing the correct direction. Mostly. Call me... if you dare. Mwa ha ha ha!"));
+document.getElementById("forbidden").addEventListener("click", () => {
+  const warnings = ["I SAID DON'T PRESS THAT!","WHO AUTHORIZED THIS BUTTON?!","ADAM HAS BEEN NOTIFIED. HE IS NOT PLEASED.","INITIATING... ABSOLUTELY NOTHING. NICE TRY.","THE BEAVERS HAVE FILED A FORMAL COMPLAINT."];
+  surprise.textContent = warnings[Math.floor(Math.random()*warnings.length)];
+  document.getElementById("callWarning").textContent = "SECURITY ALERT: Visitor has pressed the forbidden button.";
+  if ("vibrate" in navigator) navigator.vibrate([70,40,70]);
+});
+const water = document.getElementById("waterFlash");
+document.getElementById("release").addEventListener("click", () => {
+  water.classList.add("active");
+  surprise.textContent = "⚠️ WATER RELEASE AUTHORIZED. THE DAM MASTER DENIES EVERYTHING.";
+  setTimeout(()=>water.classList.remove("active"),1900);
+});
+})();
+</script>
+</body>
+</html>

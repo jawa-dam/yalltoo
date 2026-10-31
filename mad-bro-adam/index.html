@@ -83,7 +83,7 @@ main{max-width:1120px;margin:auto;padding:10px 22px 70px}.hero{text-align:center
 <section class="stage" aria-label="Secret DAM headquarters">
 <div class="stage-head"><span><i class="live-dot"></i><span id="feedLabel"></span></span><span id="camLabel"></span></div>
 <div class="photo-frame">
-<img class="chair-photo" src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/mad-bro-adam-dam-chair-0fHVqIetftE328Cv.gif" alt="The DAM Master behind a chair like Dr. Claw from Inspector Gadget" fetchpriority="high">
+<img class="chair-photo" id="chairPhoto" src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/mad-bro-adam-dam-chair-0fHVqIetftE328Cv.gif" alt="The DAM Master behind a chair like Dr. Claw from Inspector Gadget" fetchpriority="high">
 <div class="photo-caption" id="photoCaption"></div>
 </div>
 <div class="monitor-row" id="monitorRow"></div>
@@ -206,6 +206,13 @@ $("statusBadge").textContent = R(statuses);
 $("feedLabel").textContent = R(feedLabels);
 $("camLabel").textContent = R(camLabels);
 $("photoCaption").textContent = R(captions);
+
+const chairImages = [
+  "https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/mad-bro-adam-dam-chair-0fHVqIetftE328Cv.gif",
+  "https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/mad-bro-adam-chair-lu49axEM2CfNdtoA.gif",
+  "https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/mad-bro-adam-chair-call-EYQlD0CoicqRuDtE.gif"
+];
+$("chairPhoto").src = R(chairImages);
 
 const monitors = R(monitorSets);
 $("monitorRow").innerHTML = monitors.map(m => {

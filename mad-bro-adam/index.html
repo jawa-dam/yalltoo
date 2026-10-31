@@ -33,6 +33,24 @@ main{max-width:1120px;margin:auto;padding:10px 22px 70px}.hero{text-align:center
 @keyframes pulse{50%{opacity:.35;box-shadow:0 0 2px #ff3949}}@keyframes meter{to{width:96%}}@keyframes reveal{from{opacity:0;transform:scale(1.025);filter:brightness(.55)}to{opacity:1;transform:scale(1);filter:brightness(1)}}
 @media(max-width:560px){.topbar{padding:14px 16px}.status{font-size:.58rem}main{padding:4px 14px 48px}.hero{padding-top:22px}.stage{padding:11px;border-radius:17px}.monitor-row{gap:6px}.monitor{padding:8px 7px;font-size:.57rem;min-height:64px}.controls{grid-template-columns:1fr}.buttons{display:grid}.btn{width:100%}.photo-caption{font-size:.62rem}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition:none!important}}
+.ss-overlay{position:fixed;inset:0;z-index:100;background:#080a11;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .6s ease}.ss-overlay.active{opacity:1;pointer-events:auto}
+.ss-overlay .scanlines{z-index:101}
+.ss-img{position:absolute;max-width:70vw;max-height:70vh;object-fit:contain;opacity:0;border-radius:18px;filter:drop-shadow(0 0 40px rgba(255,62,77,.3)) drop-shadow(0 0 80px rgba(56,216,245,.15))}
+.ss-label{position:absolute;bottom:8%;width:100%;text-align:center;font:900 clamp(.7rem,2vw,1rem) ui-monospace,monospace;letter-spacing:.18em;color:var(--cyan);opacity:0;transition:opacity .5s .3s}
+.ss-overlay.active .ss-label{opacity:1}
+.ss-title{position:absolute;top:5%;width:100%;text-align:center;font:1000 clamp(1.2rem,4vw,2.4rem)/1 system-ui;letter-spacing:-.02em;color:var(--red);opacity:0;transition:opacity .5s .2s;text-shadow:0 0 30px rgba(255,62,77,.4)}
+.ss-overlay.active .ss-title{opacity:1}
+@keyframes ss-fade-in{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+@keyframes ss-slide-left{from{opacity:0;transform:translateX(-100vw) rotate(-8deg)}to{opacity:1;transform:translateX(0) rotate(0)}}
+@keyframes ss-slide-right{from{opacity:0;transform:translateX(100vw) rotate(8deg)}to{opacity:1;transform:translateX(0) rotate(0)}}
+@keyframes ss-slide-up{from{opacity:0;transform:translateY(100vh)}to{opacity:1;transform:translateY(0)}}
+@keyframes ss-slide-down{from{opacity:0;transform:translateY(-100vh)}to{opacity:1;transform:translateY(0)}}
+@keyframes ss-zoom-spin{from{opacity:0;transform:scale(0) rotate(-180deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes ss-flip{from{opacity:0;transform:perspective(800px) rotateY(-90deg)}to{opacity:1;transform:perspective(800px) rotateY(0)}}
+@keyframes ss-bounce{0%{opacity:0;transform:scale(0)}50%{opacity:1;transform:scale(1.15)}70%{transform:scale(.95)}100%{opacity:1;transform:scale(1)}}
+@keyframes ss-glitch{0%{opacity:0;transform:translate(0);filter:hue-rotate(0)}20%{opacity:1;transform:translate(-5px,3px);filter:hue-rotate(90deg)}40%{transform:translate(4px,-2px);filter:hue-rotate(180deg)}60%{transform:translate(-3px,4px);filter:hue-rotate(270deg)}80%{transform:translate(2px,-3px);filter:hue-rotate(360deg)}100%{opacity:1;transform:translate(0);filter:hue-rotate(0)}}
+@keyframes ss-drop{from{opacity:0;transform:translateY(-120vh) rotate(15deg)}60%{opacity:1;transform:translateY(5vh) rotate(-3deg)}80%{transform:translateY(-2vh) rotate(1deg)}to{opacity:1;transform:translateY(0) rotate(0)}}
+@keyframes ss-fade-out{from{opacity:1}to{opacity:0;transform:scale(1.1)}}
 </style>
 </head>
 <body>
@@ -408,6 +426,125 @@ $("release").addEventListener("click", () => {
   surprise.textContent = R(waterReleaseMessages);
   setTimeout(() => water.classList.remove("active"), 1900);
 });
+})();
+
+/* ── SCREENSAVER ── */
+(() => {
+const IDLE_MS = 3000;
+const SHOW_MS = 4000;
+const FADE_OUT_MS = 600;
+
+const images = [
+  {src:"https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/wilbert-the-dam-guide-Jv8ovjc6i8PutsiP.png",name:"WILBERT THE DAM GUIDE"},
+  {src:"https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yall-too-beaver-rhhiVplt1GMykxV8.png",name:"Y'ALL TOO BEAVER"},
+  {src:"https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/operator-fireman-3hTPsSNuSI8dOo3K.png",name:"OPERATOR FIREMAN"},
+  {src:"https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/operator-moses-NaoYxXNs8PIe8VAq.png",name:"OPERATOR MOSES"},
+  {src:"https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/operator-valentine-qL9S3qnHVqfuQlf7.png",name:"OPERATOR VALENTINE"},
+  {src:"https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/operator-sam-JpZqlSoHFxPr8UA8.png",name:"OPERATOR SAM"},
+  {src:"https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/operator-jack-o-lantern-ttAhh3czPzwGoHfW.png",name:"OPERATOR JACK-O-LANTERN"},
+  {src:"https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/operator-santa-claus-eyMjBlQqWCVDRsc2.png",name:"OPERATOR SANTA CLAUS"},
+  {src:"https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/operator-woman-SBXOdIurIocbRsrx.png",name:"OPERATOR WOMAN"},
+  {src:"https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/operator-man-iOjCPh1RTtpl4t40.png",name:"OPERATOR MAN"}
+];
+
+const effects = [
+  {name:"ss-fade-in",dur:".8s",ease:"ease"},
+  {name:"ss-slide-left",dur:"1s",ease:"cubic-bezier(.2,.8,.3,1)"},
+  {name:"ss-slide-right",dur:"1s",ease:"cubic-bezier(.2,.8,.3,1)"},
+  {name:"ss-slide-up",dur:"1s",ease:"cubic-bezier(.2,.8,.3,1)"},
+  {name:"ss-slide-down",dur:"1s",ease:"cubic-bezier(.2,.8,.3,1)"},
+  {name:"ss-zoom-spin",dur:"1s",ease:"cubic-bezier(.2,.8,.3,1)"},
+  {name:"ss-flip",dur:".9s",ease:"ease"},
+  {name:"ss-bounce",dur:"1s",ease:"ease"},
+  {name:"ss-glitch",dur:".7s",ease:"steps(6)"},
+  {name:"ss-drop",dur:"1.2s",ease:"cubic-bezier(.2,.8,.3,1)"}
+];
+
+const titles = [
+  "DAM CREW ON STANDBY",
+  "THE DAM SQUAD",
+  "HEADQUARTERS PERSONNEL",
+  "WHO'S WATCHING THE DAM?",
+  "CLASSIFIED OPERATIVES",
+  "DAM TEAM ASSEMBLE",
+  "MEET THE CREW",
+  "AGENTS OF THE DAM"
+];
+
+const overlay = document.createElement("div");
+overlay.className = "ss-overlay";
+overlay.innerHTML = '<div class="scanlines" aria-hidden="true"></div><div class="ss-title"></div><div class="ss-label"></div>';
+document.body.appendChild(overlay);
+
+const ssTitle = overlay.querySelector(".ss-title");
+const ssLabel = overlay.querySelector(".ss-label");
+let currentImg = null;
+let idleTimer = null;
+let cycleTimer = null;
+let active = false;
+let lastIdx = -1;
+
+images.forEach(i => { const p = new Image(); p.src = i.src; });
+
+const R = a => a[Math.floor(Math.random()*a.length)];
+
+function pickImage() {
+  let idx;
+  do { idx = Math.floor(Math.random()*images.length); } while(idx === lastIdx && images.length > 1);
+  lastIdx = idx;
+  return images[idx];
+}
+
+function showImage() {
+  if (!active) return;
+  if (currentImg) {
+    currentImg.style.animation = `ss-fade-out ${FADE_OUT_MS}ms ease forwards`;
+    const old = currentImg;
+    setTimeout(() => old.remove(), FADE_OUT_MS);
+  }
+
+  const pick = pickImage();
+  const fx = R(effects);
+  const img = document.createElement("img");
+  img.className = "ss-img";
+  img.src = pick.src;
+  img.alt = pick.name;
+  img.style.animation = `${fx.name} ${fx.dur} ${fx.ease} forwards`;
+  overlay.appendChild(img);
+  currentImg = img;
+  ssLabel.textContent = pick.name;
+
+  cycleTimer = setTimeout(showImage, SHOW_MS);
+}
+
+function startScreensaver() {
+  if (active) return;
+  active = true;
+  ssTitle.textContent = R(titles);
+  overlay.classList.add("active");
+  showImage();
+}
+
+function stopScreensaver() {
+  if (!active) return;
+  active = false;
+  overlay.classList.remove("active");
+  clearTimeout(cycleTimer);
+  if (currentImg) { currentImg.remove(); currentImg = null; }
+  lastIdx = -1;
+  resetIdle();
+}
+
+function resetIdle() {
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(startScreensaver, IDLE_MS);
+}
+
+["mousemove","mousedown","keydown","touchstart","scroll","click"].forEach(e =>
+  document.addEventListener(e, () => { if (active) stopScreensaver(); else resetIdle(); }, {passive:true})
+);
+
+resetIdle();
 })();
 </script>
 </body>

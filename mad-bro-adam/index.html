@@ -51,6 +51,17 @@ main{max-width:1120px;margin:auto;padding:10px 22px 70px}.hero{text-align:center
 @keyframes ss-glitch{0%{opacity:0;transform:translate(0);filter:hue-rotate(0)}20%{opacity:1;transform:translate(-5px,3px);filter:hue-rotate(90deg)}40%{transform:translate(4px,-2px);filter:hue-rotate(180deg)}60%{transform:translate(-3px,4px);filter:hue-rotate(270deg)}80%{transform:translate(2px,-3px);filter:hue-rotate(360deg)}100%{opacity:1;transform:translate(0);filter:hue-rotate(0)}}
 @keyframes ss-drop{from{opacity:0;transform:translateY(-120vh) rotate(15deg)}60%{opacity:1;transform:translateY(5vh) rotate(-3deg)}80%{transform:translateY(-2vh) rotate(1deg)}to{opacity:1;transform:translateY(0) rotate(0)}}
 @keyframes ss-fade-out{from{opacity:1}to{opacity:0;transform:scale(1.1)}}
+.hero-logo{display:block;max-width:clamp(280px,55vw,500px);height:auto;margin:0 auto 20px;opacity:0;filter:drop-shadow(0 0 30px rgba(47,210,255,.35)) drop-shadow(0 0 60px rgba(243,16,186,.25))}
+@keyframes logo-fade-up{from{opacity:0;transform:translateY(50px) scale(.85)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes logo-slide-left{from{opacity:0;transform:translateX(-80vw) rotate(-12deg)}to{opacity:1;transform:translateX(0) rotate(0)}}
+@keyframes logo-slide-right{from{opacity:0;transform:translateX(80vw) rotate(12deg)}to{opacity:1;transform:translateX(0) rotate(0)}}
+@keyframes logo-drop{from{opacity:0;transform:translateY(-60vh) rotate(10deg)}60%{opacity:1;transform:translateY(4vh) rotate(-2deg)}80%{transform:translateY(-2vh) rotate(1deg)}to{opacity:1;transform:translateY(0) rotate(0)}}
+@keyframes logo-zoom-spin{from{opacity:0;transform:scale(0) rotate(-180deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes logo-flip{from{opacity:0;transform:perspective(800px) rotateY(-90deg)}to{opacity:1;transform:perspective(800px) rotateY(0)}}
+@keyframes logo-bounce{0%{opacity:0;transform:scale(0)}50%{opacity:1;transform:scale(1.15)}70%{transform:scale(.92)}85%{transform:scale(1.05)}to{opacity:1;transform:scale(1)}}
+@keyframes logo-glitch{0%{opacity:0;transform:translate(0);filter:hue-rotate(0)}20%{opacity:1;transform:translate(-8px,5px);filter:hue-rotate(90deg)}40%{transform:translate(6px,-3px);filter:hue-rotate(180deg)}60%{transform:translate(-4px,6px);filter:hue-rotate(270deg)}80%{transform:translate(3px,-4px);filter:hue-rotate(360deg)}to{opacity:1;transform:translate(0);filter:hue-rotate(0)}}
+@keyframes logo-elastic{0%{opacity:0;transform:scale(.3)}30%{opacity:1;transform:scale(1.12)}45%{transform:scale(.9)}60%{transform:scale(1.05)}75%{transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+@keyframes logo-swing{from{opacity:0;transform:rotate(-25deg) scale(.7);transform-origin:top center}40%{opacity:1;transform:rotate(12deg) scale(1)}60%{transform:rotate(-6deg)}80%{transform:rotate(3deg)}to{opacity:1;transform:rotate(0) scale(1)}}
 </style>
 </head>
 <body>
@@ -65,6 +76,7 @@ main{max-width:1120px;margin:auto;padding:10px 22px 70px}.hero{text-align:center
 <main>
 <section class="hero">
 <div class="eyebrow" id="eyebrow"></div>
+<img class="hero-logo" id="heroLogo" src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/inspector-yalltoo-tSUarZlGd0S1H7PY.png" alt="Inspector YallToo">
 <h1>MAD-BRO-<em>ADAM</em></h1>
 <p class="subtitle" id="tagline"></p>
 </section>
@@ -142,34 +154,9 @@ const statuses = [
   "● FIRST IMPRESSION MODE"
 ];
 
-const feedLabels = [
-  "LIVE SURVEILLANCE FEED",
-  "REAL-TIME CHAIR MONITOR",
-  "ACTIVE RECONNAISSANCE",
-  "HEADQUARTERS VISUAL",
-  "LIVE FROM THE LAIR",
-  "DIRECT CHAIR FEED"
-];
-
-const camLabels = [
-  "CAM 06 // THE DAM CHAIR",
-  "CAM 13 // COMMAND SEAT",
-  "CAM 42 // VILLAIN VIEW",
-  "CAM 99 // CHAIR OF POWER",
-  "CAM 07 // THE THRONE ROOM",
-  "CAM 23 // CLAW POSITION"
-];
-
-const captions = [
-  "SUBJECT: THE DAM MASTER",
-  "VISUAL CONFIRMED: IT'S HIM",
-  "POSITIVE ID: CHAIR OCCUPANT",
-  "TARGET ACQUIRED: DR. DAM",
-  "STATUS: BEHIND THE CHAIR",
-  "FIRST SIGHTING: THE BOSS",
-  "SURVEILLANCE LOG: HE KNOWS",
-  "CLASSIFIED: DO NOT ZOOM IN"
-];
+const feedLabels = ["LIVE SURVEILLANCE FEED","REAL-TIME CHAIR MONITOR","ACTIVE RECONNAISSANCE","HEADQUARTERS VISUAL","LIVE FROM THE LAIR","DIRECT CHAIR FEED"];
+const camLabels = ["CAM 06 // THE DAM CHAIR","CAM 13 // COMMAND SEAT","CAM 42 // VILLAIN VIEW","CAM 99 // CHAIR OF POWER","CAM 07 // THE THRONE ROOM","CAM 23 // CLAW POSITION"];
+const captions = ["SUBJECT: THE DAM MASTER","VISUAL CONFIRMED: IT'S HIM","POSITIVE ID: CHAIR OCCUPANT","TARGET ACQUIRED: DR. DAM","STATUS: BEHIND THE CHAIR","FIRST SIGHTING: THE BOSS","SURVEILLANCE LOG: HE KNOWS","CLASSIFIED: DO NOT ZOOM IN"];
 
 const monitorSets = [
   [{t:"RESERVOIR STATUS",v:"Suspiciously full"},{t:"BEAVER ALERT",v:"One boss detected"},{t:"VISITOR STATUS",v:"Under first observation"}],
@@ -181,183 +168,35 @@ const monitorSets = [
   [{t:"TURBINE STATUS",v:"Humming ominously"},{t:"SECRET LEVEL",v:"Maximum secrecy"},{t:"WELCOME STATUS",v:"Aggressively unwelcoming"}]
 ];
 
-const transmissionLabels = [
-  "◆ MESSAGE FROM BEHIND THE DAM CHAIR",
-  "◆ INTERCEPTED TRANSMISSION",
-  "◆ VOICE FROM THE SHADOWS",
-  "◆ FIRST WORDS FROM THE CHAIR",
-  "◆ INAUGURAL BROADCAST",
-  "◆ THE DAM MASTER SPEAKS"
-];
+const transmissionLabels = ["◆ MESSAGE FROM BEHIND THE DAM CHAIR","◆ INTERCEPTED TRANSMISSION","◆ VOICE FROM THE SHADOWS","◆ FIRST WORDS FROM THE CHAIR","◆ INAUGURAL BROADCAST","◆ THE DAM MASTER SPEAKS"];
 
 const transmissions = [
-  {
-    html: '"So... you actually found this place. I have to admit, I\'m impressed. Most people never make it past the beaver checkpoint.<br><br>Take a good look around. This is <strong>MAD-BRO-ADAM</strong> headquarters — and you\'re the newest entry in my visitor log.<br><br>Fair warning: the chair sees everything. The beavers report everything. And I? I just sit here... <strong>waiting.</strong><br><br><strong>MWA-HA-HA-HA!</strong>"',
-    speech: "So you actually found this place. I have to admit, I'm impressed. Most people never make it past the beaver checkpoint. Take a good look around. This is Mad Bro Adam headquarters, and you're the newest entry in my visitor log. The chair sees everything. Mwa ha ha ha!"
-  },
-  {
-    html: '"Well, well, well... a fresh face on the monitors. The beavers are going absolutely <strong>nuts</strong> right now.<br><br>You\'ve just walked into the most classified dam operation this side of the internet. <strong>MAD-BRO-ADAM</strong> doesn\'t get many first-timers.<br><br>Don\'t touch anything. Don\'t look at the red button. And whatever you do... don\'t make eye contact with the chair.<br><br><strong>TOO LATE. IT SAW YOU.</strong>"',
-    speech: "Well well well. A fresh face on the monitors. The beavers are going absolutely nuts right now. You've walked into the most classified dam operation this side of the internet. Don't touch anything. Don't look at the red button. Too late. It saw you."
-  },
-  {
-    html: '"Ladies and gentlemen... we have a visitor. A real, live, never-been-here-before visitor. <strong>This is not a drill.</strong><br><br>I\'ve been sitting in this chair for what feels like forever, waiting for someone brave enough — or lost enough — to find <strong>MAD-BRO-ADAM</strong>.<br><br>The water is contained. The beavers are nervous. And my chair? It\'s facing exactly the wrong direction. <strong>On purpose.</strong><br><br><strong>MWA-HA-HA-HA!</strong>"',
-    speech: "Ladies and gentlemen, we have a visitor. A real, live, never been here before visitor. This is not a drill. I've been sitting in this chair forever, waiting for someone brave enough or lost enough to find Mad Bro Adam. Mwa ha ha ha!"
-  },
-  {
-    html: '"Oh? OH? Someone new? The last person who found this page was a beaver, and <strong>he works here.</strong><br><br>Welcome to the inner sanctum. <strong>MAD-BRO-ADAM</strong> — where the water is controlled, the chair is backwards, and the phone number spells out exactly what you think it does.<br><br>Go ahead, look around. But remember: <strong>I\'m watching.</strong> The chair is watching. Even the beavers are watching. We\'re all watching.<br><br><strong>DRAMATIC PAUSE.</strong>"',
-    speech: "Oh? Someone new? The last person who found this page was a beaver, and he works here. Welcome to the inner sanctum. Mad Bro Adam. Where the water is controlled, the chair is backwards, and the phone number spells exactly what you think. I'm watching. Dramatic pause."
-  },
-  {
-    html: '"First time here? I can tell by the look on your face. Or at least, I <strong>imagine</strong> that\'s the look on your face.<br><br>You\'ve just entered the legendary lair of <strong>MAD-BRO-ADAM</strong>. Population: me, some beavers, and now... you.<br><br>The beavers wanted me to say \'welcome.\' I wanted to say \'how did you get past the firewall?\' We compromised. <strong>Welcome. How did you get past the firewall?</strong><br><br><strong>MWA-HA-HA-HA!</strong>"',
-    speech: "First time here? I can tell by the look on your face. You've just entered the legendary lair of Mad Bro Adam. Population: me, some beavers, and now you. Welcome. How did you get past the firewall? Mwa ha ha ha!"
-  },
-  {
-    html: '"You know what\'s funny? I set up this entire secret headquarters, hired the beavers, bought the chair, installed the cameras... and then someone just <strong>finds it.</strong><br><br>That\'s you. You just found <strong>MAD-BRO-ADAM</strong>. The beavers are running around like it\'s their first day. It basically is.<br><br>Sit tight. Don\'t press anything red. And for the love of all things hydraulic, do NOT pull that lever.<br><br><strong>...UNLESS YOU DARE.</strong>"',
-    speech: "You know what's funny? I set up this entire secret headquarters, hired the beavers, bought the chair, and then someone just finds it. That's you. The beavers are running around like it's their first day. Don't press anything red. Unless you dare."
-  },
-  {
-    html: '"Ah. A newcomer. The chair swiveled on its own when you arrived — it does that. Don\'t ask questions.<br><br>This is <strong>MAD-BRO-ADAM</strong>, and everything you see here is operating at peak secrecy. The dam? Secure. The beavers? Panicking. My villain pose? <strong>Flawless.</strong><br><br>You\'ve got one chance to call the number, or the beavers will escort you out. They\'re small but <strong>very motivated.</strong><br><br><strong>MWA-HA-HA-HA!</strong>"',
-    speech: "Ah, a newcomer. The chair swiveled on its own when you arrived. This is Mad Bro Adam, and everything here is operating at peak secrecy. The dam? Secure. The beavers? Panicking. My villain pose? Flawless. Mwa ha ha ha!"
-  }
+  {html:'"So... you actually found this place. I have to admit, I\'m impressed. Most people never make it past the beaver checkpoint.<br><br>Take a good look around. This is <strong>MAD-BRO-ADAM</strong> headquarters — and you\'re the newest entry in my visitor log.<br><br>Fair warning: the chair sees everything. The beavers report everything. And I? I just sit here... <strong>waiting.</strong><br><br><strong>MWA-HA-HA-HA!</strong>"',speech:"So you actually found this place. I have to admit, I'm impressed. Most people never make it past the beaver checkpoint. Take a good look around. This is Mad Bro Adam headquarters, and you're the newest entry in my visitor log. The chair sees everything. Mwa ha ha ha!"},
+  {html:'"Well, well, well... a fresh face on the monitors. The beavers are going absolutely <strong>nuts</strong> right now.<br><br>You\'ve just walked into the most classified dam operation this side of the internet. <strong>MAD-BRO-ADAM</strong> doesn\'t get many first-timers.<br><br>Don\'t touch anything. Don\'t look at the red button. And whatever you do... don\'t make eye contact with the chair.<br><br><strong>TOO LATE. IT SAW YOU.</strong>"',speech:"Well well well. A fresh face on the monitors. The beavers are going absolutely nuts right now. You've walked into the most classified dam operation this side of the internet. Don't touch anything. Don't look at the red button. Too late. It saw you."},
+  {html:'"Ladies and gentlemen... we have a visitor. A real, live, never-been-here-before visitor. <strong>This is not a drill.</strong><br><br>I\'ve been sitting in this chair for what feels like forever, waiting for someone brave enough — or lost enough — to find <strong>MAD-BRO-ADAM</strong>.<br><br>The water is contained. The beavers are nervous. And my chair? It\'s facing exactly the wrong direction. <strong>On purpose.</strong><br><br><strong>MWA-HA-HA-HA!</strong>"',speech:"Ladies and gentlemen, we have a visitor. A real, live, never been here before visitor. This is not a drill. I've been sitting in this chair forever, waiting for someone brave enough or lost enough to find Mad Bro Adam. Mwa ha ha ha!"},
+  {html:'"Oh? OH? Someone new? The last person who found this page was a beaver, and <strong>he works here.</strong><br><br>Welcome to the inner sanctum. <strong>MAD-BRO-ADAM</strong> — where the water is controlled, the chair is backwards, and the phone number spells out exactly what you think it does.<br><br>Go ahead, look around. But remember: <strong>I\'m watching.</strong> The chair is watching. Even the beavers are watching. We\'re all watching.<br><br><strong>DRAMATIC PAUSE.</strong>"',speech:"Oh? Someone new? The last person who found this page was a beaver, and he works here. Welcome to the inner sanctum. Mad Bro Adam. Where the water is controlled, the chair is backwards, and the phone number spells exactly what you think. I'm watching. Dramatic pause."},
+  {html:'"First time here? I can tell by the look on your face. Or at least, I <strong>imagine</strong> that\'s the look on your face.<br><br>You\'ve just entered the legendary lair of <strong>MAD-BRO-ADAM</strong>. Population: me, some beavers, and now... you.<br><br>The beavers wanted me to say \'welcome.\' I wanted to say \'how did you get past the firewall?\' We compromised. <strong>Welcome. How did you get past the firewall?</strong><br><br><strong>MWA-HA-HA-HA!</strong>"',speech:"First time here? I can tell by the look on your face. You've just entered the legendary lair of Mad Bro Adam. Population: me, some beavers, and now you. Welcome. How did you get past the firewall? Mwa ha ha ha!"},
+  {html:'"You know what\'s funny? I set up this entire secret headquarters, hired the beavers, bought the chair, installed the cameras... and then someone just <strong>finds it.</strong><br><br>That\'s you. You just found <strong>MAD-BRO-ADAM</strong>. The beavers are running around like it\'s their first day. It basically is.<br><br>Sit tight. Don\'t press anything red. And for the love of all things hydraulic, do NOT pull that lever.<br><br><strong>...UNLESS YOU DARE.</strong>"',speech:"You know what's funny? I set up this entire secret headquarters, hired the beavers, bought the chair, and then someone just finds it. That's you. The beavers are running around like it's their first day. Don't press anything red. Unless you dare."},
+  {html:'"Ah. A newcomer. The chair swiveled on its own when you arrived — it does that. Don\'t ask questions.<br><br>This is <strong>MAD-BRO-ADAM</strong>, and everything you see here is operating at peak secrecy. The dam? Secure. The beavers? Panicking. My villain pose? <strong>Flawless.</strong><br><br>You\'ve got one chance to call the number, or the beavers will escort you out. They\'re small but <strong>very motivated.</strong><br><br><strong>MWA-HA-HA-HA!</strong>"',speech:"Ah, a newcomer. The chair swiveled on its own when you arrived. This is Mad Bro Adam, and everything here is operating at peak secrecy. The dam? Secure. The beavers? Panicking. My villain pose? Flawless. Mwa ha ha ha!"}
 ];
 
-const callEyebrows = [
-  "OPEN A DIRECT LINE TO THE HEADQUARTERS",
-  "INITIATE FIRST CONTACT WITH THE DAM",
-  "YOUR ONE CHANCE TO REACH THE CHAIR",
-  "ESTABLISHING SECURE CONNECTION",
-  "THE HOTLINE IS LIVE FOR THE FIRST TIME",
-  "DARE TO DIAL THE DAM MASTER"
-];
-
-const callTitles = [
-  "THE DAM MASTER'S PRIVATE LINE",
-  "FIRST-TIME CALLER? PERFECT.",
-  "THE CHAIR WANTS YOU TO CALL",
-  "DIRECT LINE TO DAM COMMAND",
-  "ONE NUMBER TO RULE THE DAM",
-  "CALL IF YOU'RE BRAVE ENOUGH"
-];
-
-const callWarnings = [
-  "Calls may be monitored by highly unqualified beavers.",
-  "First-time callers receive a complimentary beaver greeting.",
-  "Side effects may include uncontrollable dam puns.",
-  "Warning: the chair picks up on the third ring.",
-  "Beavers standing by. They have no idea what they're doing.",
-  "This line has never been called before. Probably.",
-  "Dialing this number voids your beaver warranty.",
-  "The beavers promise they won't eavesdrop. They're lying."
-];
-
-const callBtnLabels = [
-  "☎ CALL THE DAM MASTER",
-  "☎ RING THE LAIR",
-  "☎ DIAL THE CHAIR",
-  "☎ MAKE FIRST CONTACT"
-];
-
-const textBtnLabels = [
-  "✉ SEND A DAM MESSAGE",
-  "✉ TEXT THE HEADQUARTERS",
-  "✉ DROP A LINE",
-  "✉ MESSAGE THE BEAVERS"
-];
-
-const voiceBtnLabels = [
-  "🔊 HEAR THE TRANSMISSION",
-  "🔊 PLAY THE MESSAGE",
-  "🔊 LISTEN TO THE CHAIR",
-  "🔊 DECODE THE BROADCAST"
-];
-
-const forbiddenTitles = [
-  "🚨 THE FORBIDDEN BUTTON",
-  "🚨 DO NOT EVEN LOOK AT THIS",
-  "🚨 CLASSIFIED BUTTON ZONE",
-  "🚨 THE ONE BUTTON TO AVOID"
-];
-
-const forbiddenDescs = [
-  "Headquarters policy says not to press it. Headquarters policy was written by a nervous beaver.",
-  "This button has never been pressed by a first-time visitor. Let's keep it that way. Or not.",
-  "No one knows what it does. The beavers refuse to discuss it. The chair won't comment.",
-  "Installed by the DAM Master himself. Purpose: classified. Consequences: also classified."
-];
-
-const forbiddenBtnLabels = [
-  "DO NOT PRESS",
-  "SERIOUSLY, DON'T",
-  "RESIST THE URGE",
-  "TOUCH AT YOUR OWN RISK"
-];
-
-const releaseTitles = [
-  "🌊 EMERGENCY WATER RELEASE",
-  "🌊 THE DAM LEVER",
-  "🌊 HYDRAULIC OVERRIDE",
-  "🌊 WATER RELEASE PROTOCOL"
-];
-
-const releaseDescs = [
-  "Only the DAM Master can authorize this. Visitors are strongly discouraged from trying.",
-  "First-time visitors absolutely should not pull this lever. That's what makes it tempting.",
-  "The beavers installed a sign that says 'DO NOT PULL.' They misspelled three words.",
-  "This lever controls the entire water supply. No pressure. Literally — if you pull it, no pressure."
-];
-
-const releaseBtnLabels = [
-  "PULL THE DAM LEVER",
-  "RELEASE THE WATER",
-  "GO AHEAD, TRY IT",
-  "WHAT'S THE WORST THAT HAPPENS"
-];
-
-const forbiddenWarnings = [
-  "I SAID DON'T PRESS THAT! FIRST VISIT AND ALREADY CAUSING TROUBLE!",
-  "THE CHAIR JUST SPUN AROUND. THAT'S NEVER HAPPENED BEFORE. NICE GOING.",
-  "ADAM HAS BEEN NOTIFIED. HE WAS NOT EXPECTING COMPANY THIS BOLD.",
-  "INITIATING... ABSOLUTELY NOTHING. BUT THE BEAVERS ARE FREAKING OUT.",
-  "THE BEAVERS HAVE FILED A COMPLAINT. IT'S THEIR FIRST ONE EVER.",
-  "CONGRATULATIONS. YOU'RE THE FIRST PERSON TO PRESS THAT. OR SO WE'LL TELL YOU.",
-  "ALARM TRIGGERED. THE CHAIR IS VIBRATING. THE DAM MASTER IS AMUSED.",
-  "OKAY THAT WAS UNEXPECTED. THE MONITORS ALL FLICKERED. COOL COOL COOL."
-];
-
-const forbiddenCallWarnings = [
-  "SECURITY ALERT: First-time visitor has pressed the forbidden button.",
-  "BEAVER DISPATCH: New visitor already causing problems. Send backup.",
-  "DAM LOG: Intruder made contact with the red button. Brave or foolish.",
-  "ALERT: The forbidden button was pressed within seconds of arrival. Bold."
-];
-
-const waterReleaseMessages = [
-  "⚠️ WATER RELEASE AUTHORIZED. THE DAM MASTER DENIES EVERYTHING.",
-  "⚠️ FIRST WATER RELEASE BY A VISITOR. THE BEAVERS ARE SWIMMING FOR IT.",
-  "⚠️ LEVER PULLED. WATER INCOMING. THE CHAIR REMAINS DRY. SOMEHOW.",
-  "⚠️ DAM BREACH SIMULATED. THE BEAVERS BLAME THE NEW VISITOR.",
-  "⚠️ HYDRAULIC OVERRIDE ENGAGED. THIS WAS NOT IN THE WELCOME PACKET."
-];
-
-const waterLabels = [
-  "RELEASE THE WATER!",
-  "DAM IT ALL!",
-  "FLOOD PROTOCOL!",
-  "HERE IT COMES!",
-  "WATER EVERYWHERE!",
-  "THE DAM HAS SPOKEN!"
-];
-
-const footerTags = [
-  "An independent Y'all Too experience. The chair started it.",
-  "First impressions are everything. The beavers agree.",
-  "Every visit is unique. Every chair rotation is intentional.",
-  "All systems nominal. The chair has its own agenda.",
-  "You were here. The beavers will remember.",
-  "A Y'all Too production. No beavers were harmed. Probably.",
-  "The DAM Master sees all. The chair confirms.",
-  "Powered by water, beavers, and one very dramatic chair."
-];
+const callEyebrows = ["OPEN A DIRECT LINE TO THE HEADQUARTERS","INITIATE FIRST CONTACT WITH THE DAM","YOUR ONE CHANCE TO REACH THE CHAIR","ESTABLISHING SECURE CONNECTION","THE HOTLINE IS LIVE FOR THE FIRST TIME","DARE TO DIAL THE DAM MASTER"];
+const callTitles = ["THE DAM MASTER'S PRIVATE LINE","FIRST-TIME CALLER? PERFECT.","THE CHAIR WANTS YOU TO CALL","DIRECT LINE TO DAM COMMAND","ONE NUMBER TO RULE THE DAM","CALL IF YOU'RE BRAVE ENOUGH"];
+const callWarnings = ["Calls may be monitored by highly unqualified beavers.","First-time callers receive a complimentary beaver greeting.","Side effects may include uncontrollable dam puns.","Warning: the chair picks up on the third ring.","Beavers standing by. They have no idea what they're doing.","This line has never been called before. Probably.","Dialing this number voids your beaver warranty.","The beavers promise they won't eavesdrop. They're lying."];
+const callBtnLabels = ["☎ CALL THE DAM MASTER","☎ RING THE LAIR","☎ DIAL THE CHAIR","☎ MAKE FIRST CONTACT"];
+const textBtnLabels = ["✉ SEND A DAM MESSAGE","✉ TEXT THE HEADQUARTERS","✉ DROP A LINE","✉ MESSAGE THE BEAVERS"];
+const voiceBtnLabels = ["🔊 HEAR THE TRANSMISSION","🔊 PLAY THE MESSAGE","🔊 LISTEN TO THE CHAIR","🔊 DECODE THE BROADCAST"];
+const forbiddenTitles = ["🚨 THE FORBIDDEN BUTTON","🚨 DO NOT EVEN LOOK AT THIS","🚨 CLASSIFIED BUTTON ZONE","🚨 THE ONE BUTTON TO AVOID"];
+const forbiddenDescs = ["Headquarters policy says not to press it. Headquarters policy was written by a nervous beaver.","This button has never been pressed by a first-time visitor. Let's keep it that way. Or not.","No one knows what it does. The beavers refuse to discuss it. The chair won't comment.","Installed by the DAM Master himself. Purpose: classified. Consequences: also classified."];
+const forbiddenBtnLabels = ["DO NOT PRESS","SERIOUSLY, DON'T","RESIST THE URGE","TOUCH AT YOUR OWN RISK"];
+const releaseTitles = ["🌊 EMERGENCY WATER RELEASE","🌊 THE DAM LEVER","🌊 HYDRAULIC OVERRIDE","🌊 WATER RELEASE PROTOCOL"];
+const releaseDescs = ["Only the DAM Master can authorize this. Visitors are strongly discouraged from trying.","First-time visitors absolutely should not pull this lever. That's what makes it tempting.","The beavers installed a sign that says 'DO NOT PULL.' They misspelled three words.","This lever controls the entire water supply. No pressure. Literally — if you pull it, no pressure."];
+const releaseBtnLabels = ["PULL THE DAM LEVER","RELEASE THE WATER","GO AHEAD, TRY IT","WHAT'S THE WORST THAT HAPPENS"];
+const forbiddenWarnings = ["I SAID DON'T PRESS THAT! FIRST VISIT AND ALREADY CAUSING TROUBLE!","THE CHAIR JUST SPUN AROUND. THAT'S NEVER HAPPENED BEFORE. NICE GOING.","ADAM HAS BEEN NOTIFIED. HE WAS NOT EXPECTING COMPANY THIS BOLD.","INITIATING... ABSOLUTELY NOTHING. BUT THE BEAVERS ARE FREAKING OUT.","THE BEAVERS HAVE FILED A COMPLAINT. IT'S THEIR FIRST ONE EVER.","CONGRATULATIONS. YOU'RE THE FIRST PERSON TO PRESS THAT. OR SO WE'LL TELL YOU.","ALARM TRIGGERED. THE CHAIR IS VIBRATING. THE DAM MASTER IS AMUSED.","OKAY THAT WAS UNEXPECTED. THE MONITORS ALL FLICKERED. COOL COOL COOL."];
+const forbiddenCallWarnings = ["SECURITY ALERT: First-time visitor has pressed the forbidden button.","BEAVER DISPATCH: New visitor already causing problems. Send backup.","DAM LOG: Intruder made contact with the red button. Brave or foolish.","ALERT: The forbidden button was pressed within seconds of arrival. Bold."];
+const waterReleaseMessages = ["⚠️ WATER RELEASE AUTHORIZED. THE DAM MASTER DENIES EVERYTHING.","⚠️ FIRST WATER RELEASE BY A VISITOR. THE BEAVERS ARE SWIMMING FOR IT.","⚠️ LEVER PULLED. WATER INCOMING. THE CHAIR REMAINS DRY. SOMEHOW.","⚠️ DAM BREACH SIMULATED. THE BEAVERS BLAME THE NEW VISITOR.","⚠️ HYDRAULIC OVERRIDE ENGAGED. THIS WAS NOT IN THE WELCOME PACKET."];
+const waterLabels = ["RELEASE THE WATER!","DAM IT ALL!","FLOOD PROTOCOL!","HERE IT COMES!","WATER EVERYWHERE!","THE DAM HAS SPOKEN!"];
+const footerTags = ["An independent Y'all Too experience. The chair started it.","First impressions are everything. The beavers agree.","Every visit is unique. Every chair rotation is intentional.","All systems nominal. The chair has its own agenda.","You were here. The beavers will remember.","A Y'all Too production. No beavers were harmed. Probably.","The DAM Master sees all. The chair confirms.","Powered by water, beavers, and one very dramatic chair."];
 
 const $ = id => document.getElementById(id);
 
@@ -397,6 +236,21 @@ $("release").textContent = R(releaseBtnLabels);
 
 $("waterLabel").textContent = R(waterLabels);
 $("footerTag").textContent = R(footerTags);
+
+const logoEffects = [
+  {name:"logo-fade-up",dur:"1s",ease:"ease-out"},
+  {name:"logo-slide-left",dur:"1.2s",ease:"cubic-bezier(.2,.8,.3,1)"},
+  {name:"logo-slide-right",dur:"1.2s",ease:"cubic-bezier(.2,.8,.3,1)"},
+  {name:"logo-drop",dur:"1.4s",ease:"cubic-bezier(.2,.8,.3,1)"},
+  {name:"logo-zoom-spin",dur:"1.1s",ease:"cubic-bezier(.2,.8,.3,1)"},
+  {name:"logo-flip",dur:"1s",ease:"ease"},
+  {name:"logo-bounce",dur:"1.2s",ease:"ease"},
+  {name:"logo-glitch",dur:".8s",ease:"steps(6)"},
+  {name:"logo-elastic",dur:"1.3s",ease:"ease"},
+  {name:"logo-swing",dur:"1.2s",ease:"ease"}
+];
+const logoFx = R(logoEffects);
+$("heroLogo").style.animation = `${logoFx.name} ${logoFx.dur} ${logoFx.ease} both`;
 
 const surprise = $("surprise");
 
@@ -460,16 +314,7 @@ const effects = [
   {name:"ss-drop",dur:"1.2s",ease:"cubic-bezier(.2,.8,.3,1)"}
 ];
 
-const titles = [
-  "DAM CREW ON STANDBY",
-  "THE DAM SQUAD",
-  "HEADQUARTERS PERSONNEL",
-  "WHO'S WATCHING THE DAM?",
-  "CLASSIFIED OPERATIVES",
-  "DAM TEAM ASSEMBLE",
-  "MEET THE CREW",
-  "AGENTS OF THE DAM"
-];
+const titles = ["DAM CREW ON STANDBY","THE DAM SQUAD","HEADQUARTERS PERSONNEL","WHO'S WATCHING THE DAM?","CLASSIFIED OPERATIVES","DAM TEAM ASSEMBLE","MEET THE CREW","AGENTS OF THE DAM"];
 
 const overlay = document.createElement("div");
 overlay.className = "ss-overlay";

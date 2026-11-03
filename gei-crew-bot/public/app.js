@@ -1,21 +1,24 @@
 (function () {
   'use strict';
 
-  const welcomeScreen = document.getElementById('welcome-screen');
-  const chatContainer = document.getElementById('chat-container');
-  const messagesArea = document.getElementById('messages-area');
-  const inputForm = document.getElementById('input-form');
-  const userInput = document.getElementById('user-input');
-  const sendBtn = document.getElementById('send-btn');
-  const headerBack = document.getElementById('header-back');
-  const headerStatus = document.getElementById('header-status');
-  const errorBanner = document.getElementById('error-banner');
-  const errorText = document.getElementById('error-text');
-  const errorDismiss = document.getElementById('error-dismiss');
-  const starterBtns = document.querySelectorAll('.starter-btn');
+  var welcomeScreen = document.getElementById('welcome-screen');
+  var chatContainer = document.getElementById('chat-container');
+  var messagesArea = document.getElementById('messages-area');
+  var inputForm = document.getElementById('input-form');
+  var userInput = document.getElementById('user-input');
+  var sendBtn = document.getElementById('send-btn');
+  var headerBack = document.getElementById('header-back');
+  var headerStatus = document.getElementById('header-status');
+  var errorBanner = document.getElementById('error-banner');
+  var errorText = document.getElementById('error-text');
+  var errorDismiss = document.getElementById('error-dismiss');
+  var starterBtns = document.querySelectorAll('.starter-btn');
 
-  let conversationHistory = [];
-  let isProcessing = false;
+  var conversationHistory = [];
+  var isProcessing = false;
+  var lastSendTime = 0;
+  var MIN_SEND_INTERVAL = 2000;
+  var MAX_CLIENT_MESSAGES = 30;
 
   function showChat() {
     welcomeScreen.classList.add('hidden');
@@ -61,11 +64,14 @@
     });
   }
 
+  function escapeHtml(text) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(text));
+    return div.innerHTML;
+  }
+
   function renderMarkdown(text) {
-    var html = text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+    var html = escapeHtml(text);
 
     html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
@@ -73,12 +79,16 @@
 
     html = html.replace(
       /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
-      '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+      function (_, label, url) {
+        return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + label + '</a>';
+      }
     );
 
     html = html.replace(
       /(^|[^"=])(https?:\/\/[^\s<)]+)/g,
-      '$1<a href="$2" target="_blank" rel="noopener noreferrer">$2</a>'
+      function (_, prefix, url) {
+        return prefix + '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
+      }
     );
 
     var lines = html.split('\n');
@@ -168,9 +178,22 @@
   }
 
   async function sendMessage(text) {
-    if (!text.trim() || isProcessing) return;
+    text = (text || '').trim();
+    if (!text || isProcessing) return;
+
+    var now = Date.now();
+    if (now - lastSendTime < MIN_SEND_INTERVAL) {
+      showError('Please wait a moment before sending another message.');
+      return;
+    }
+
+    if (conversationHistory.length >= MAX_CLIENT_MESSAGES) {
+      showError('Conversation limit reached. Please start a new conversation.');
+      return;
+    }
 
     isProcessing = true;
+    lastSendTime = now;
     updateSendBtn();
     hideError();
 
@@ -184,13 +207,18 @@
     setStatus('Investigating...');
     showTyping();
 
+    var controller = new AbortController();
+    var timeoutId = setTimeout(function () { controller.abort(); }, 35000);
+
     try {
       var res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: conversationHistory }),
+        signal: controller.signal,
       });
 
+      clearTimeout(timeoutId);
       hideTyping();
 
       if (!res.ok) {
@@ -207,11 +235,14 @@
           );
           setStatus('Configuration needed');
         } else if (errData.error === 'rate_limited') {
-          showError('Rate limited — please wait a moment and try again.');
+          showError(errData.message || 'Too many requests. Please wait a minute and try again.');
           setStatus('Rate limited');
+        } else if (errData.error === 'timeout') {
+          showError('The response took too long. Try a shorter or simpler question.');
+          setStatus('Timed out');
         } else {
           showError(errData.message || 'Something went wrong. Please try again.');
-          setStatus('Error — try again');
+          setStatus('Error');
         }
 
         conversationHistory.pop();
@@ -227,9 +258,15 @@
       conversationHistory.push({ role: 'assistant', content: reply });
       setStatus('Ready to investigate');
     } catch (err) {
+      clearTimeout(timeoutId);
       hideTyping();
-      showError('Network error — please check your connection and try again.');
-      setStatus('Connection issue');
+      if (err.name === 'AbortError') {
+        showError('The request timed out. Please try again.');
+        setStatus('Timed out');
+      } else {
+        showError('Network error — please check your connection and try again.');
+        setStatus('Connection issue');
+      }
       conversationHistory.pop();
     }
 

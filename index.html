@@ -13,6 +13,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="redesign.css">
+
+<style id="gei-discovery-guide-cta-style">
+.gei-guide-cta{box-sizing:border-box;width:min(1080px,calc(100% - 32px));margin:42px auto 34px;padding:clamp(18px,3vw,30px);display:flex;align-items:center;justify-content:center;gap:clamp(18px,3vw,34px);border:1px solid rgba(47,210,255,.35);border-radius:22px;background:linear-gradient(120deg,rgba(47,210,255,.13),rgba(61,61,234,.09),rgba(243,16,186,.08));box-shadow:0 14px 36px rgba(10,30,60,.10);color:inherit;text-align:left;font-family:inherit;position:relative;isolation:isolate}
+.gei-guide-cta-copy{flex:1;min-width:0}
+.gei-guide-cta-kicker{display:block;margin:0 0 7px;font-size:.72rem;font-weight:850;letter-spacing:.14em;text-transform:uppercase;opacity:.72}
+.gei-guide-cta h2{margin:0 0 8px;font-size:clamp(1.25rem,3vw,1.8rem);line-height:1.15;font-weight:900}
+.gei-guide-cta p{margin:0;max-width:590px;font-size:.98rem;line-height:1.55;opacity:.82}
+.gei-guide-cta-link{display:inline-flex;align-items:center;justify-content:center;margin-top:14px;padding:11px 17px;border-radius:999px;background:linear-gradient(100deg,#2fd2ff,#3d3dea);color:#fff!important;text-decoration:none!important;font-size:.88rem;font-weight:850;letter-spacing:.025em;box-shadow:0 6px 18px rgba(61,61,234,.2);transition:transform .2s ease,filter .2s ease}
+.gei-guide-cta-link:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.gei-guide-cta-art{display:block;flex:0 1 330px;max-width:38%;border-radius:15px;overflow:hidden;line-height:0;outline-offset:4px}
+.gei-guide-cta-art img{display:block;width:100%;max-height:205px;object-fit:contain;border-radius:15px;transition:transform .35s ease}
+.gei-guide-cta-art:hover img{transform:scale(1.035)}
+@media(max-width:650px){.gei-guide-cta{flex-direction:column-reverse;align-items:stretch;text-align:center;margin:28px auto;padding:17px;gap:14px}.gei-guide-cta-art{max-width:100%;width:min(100%,390px);margin:0 auto}.gei-guide-cta-art img{max-height:190px}.gei-guide-cta p{margin-inline:auto}}
+@media(prefers-reduced-motion:reduce){.gei-guide-cta-link,.gei-guide-cta-art img{transition:none}}
+</style>
 </head>
 <body>
 
@@ -374,5 +389,18 @@
 
 <script src="redesign.js" defer></script>
 <script src="mascot-effects.js" defer></script>
+
+<section class="gei-guide-cta" aria-label="Get the GEI Discovery Guide">
+  <div class="gei-guide-cta-copy">
+    <span class="gei-guide-cta-kicker">Keep exploring · Your next step</span>
+    <h2>Ready to Go Deeper Into GEI?</h2>
+    <p>Explore the GEI Discovery Guide and continue investigating the proposed Genesis 1–6 hydraulic blueprint.</p>
+    <a class="gei-guide-cta-link" href="https://www.yalltoo.com/gei-discovery-guide-" target="_blank" rel="noopener noreferrer">OPEN THE GEI DISCOVERY GUIDE ↗</a>
+  </div>
+  <a class="gei-guide-cta-art" href="https://www.yalltoo.com/gei-discovery-guide-" target="_blank" rel="noopener noreferrer" aria-label="Open the GEI Discovery Guide in a new tab">
+    <img src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/inshot_20260808_192709068-u7bYAfdJRGRfnEfC.gif" alt="GEI Discovery Guide — tap to open the guide" loading="lazy" decoding="async">
+  </a>
+</section>
+
 </body>
 </html>

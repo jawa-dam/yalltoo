@@ -1,0 +1,56 @@
+name: GEI Challenge Submission
+description: Submit an evidence-based challenge to a specific Genesis Engineered Interpretation claim.
+title: "[GEI CHALLENGE] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the challenge seriously. Public submissions are visible to everyone. Do not include private information.
+  - type: input
+    id: submitter
+    attributes:
+      label: Name or public attribution
+      description: Use a name, organization, or pseudonym you are comfortable displaying publicly.
+      placeholder: Your preferred public name
+    validations:
+      required: true
+  - type: input
+    id: claim
+    attributes:
+      label: Specific GEI claim being challenged
+      description: Identify the exact statement or interpretation you believe is wrong.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and sources
+      description: Provide quotations, references, links, primary sources, or relevant technical documentation.
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    id: reasoning
+    attributes:
+      label: Explain the contradiction
+      description: Show how the evidence contradicts the stated GEI claim and why the contradiction matters.
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    id: response
+    attributes:
+      label: What is the strongest response GEI could make?
+      description: Address the strongest reasonable counterargument to your submission.
+      render: markdown
+    validations:
+      required: false
+  - type: checkboxes
+    id: acknowledgment
+    attributes:
+      label: Submission acknowledgment
+      options:
+        - label: I understand this submission will be public and that submission alone does not qualify for the cash prize.
+          required: true
+        - label: I have not knowingly submitted fabricated evidence or sources.
+          required: true

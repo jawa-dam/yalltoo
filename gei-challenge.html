@@ -58,8 +58,8 @@ strong{color:var(--yt-text);font-weight:700}
 body::before{
   content:"";position:fixed;inset:0;z-index:-2;
   background-image:
-    linear-gradient(rgba(47,210,255,.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(47,210,255,.04) 1px,transparent 1px);
+    linear-gradient(var(--grid-color,rgba(47,210,255,.04)) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-color,rgba(47,210,255,.04)) 1px,transparent 1px);
   background-size:60px 60px;
   pointer-events:none;
 }
@@ -85,12 +85,12 @@ body::before{
 }
 .water-ambient::before{
   top:5%;left:-20%;
-  background:linear-gradient(135deg,rgba(47,210,255,.08),rgba(61,61,234,.06));
+  background:linear-gradient(135deg,var(--amb1,rgba(47,210,255,.08)),var(--amb2,rgba(61,61,234,.06)));
   animation:waterDrift 18s ease-in-out infinite alternate;
 }
 .water-ambient::after{
   bottom:10%;right:-20%;
-  background:linear-gradient(135deg,rgba(243,16,186,.05),rgba(47,210,255,.06));
+  background:linear-gradient(135deg,var(--amb3,rgba(243,16,186,.05)),var(--amb4,rgba(47,210,255,.06)));
   animation:waterDrift2 22s ease-in-out infinite alternate;
 }
 
@@ -159,9 +159,48 @@ body::before{
   margin:18px auto 6px;padding:10px 28px;
   border-radius:999px;font-size:clamp(1.3rem,4vw,1.9rem);font-weight:900;
   letter-spacing:.02em;color:#fff;
-  background:linear-gradient(135deg,#3d3dea,#2fd2ff);
-  box-shadow:0 4px 24px rgba(47,210,255,.2),0 0 60px rgba(47,210,255,.1);
+  background:var(--prize-bg,linear-gradient(135deg,#3d3dea,#2fd2ff));
+  box-shadow:0 4px 24px var(--prize-glow,rgba(47,210,255,.2)),0 0 60px var(--prize-glow-outer,rgba(47,210,255,.1));
+  position:relative;overflow:hidden;
 }
+
+/* --- PRIZE EFFECTS (assigned randomly via JS) --- */
+@keyframes prizeGlowPulse{
+  0%,100%{box-shadow:0 4px 24px var(--prize-glow,rgba(47,210,255,.2)),0 0 40px var(--prize-glow-outer,rgba(47,210,255,.1))}
+  50%{box-shadow:0 4px 32px var(--prize-glow,rgba(47,210,255,.35)),0 0 80px var(--prize-glow-outer,rgba(47,210,255,.2)),0 0 120px var(--prize-glow-far,rgba(47,210,255,.06))}
+}
+@keyframes prizeShimmer{
+  0%{transform:translateX(-100%) skewX(-15deg)}
+  100%{transform:translateX(200%) skewX(-15deg)}
+}
+@keyframes prizeFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-4px)}
+}
+@keyframes prizeBorderRotate{
+  0%{--prize-angle:0deg}
+  100%{--prize-angle:360deg}
+}
+@keyframes prizeScalePop{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.04)}
+}
+@keyframes prizeColorShift{
+  0%{filter:hue-rotate(0deg)}
+  50%{filter:hue-rotate(25deg)}
+  100%{filter:hue-rotate(0deg)}
+}
+.prize-fx-pulse{animation:prizeGlowPulse 2.8s ease-in-out infinite}
+.prize-fx-shimmer .prize-shine{
+  position:absolute;top:0;left:0;width:40%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);
+  animation:prizeShimmer 2.5s ease-in-out infinite;
+}
+.prize-fx-float{animation:prizeFloat 3s ease-in-out infinite}
+.prize-fx-breathe{animation:prizeScalePop 3.5s ease-in-out infinite}
+.prize-fx-hueshift{animation:prizeColorShift 6s ease-in-out infinite}
+.prize-fx-combo-a{animation:prizeFloat 3s ease-in-out infinite,prizeGlowPulse 2.8s ease-in-out infinite}
+.prize-fx-combo-b{animation:prizeScalePop 3.5s ease-in-out infinite,prizeColorShift 6s ease-in-out infinite}
 
 .challenge-intro{
   max-width:640px;margin:14px auto 0;
@@ -457,6 +496,7 @@ body::before{
   .water-ambient::before,.water-ambient::after{animation:none;opacity:.25}
   .btn-reveal::before{animation:none}
   .expandable-content{transition:none}
+  .challenge-prize,.prize-shine{animation:none!important}
 }
   </style>
 </head>
@@ -475,7 +515,7 @@ body::before{
   <section class="challenge-hero">
     <span class="challenge-kicker">THE PUBLIC GEI RESEARCH CHALLENGE</span>
     <h1>PROVE WILBERT BOUIE JR. WRONG!</h1>
-    <div class="challenge-prize">$6.66 CASH PRIZE</div>
+    <div class="challenge-prize" id="prize-badge"><span class="prize-shine"></span>$6.66 CASH PRIZE</div>
     <p class="challenge-intro" id="hero-intro"></p>
     <div class="challenge-streak" id="hero-streak">
       <span class="dot"></span>
@@ -741,6 +781,203 @@ body::before{
   function pick(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
+
+  /* ==========================================================
+     RANDOMIZED COLOR THEMES
+     Each theme shifts the atmosphere while keeping all text
+     crisp and readable. Text colors stay fixed (#e8edf3 body,
+     #b0bdcf secondary, #7a8da4 muted) — only backgrounds,
+     accents, and ambient tones change.
+     ========================================================== */
+  var colorThemes = [
+    {
+      name: "deep-ocean",
+      bg: "#06070d",
+      surface: "#0d1117",
+      accent: "#2fd2ff",
+      accentRgb: "47,210,255",
+      secondary: "#3d3dea",
+      secondaryRgb: "61,61,234",
+      ambient1: "rgba(47,210,255,.08)",
+      ambient2: "rgba(61,61,234,.06)",
+      ambient3: "rgba(243,16,186,.05)",
+      ambient4: "rgba(47,210,255,.06)",
+      heroGrad1: "rgba(47,210,255,.12)",
+      heroGrad2: "rgba(243,16,186,.07)",
+      heroGrad3: "rgba(61,61,234,.06)",
+      gridColor: "rgba(47,210,255,.04)",
+      prizeGrad: "linear-gradient(135deg,#3d3dea,#2fd2ff)",
+      heroBorder: "rgba(47,210,255,.18)"
+    },
+    {
+      name: "midnight-indigo",
+      bg: "#080811",
+      surface: "#0e0e1a",
+      accent: "#7b7bff",
+      accentRgb: "123,123,255",
+      secondary: "#3d3dea",
+      secondaryRgb: "61,61,234",
+      ambient1: "rgba(123,123,255,.08)",
+      ambient2: "rgba(61,61,234,.08)",
+      ambient3: "rgba(123,123,255,.04)",
+      ambient4: "rgba(157,100,255,.05)",
+      heroGrad1: "rgba(123,123,255,.1)",
+      heroGrad2: "rgba(157,100,255,.07)",
+      heroGrad3: "rgba(61,61,234,.08)",
+      gridColor: "rgba(123,123,255,.035)",
+      prizeGrad: "linear-gradient(135deg,#3d3dea,#7b7bff)",
+      heroBorder: "rgba(123,123,255,.16)"
+    },
+    {
+      name: "electric-rose",
+      bg: "#0a070b",
+      surface: "#12101a",
+      accent: "#f472b6",
+      accentRgb: "244,114,182",
+      secondary: "#f310ba",
+      secondaryRgb: "243,16,186",
+      ambient1: "rgba(244,114,182,.07)",
+      ambient2: "rgba(243,16,186,.06)",
+      ambient3: "rgba(255,157,242,.05)",
+      ambient4: "rgba(244,114,182,.05)",
+      heroGrad1: "rgba(244,114,182,.1)",
+      heroGrad2: "rgba(243,16,186,.08)",
+      heroGrad3: "rgba(157,100,255,.05)",
+      gridColor: "rgba(244,114,182,.03)",
+      prizeGrad: "linear-gradient(135deg,#f310ba,#f472b6)",
+      heroBorder: "rgba(244,114,182,.16)"
+    },
+    {
+      name: "arctic-teal",
+      bg: "#060b0d",
+      surface: "#0b1418",
+      accent: "#5eead4",
+      accentRgb: "94,234,212",
+      secondary: "#14b8a6",
+      secondaryRgb: "20,184,166",
+      ambient1: "rgba(94,234,212,.07)",
+      ambient2: "rgba(20,184,166,.06)",
+      ambient3: "rgba(47,210,255,.04)",
+      ambient4: "rgba(94,234,212,.05)",
+      heroGrad1: "rgba(94,234,212,.1)",
+      heroGrad2: "rgba(20,184,166,.06)",
+      heroGrad3: "rgba(47,210,255,.05)",
+      gridColor: "rgba(94,234,212,.035)",
+      prizeGrad: "linear-gradient(135deg,#14b8a6,#5eead4)",
+      heroBorder: "rgba(94,234,212,.16)"
+    },
+    {
+      name: "ultraviolet",
+      bg: "#09060e",
+      surface: "#110d1a",
+      accent: "#c084fc",
+      accentRgb: "192,132,252",
+      secondary: "#9333ea",
+      secondaryRgb: "147,51,234",
+      ambient1: "rgba(192,132,252,.07)",
+      ambient2: "rgba(147,51,234,.06)",
+      ambient3: "rgba(243,16,186,.04)",
+      ambient4: "rgba(192,132,252,.05)",
+      heroGrad1: "rgba(192,132,252,.1)",
+      heroGrad2: "rgba(147,51,234,.07)",
+      heroGrad3: "rgba(243,16,186,.05)",
+      gridColor: "rgba(192,132,252,.035)",
+      prizeGrad: "linear-gradient(135deg,#9333ea,#c084fc)",
+      heroBorder: "rgba(192,132,252,.16)"
+    },
+    {
+      name: "ember-gold",
+      bg: "#0b0806",
+      surface: "#151008",
+      accent: "#fbbf24",
+      accentRgb: "251,191,36",
+      secondary: "#f59e0b",
+      secondaryRgb: "245,158,11",
+      ambient1: "rgba(251,191,36,.06)",
+      ambient2: "rgba(245,158,11,.05)",
+      ambient3: "rgba(251,146,60,.04)",
+      ambient4: "rgba(251,191,36,.04)",
+      heroGrad1: "rgba(251,191,36,.09)",
+      heroGrad2: "rgba(245,158,11,.06)",
+      heroGrad3: "rgba(251,146,60,.04)",
+      gridColor: "rgba(251,191,36,.03)",
+      prizeGrad: "linear-gradient(135deg,#f59e0b,#fbbf24)",
+      heroBorder: "rgba(251,191,36,.15)"
+    }
+  ];
+
+  var theme = pick(colorThemes);
+  var r = document.documentElement.style;
+
+  r.setProperty("--yt-bg", theme.bg);
+  r.setProperty("--yt-surface-solid", theme.surface);
+  r.setProperty("--yt-cyan", theme.accent);
+  r.setProperty("--yt-line", "rgba(" + theme.accentRgb + ",.12)");
+  r.setProperty("--yt-gradient", "linear-gradient(135deg," + theme.accent + " 0%," + theme.secondary + " 50%,#f310ba 100%)");
+
+  document.body.style.background = theme.bg;
+  document.querySelector("meta[name='theme-color']").setAttribute("content", theme.bg);
+
+  var gridEl = document.body;
+  gridEl.style.setProperty("--grid-color", theme.gridColor);
+
+  var hero = document.querySelector(".challenge-hero");
+  hero.style.background =
+    "radial-gradient(ellipse at 20% 10%," + theme.heroGrad1 + ",transparent 50%)," +
+    "radial-gradient(ellipse at 80% 90%," + theme.heroGrad2 + ",transparent 45%)," +
+    "radial-gradient(ellipse at 50% 50%," + theme.heroGrad3 + ",transparent 60%)," +
+    theme.surface;
+  hero.style.borderColor = theme.heroBorder;
+
+  var waterEl = document.querySelector(".water-ambient");
+  if (waterEl) {
+    waterEl.style.setProperty("--amb1", theme.ambient1);
+    waterEl.style.setProperty("--amb2", theme.ambient2);
+    waterEl.style.setProperty("--amb3", theme.ambient3);
+    waterEl.style.setProperty("--amb4", theme.ambient4);
+  }
+
+  var accentEls = document.querySelectorAll(
+    ".section-kicker, .challenge-kicker, .live-tag, .claim-item .claim-tag"
+  );
+  for (var i = 0; i < accentEls.length; i++) {
+    accentEls[i].style.color = theme.accent;
+  }
+
+  document.querySelector(".challenge-kicker").style.background = "rgba(" + theme.accentRgb + ",.08)";
+  document.querySelector(".challenge-kicker").style.borderColor = "rgba(" + theme.accentRgb + ",.15)";
+
+  var streakBadge = document.getElementById("hero-streak");
+  streakBadge.style.borderColor = "rgba(" + theme.accentRgb + ",.2)";
+  streakBadge.style.background = "rgba(" + theme.accentRgb + ",.06)";
+  streakBadge.style.color = theme.accent;
+  var dot = streakBadge.querySelector(".dot");
+  if (dot) {
+    dot.style.background = theme.accent;
+    dot.style.boxShadow = "0 0 0 4px rgba(" + theme.accentRgb + ",.15),0 0 12px rgba(" + theme.accentRgb + ",.3)";
+  }
+
+  /* ==========================================================
+     RANDOMIZED PRIZE EFFECT
+     Each visit gets a different looping animation on the $6.66
+     badge to make it feel alive and engaging.
+     ========================================================== */
+  var prizeEffects = [
+    "prize-fx-pulse",
+    "prize-fx-shimmer",
+    "prize-fx-float",
+    "prize-fx-breathe",
+    "prize-fx-hueshift",
+    "prize-fx-combo-a",
+    "prize-fx-combo-b"
+  ];
+
+  var prizeBadge = document.getElementById("prize-badge");
+  prizeBadge.style.setProperty("--prize-bg", theme.prizeGrad);
+  prizeBadge.style.setProperty("--prize-glow", "rgba(" + theme.accentRgb + ",.25)");
+  prizeBadge.style.setProperty("--prize-glow-outer", "rgba(" + theme.accentRgb + ",.1)");
+  prizeBadge.style.setProperty("--prize-glow-far", "rgba(" + theme.accentRgb + ",.06)");
+  prizeBadge.classList.add(pick(prizeEffects));
 
   /* ==========================================================
      APPLY RANDOMIZED TEXT

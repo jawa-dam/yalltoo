@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#06070d">
+<title>Wheel of Fantasites — YallToo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════
+   WHEEL OF FANTASITES — YallToo
+   Complete standalone CSS
+   ═══════════════════════════════════════════════════ */
+
+:root {
+  --cyan: #2fd2ff;
+  --indigo: #3d3dea;
+  --magenta: #f310ba;
+  --pink: #ff9df2;
+  --dark: #06070d;
+  --dark2: #0d1017;
+  --dark3: #141822;
+  --wood1: #8B6914;
+  --wood2: #A0762C;
+  --iron: #4a4a5a;
+  --gold: #ffd700;
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; min-height: 100vh; min-height: 100dvh;
+  overflow-x: hidden;
+  font-family: var(--font);
+  background: var(--dark);
+  color: #e8ecf2;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+body {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 0 0 env(safe-area-inset-bottom, 0);
+}
+
+/* ── TITLE ── */
+.game-title {
+  width: 100%; text-align: center;
+  padding: 12px 16px 4px;
+  background: linear-gradient(180deg, var(--dark) 0%, transparent 100%);
+  position: relative; z-index: 10;
+}
+.game-title h1 {
+  font-size: clamp(1.3rem, 4.5vw, 2.2rem);
+  font-weight: 900; letter-spacing: .04em;
+  background: linear-gradient(100deg, var(--cyan), var(--magenta), var(--cyan));
+  background-size: 200% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: titleShimmer 4s ease infinite;
+}
+.game-title .subtitle {
+  font-size: .7rem; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--cyan); opacity: .6; margin-top: 2px;
+}
+@keyframes titleShimmer {
+  0%,100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ── WHEEL CONTAINER ── */
+.wheel-area {
+  width: 100%; max-width: 700px;
+  position: relative;
+  display: flex; justify-content: center; align-items: center;
+  padding: 4px 8px;
+}
+.wheel-area canvas {
+  width: 100%; height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+/* ── POINTER ── */
+.pointer-container {
+  position: absolute;
+  top: 4px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  filter: drop-shadow(0 4px 12px rgba(47,210,255,.5));
+}
+
+/* ── ANNOUNCER BUBBLE ── */
+.announcer {
+  width: calc(100% - 32px); max-width: 660px;
+  min-height: 52px;
+  margin: 4px auto;
+  padding: 10px 16px;
+  background: var(--dark3);
+  border: 1px solid rgba(47,210,255,.2);
+  border-radius: 14px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .3s;
+}
+.announcer.active { border-color: var(--cyan); }
+.announcer .personality {
+  font-size: .65rem; font-weight: 800;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--magenta); margin-bottom: 3px;
+}
+.announcer .phrase {
+  font-size: clamp(.85rem, 2.5vw, 1.05rem);
+  font-weight: 700; line-height: 1.3;
+  color: #fff;
+  min-height: 1.3em;
+}
+
+/* ── CONTROLS AREA ── */
+.controls {
+  width: calc(100% - 32px); max-width: 660px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  padding: 8px 0;
+  align-items: center;
+}
+
+/* ── T-VALVE ── */
+.valve-wrapper {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.valve-canvas {
+  width: 90px; height: 90px;
+  cursor: grab;
+  touch-action: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--dark3), var(--dark));
+  border: 2px solid var(--iron);
+}
+.valve-canvas:active { cursor: grabbing; }
+.valve-buttons {
+  display: flex; gap: 6px;
+}
+.valve-btn {
+  width: 44px; height: 44px;
+  border: 2px solid var(--iron);
+  border-radius: 10px;
+  background: var(--dark3);
+  color: var(--cyan);
+  font-size: 1.2rem; font-weight: 900;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s, border-color .15s;
+  -webkit-user-select: none; user-select: none;
+}
+.valve-btn:hover, .valve-btn:active {
+  background: rgba(47,210,255,.12);
+  border-color: var(--cyan);
+}
+.valve-btn:disabled { opacity: .3; cursor: default; }
+
+/* ── RIGHT PANEL ── */
+.right-panel {
+  display: flex; flex-direction: column; gap: 8px;
+}
+
+/* Gate meter */
+.gate-meter {
+  display: flex; align-items: center; gap: 8px;
+}
+.gate-label {
+  font-size: .7rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+  white-space: nowrap;
+}
+.gate-bar-track {
+  flex: 1; height: 14px;
+  background: var(--dark3);
+  border-radius: 7px;
+  border: 1px solid var(--iron);
+  overflow: hidden;
+  position: relative;
+}
+.gate-bar-fill {
+  height: 100%;
+  border-radius: 7px;
+  background: linear-gradient(90deg, var(--indigo), var(--cyan));
+  width: 0%; transition: width .15s;
+}
+.gate-status {
+  font-size: .65rem; font-weight: 700;
+  color: var(--cyan); min-width: 52px; text-align: right;
+}
+
+/* Pressure gauge */
+.pressure-gauge {
+  display: flex; align-items: center; gap: 8px;
+}
+.pressure-label {
+  font-size: .7rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+  white-space: nowrap;
+}
+.pressure-bar-track {
+  flex: 1; height: 14px;
+  background: var(--dark3);
+  border-radius: 7px;
+  border: 1px solid var(--iron);
+  overflow: hidden;
+}
+.pressure-bar-fill {
+  height: 100%; border-radius: 7px;
+  background: linear-gradient(90deg, var(--cyan), var(--magenta));
+  width: 0%; transition: width .1s;
+}
+
+/* ── INSTRUCTION ── */
+.instruction {
+  width: calc(100% - 32px); max-width: 660px;
+  text-align: center;
+  font-size: .78rem; font-weight: 600;
+  color: rgba(255,255,255,.45);
+  padding: 2px 0;
+  min-height: 1.3em;
+}
+
+/* ── AUDIO CONTROLS ── */
+.audio-controls {
+  width: calc(100% - 32px); max-width: 660px;
+  display: flex; align-items: center; gap: 10px;
+  padding: 4px 0;
+}
+.audio-icon {
+  width: 32px; height: 32px;
+  border: none; border-radius: 8px;
+  background: var(--dark3);
+  color: var(--cyan);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-icon:hover { background: rgba(47,210,255,.12); }
+.volume-slider {
+  flex: 1; height: 6px;
+  -webkit-appearance: none; appearance: none;
+  background: var(--dark3);
+  border-radius: 3px;
+  outline: none;
+}
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--cyan);
+  cursor: pointer;
+}
+.volume-slider::-moz-range-thumb {
+  width: 18px; height: 18px;
+  border-radius: 50%; border: none;
+  background: var(--cyan);
+  cursor: pointer;
+}
+
+/* ── HISTORY PANEL ── */
+.history-panel {
+  width: calc(100% - 32px); max-width: 660px;
+  padding: 8px 0;
+}
+.history-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 6px;
+}
+.history-title {
+  font-size: .72rem; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+}
+.history-clear {
+  font-size: .65rem; font-weight: 700;
+  color: var(--magenta);
+  background: none; border: none;
+  cursor: pointer; text-decoration: underline;
+  padding: 4px 8px;
+}
+.history-clear:hover { color: var(--pink); }
+.history-list {
+  display: flex; flex-wrap: wrap; gap: 4px;
+}
+.history-item {
+  padding: 4px 10px;
+  background: var(--dark3);
+  border: 1px solid rgba(47,210,255,.1);
+  border-radius: 8px;
+  font-size: .7rem; font-weight: 600;
+  color: rgba(255,255,255,.7);
+  white-space: nowrap;
+}
+.history-item .num {
+  color: var(--cyan); margin-right: 4px; font-weight: 800;
+}
+.history-empty {
+  font-size: .7rem; color: rgba(255,255,255,.25);
+  font-style: italic;
+}
+
+/* ── REPLAY BUTTON ── */
+.replay-btn {
+  width: calc(100% - 32px); max-width: 660px;
+  padding: 14px 20px;
+  border: 2px solid var(--cyan);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(47,210,255,.12), rgba(61,61,234,.12));
+  color: var(--cyan);
+  font-family: var(--font);
+  font-size: 1rem; font-weight: 900;
+  letter-spacing: .06em;
+  cursor: pointer;
+  display: none;
+  margin: 4px 0 12px;
+  transition: background .2s, transform .15s;
+}
+.replay-btn:hover {
+  background: linear-gradient(135deg, rgba(47,210,255,.22), rgba(61,61,234,.22));
+  transform: translateY(-1px);
+}
+.replay-btn.visible { display: block; }
+
+/* ── PRIZE MODAL ── */
+.prize-overlay {
+  position: fixed; inset: 0;
+  background: rgba(6,7,13,.92);
+  z-index: 1000;
+  display: none; align-items: center; justify-content: center;
+  padding: 16px;
+  animation: fadeIn .4s ease;
+}
+.prize-overlay.visible { display: flex; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.prize-card {
+  width: 100%; max-width: 480px;
+  background: linear-gradient(160deg, var(--dark2), var(--dark3));
+  border: 2px solid var(--gold);
+  border-radius: 22px;
+  padding: clamp(20px, 4vw, 32px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  animation: prizeSlideUp .5s ease;
+  box-shadow: 0 0 60px rgba(255,215,0,.15), 0 0 120px rgba(47,210,255,.1);
+}
+@keyframes prizeSlideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.prize-card::before {
+  content: ''; position: absolute; inset: -2px;
+  background: conic-gradient(var(--gold), var(--cyan), var(--magenta), var(--gold));
+  border-radius: 24px; z-index: -1;
+  animation: prizeGlow 3s linear infinite;
+}
+@keyframes prizeGlow {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+.prize-free-tag {
+  display: inline-block;
+  padding: 6px 22px;
+  background: linear-gradient(135deg, var(--gold), #ffaa00);
+  color: var(--dark);
+  font-size: clamp(.85rem, 2.5vw, 1.1rem);
+  font-weight: 900; letter-spacing: .08em;
+  border-radius: 999px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 16px rgba(255,215,0,.3);
+}
+.prize-winner-name {
+  font-size: clamp(1.3rem, 4vw, 2rem);
+  font-weight: 900; line-height: 1.2;
+  color: #fff;
+  margin: 8px 0;
+  text-shadow: 0 0 20px rgba(47,210,255,.4);
+}
+.prize-congrats {
+  font-size: clamp(.8rem, 2.2vw, .95rem);
+  font-weight: 700; line-height: 1.5;
+  color: rgba(255,255,255,.85);
+  margin: 8px 0 14px;
+}
+.prize-congrats .value {
+  color: var(--gold); font-weight: 900;
+}
+.prize-images {
+  display: flex; gap: 8px;
+  justify-content: center;
+  margin: 14px 0;
+}
+.prize-images img {
+  width: 30%; max-width: 130px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid rgba(255,215,0,.3);
+  background: var(--dark);
+}
+.prize-close {
+  margin-top: 14px;
+  padding: 12px 28px;
+  border: 2px solid var(--cyan);
+  border-radius: 12px;
+  background: rgba(47,210,255,.1);
+  color: var(--cyan);
+  font-family: var(--font);
+  font-size: .9rem; font-weight: 800;
+  cursor: pointer;
+  transition: background .2s;
+}
+.prize-close:hover { background: rgba(47,210,255,.2); }
+
+/* ── LANDING EFFECTS ── */
+.landing-flash {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 900;
+  opacity: 0;
+  transition: opacity .15s;
+}
+.landing-flash.gold { background: radial-gradient(circle, rgba(255,215,0,.3), transparent 70%); }
+.landing-flash.blue { background: radial-gradient(circle, rgba(47,210,255,.3), transparent 70%); }
+.landing-flash.red { background: radial-gradient(circle, rgba(255,40,40,.25), transparent 70%); }
+.landing-flash.magenta { background: radial-gradient(circle, rgba(243,16,186,.25), transparent 70%); }
+.landing-flash.visible { opacity: 1; }
+
+/* ── CONFETTI ── */
+.confetti-container {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 950;
+  overflow: hidden;
+}
+.confetti-piece {
+  position: absolute;
+  width: 8px; height: 12px;
+  top: -20px;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ── SCREEN SHAKE ── */
+@keyframes shake {
+  0%, 100% { transform: translate(0); }
+  10% { transform: translate(-3px, 2px); }
+  20% { transform: translate(3px, -2px); }
+  30% { transform: translate(-2px, 3px); }
+  40% { transform: translate(2px, -3px); }
+  50% { transform: translate(-3px, 1px); }
+  60% { transform: translate(3px, -1px); }
+  70% { transform: translate(-1px, 2px); }
+  80% { transform: translate(1px, -2px); }
+  90% { transform: translate(-2px, 1px); }
+}
+.shake { animation: shake .4s ease; }
+
+/* ── SURGE OVERLAY ── */
+.surge-overlay {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 800;
+  background: radial-gradient(ellipse at bottom, rgba(47,210,255,.15), transparent 60%);
+  opacity: 0;
+  transition: opacity .3s;
+}
+.surge-overlay.visible { opacity: 1; }
+
+/* ── FOOTER ── */
+.game-footer {
+  padding: 16px;
+  text-align: center;
+  font-size: .65rem;
+  color: rgba(255,255,255,.2);
+}
+
+/* ── DESKTOP ── */
+@media (min-width: 768px) {
+  .controls { grid-template-columns: auto 1fr; gap: 20px; }
+  .wheel-area { max-width: 600px; }
+}
+@media (min-width: 1024px) {
+  body { justify-content: center; }
+  .wheel-area { max-width: 560px; }
+}
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- TITLE -->
+<div class="game-title">
+  <h1>WHEEL OF FANTASITES</h1>
+  <div class="subtitle">A YallToo Original Attraction</div>
+</div>
+
+<!-- WATERWHEEL CANVAS -->
+<div class="wheel-area" id="wheelArea">
+  <canvas id="wheelCanvas" width="700" height="700"></canvas>
+</div>
+
+<!-- ANNOUNCER -->
+<div class="announcer" id="announcer">
+  <div class="personality" id="announcerName">&nbsp;</div>
+  <div class="phrase" id="announcerPhrase">Turn the valve to release the water!</div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <div class="valve-wrapper">
+    <canvas class="valve-canvas" id="valveCanvas" width="180" height="180"></canvas>
+    <div class="valve-buttons">
+      <button class="valve-btn" id="btnCCW" aria-label="Close valve (counterclockwise)" title="Close">&circlearrowleft;</button>
+      <button class="valve-btn" id="btnCW" aria-label="Open valve (clockwise)" title="Open">&circlearrowright;</button>
+    </div>
+  </div>
+  <div class="right-panel">
+    <div class="gate-meter">
+      <span class="gate-label">Sluice Gate</span>
+      <div class="gate-bar-track"><div class="gate-bar-fill" id="gateFill"></div></div>
+      <span class="gate-status" id="gateStatus">CLOSED</span>
+    </div>
+    <div class="pressure-gauge">
+      <span class="pressure-label">Pressure</span>
+      <div class="pressure-bar-track"><div class="pressure-bar-fill" id="pressureFill"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- INSTRUCTION -->
+<div class="instruction" id="instruction">Drag the T-valve clockwise or tap &#x21bb; to open the sluice gate</div>
+
+<!-- AUDIO CONTROLS -->
+<div class="audio-controls">
+  <button class="audio-icon" id="muteBtn" aria-label="Toggle sound">&#x1f50a;</button>
+  <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="60" aria-label="Volume">
+</div>
+
+<!-- REPLAY -->
+<button class="replay-btn" id="replayBtn">SPIN AGAIN</button>
+
+<!-- HISTORY -->
+<div class="history-panel" id="historyPanel">
+  <div class="history-header">
+    <span class="history-title">Last 10 Spins</span>
+    <button class="history-clear" id="historyClear">Clear</button>
+  </div>
+  <div class="history-list" id="historyList">
+    <span class="history-empty">No spins yet</span>
+  </div>
+</div>
+
+<!-- LANDING FLASH -->
+<div class="landing-flash" id="landingFlash"></div>
+
+<!-- CONFETTI -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<!-- SURGE -->
+<div class="surge-overlay" id="surgeOverlay"></div>
+
+<!-- PRIZE MODAL -->
+<div class="prize-overlay" id="prizeOverlay">
+  <div class="prize-card">
+    <div class="prize-free-tag">FREE PRIZE</div>
+    <div class="prize-winner-name" id="prizeWinnerName"></div>
+    <div class="prize-congrats">
+      CONGRATULATIONS! YOU'VE WON<br>
+      <strong>FREE YALLTOO TEA</strong><br>
+      A PRIZE VALUED AT <span class="value">$666</span>!
+    </div>
+    <div class="prize-images">
+      <img src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yalltoo-teas-Rp9UZDwbCa1HlOKq.jpg" alt="YallToo Teas Collection" loading="lazy"
+        onerror="this.style.display='none'">
+      <img src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yalltoo-tea-Zt9cpwoNZ66phxAU.jpg" alt="YallToo Tea" loading="lazy"
+        onerror="this.style.display='none'">
+      <img src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/pure-yalltoo-tea-gfsrmqb95Iula6R9.png" alt="Pure YallToo Tea" loading="lazy"
+        onerror="this.style.display='none'">
+    </div>
+    <button class="prize-close" id="prizeClose">AMAZING!</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="game-footer">WHEEL OF FANTASITES &mdash; A YallToo Original</div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   WHEEL OF FANTASITES — Complete Game Engine
+   ═══════════════════════════════════════════════════ */
+(function() {
+"use strict";
+
+/* ── NAMES ── */
+const NAMES = [
+  "Dane Callaway","19 Keys","Bro Sanchez","Dr. Yahki","Billy Carson",
+  "Bobby Hemmit","Dr York","Doctah B Sirius","Terrance Howard","Dr Umar",
+  "Young Pharaoh","General seti","Saneter","Rizza Islam","Bro Polight",
+  "Phil Valentine","Brother Panic","Nuwaubians","Jabari Osaze",
+  "Captain Tazaryach","Tariq Nasheed","House of Konsciousness",
+  "Judge Joe Brown","607 Unk","Bro AnkhMm","FBA"
+];
+const N = NAMES.length;
+const SLICE = (Math.PI * 2) / N;
+
+/* ── COLORS ── */
+const WOOD_COLORS = [];
+for (let i = 0; i < N; i++) {
+  const h = 30 + (i % 5) * 4;
+  const s = 55 + (i % 3) * 8;
+  const l = 28 + (i % 4) * 5;
+  WOOD_COLORS.push(`hsl(${h},${s}%,${l}%)`);
+}
+const WOOD_HIGHLIGHTS = [];
+for (let i = 0; i < N; i++) {
+  const h = 30 + (i % 5) * 4;
+  const s = 45 + (i % 3) * 6;
+  const l = 42 + (i % 4) * 4;
+  WOOD_HIGHLIGHTS.push(`hsl(${h},${s}%,${l}%)`);
+}
+
+/* ── DOM REFS ── */
+const wheelCanvas = document.getElementById('wheelCanvas');
+const wheelCtx = wheelCanvas.getContext('2d');
+const valveCanvas = document.getElementById('valveCanvas');
+const valveCtx = valveCanvas.getContext('2d');
+const announcerEl = document.getElementById('announcer');
+const announcerNameEl = document.getElementById('announcerName');
+const announcerPhraseEl = document.getElementById('announcerPhrase');
+const gateFill = document.getElementById('gateFill');
+const gateStatus = document.getElementById('gateStatus');
+const pressureFill = document.getElementById('pressureFill');
+const instructionEl = document.getElementById('instruction');
+const replayBtn = document.getElementById('replayBtn');
+const muteBtn = document.getElementById('muteBtn');
+const volumeSlider = document.getElementById('volumeSlider');
+const historyList = document.getElementById('historyList');
+const historyClear = document.getElementById('historyClear');
+const prizeOverlay = document.getElementById('prizeOverlay');
+const prizeWinnerName = document.getElementById('prizeWinnerName');
+const prizeClose = document.getElementById('prizeClose');
+const landingFlash = document.getElementById('landingFlash');
+const confettiContainer = document.getElementById('confettiContainer');
+const surgeOverlay = document.getElementById('surgeOverlay');
+const btnCW = document.getElementById('btnCW');
+const btnCCW = document.getElementById('btnCCW');
+
+/* ── GAME STATE ── */
+const STATE = { READY: 0, OPENING: 1, SPINNING: 2, CLOSING: 3, LANDING: 4, LANDED: 5, REPLAY: 6 };
+let gameState = STATE.READY;
+let gateOpenness = 0;
+let pressure = 0;
+let wheelAngle = 0;
+let wheelSpeed = 0;
+let selectedIndex = -1;
+let targetAngle = 0;
+let spinCount = 0;
+let lastPhraseIdx = -1;
+let lastPersonalityIdx = -1;
+let lastEffectIdx = -1;
+let spinTimer = 0;
+let surgeTriggered = false;
+let valveAngle = 0;
+let valveDragging = false;
+let valveLastAngle = 0;
+
+/* ── AUDIO ENGINE ── */
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+let masterGain = null;
+let muted = false;
+let volume = 0.6;
+let waterNoiseNode = null;
+let waterNoiseGain = null;
+
+function ensureAudio() {
+  if (!AudioCtx) return null;
+  if (!audioCtx) {
+    audioCtx = new AudioCtx();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = volume;
+    masterGain.connect(audioCtx.destination);
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+  return audioCtx;
+}
+
+function setVolume(v) {
+  volume = v;
+  if (masterGain) masterGain.gain.setTargetAtTime(muted ? 0 : v, audioCtx.currentTime, 0.05);
+}
+
+function toggleMute() {
+  muted = !muted;
+  muteBtn.textContent = muted ? '\u{1F507}' : '\u{1F50A}';
+  if (masterGain) masterGain.gain.setTargetAtTime(muted ? 0 : volume, audioCtx.currentTime, 0.05);
+}
+
+function playTone(freq, dur, type, gain, delay, endFreq) {
+  const c = ensureAudio(); if (!c) return;
+  type = type || 'sine'; gain = gain || 0.04; delay = delay || 0; endFreq = endFreq || freq;
+  const t = c.currentTime + delay;
+  const o = c.createOscillator();
+  const g = c.createGain();
+  const f = c.createBiquadFilter();
+  o.type = type;
+  o.frequency.setValueAtTime(freq, t);
+  o.frequency.exponentialRampToValueAtTime(Math.max(20, endFreq), t + dur);
+  f.type = 'lowpass'; f.frequency.setValueAtTime(4500, t);
+  f.frequency.exponentialRampToValueAtTime(800, t + dur);
+  g.gain.setValueAtTime(0.001, t);
+  g.gain.linearRampToValueAtTime(gain, t + 0.01);
+  g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+  o.connect(f); f.connect(g); g.connect(masterGain);
+  o.start(t); o.stop(t + dur + 0.05);
+}
+
+function playNoise(dur, gain, delay, freqCenter, q) {
+  const c = ensureAudio(); if (!c) return;
+  dur = dur || 0.2; gain = gain || 0.03; delay = delay || 0;
+  freqCenter = freqCenter || 1800; q = q || 1.5;
+  const t = c.currentTime + delay;
+  const buf = c.createBuffer(1, Math.ceil(c.sampleRate * dur), c.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
+  const src = c.createBufferSource(); src.buffer = buf;
+  const flt = c.createBiquadFilter();
+  flt.type = 'bandpass'; flt.frequency.setValueAtTime(freqCenter, t); flt.Q.value = q;
+  const g = c.createGain();
+  g.gain.setValueAtTime(0.001, t);
+  g.gain.linearRampToValueAtTime(gain, t + 0.015);
+  g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+  src.connect(flt); flt.connect(g); g.connect(masterGain);
+  src.start(t); src.stop(t + dur + 0.02);
+}
+
+/* Water flowing continuous noise */
+function startWaterNoise() {
+  const c = ensureAudio(); if (!c || waterNoiseNode) return;
+  const bufLen = c.sampleRate * 2;
+  const buf = c.createBuffer(1, bufLen, c.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < bufLen; i++) d[i] = Math.random() * 2 - 1;
+  waterNoiseNode = c.createBufferSource();
+  waterNoiseNode.buffer = buf; waterNoiseNode.loop = true;
+  const flt = c.createBiquadFilter();
+  flt.type = 'lowpass'; flt.frequency.value = 900;
+  waterNoiseGain = c.createGain();
+  waterNoiseGain.gain.value = 0;
+  waterNoiseNode.connect(flt); flt.connect(waterNoiseGain); waterNoiseGain.connect(masterGain);
+  waterNoiseNode.start();
+}
+
+function setWaterLevel(level) {
+  if (waterNoiseGain) {
+    const c = ensureAudio();
+    if (c) waterNoiseGain.gain.setTargetAtTime(level * 0.04, c.currentTime, 0.1);
+  }
+}
+
+function stopWaterNoise() {
+  if (waterNoiseNode) { try { waterNoiseNode.stop(); } catch(e){} waterNoiseNode = null; waterNoiseGain = null; }
+}
+
+/* Sound effects */
+function sndValveOpen() {
+  playTone(180, 0.3, 'sawtooth', 0.04, 0, 90);
+  playNoise(0.2, 0.025, 0.02, 600, 2);
+  playTone(400, 0.15, 'square', 0.02, 0.05, 300);
+}
+
+function sndValveClose() {
+  playTone(90, 0.25, 'sawtooth', 0.04, 0, 200);
+  playNoise(0.15, 0.025, 0.01, 900, 2);
+  playTone(500, 0.12, 'square', 0.02, 0.03, 600);
+}
+
+function sndMetalClank() {
+  playTone(800, 0.08, 'square', 0.04, 0, 400);
+  playNoise(0.06, 0.03, 0, 3000, 3);
+}
+
+function sndWaterSplash() {
+  playNoise(0.18, 0.04, 0, 2200, 0.8);
+  playNoise(0.12, 0.02, 0.05, 4000, 1);
+}
+
+function sndGearTick() {
+  playTone(200, 0.04, 'square', 0.025, 0, 150);
+  playNoise(0.03, 0.015, 0, 2500, 4);
+}
+
+function sndWheelCreak() {
+  playTone(60, 0.15, 'sawtooth', 0.02, 0, 45);
+  playTone(120, 0.1, 'triangle', 0.015, 0.02, 90);
+}
+
+function sndAccelWhoosh() {
+  playNoise(0.5, 0.03, 0, 1200, 0.5);
+  playTone(200, 0.4, 'sine', 0.02, 0, 800);
+}
+
+function sndDecelWhoosh() {
+  playNoise(0.5, 0.025, 0, 800, 0.5);
+  playTone(600, 0.4, 'sine', 0.015, 0, 150);
+}
+
+function sndFanfare() {
+  const notes = [523, 659, 784, 1047];
+  notes.forEach((f, i) => {
+    playTone(f, 0.5, 'triangle', 0.04, i * 0.12);
+    playTone(f * 0.5, 0.5, 'sine', 0.02, i * 0.12);
+  });
+  playNoise(0.3, 0.02, 0.4, 3000, 1);
+}
+
+function sndGameShowLose() {
+  const variants = [
+    () => { playTone(400, 0.3, 'sawtooth', 0.05, 0, 200); playTone(200, 0.5, 'sawtooth', 0.04, 0.2, 80); },
+    () => { playTone(500, 0.2, 'triangle', 0.04, 0, 350); playTone(350, 0.2, 'triangle', 0.03, 0.15, 200); playTone(200, 0.4, 'sawtooth', 0.04, 0.3, 80); },
+    () => { playTone(600, 0.15, 'square', 0.03, 0, 580); playTone(300, 0.5, 'sawtooth', 0.04, 0.1, 60); playNoise(0.3, 0.02, 0.2, 500, 1); },
+    () => { playTone(440, 0.12, 'sine', 0.04, 0, 420); playTone(380, 0.12, 'sine', 0.04, 0.1, 360); playTone(250, 0.5, 'sawtooth', 0.04, 0.2, 80); },
+  ];
+  variants[Math.floor(Math.random() * variants.length)]();
+}
+
+function sndSurge() {
+  playNoise(0.8, 0.06, 0, 600, 0.4);
+  playTone(80, 0.6, 'sine', 0.05, 0, 200);
+  playTone(150, 0.4, 'sawtooth', 0.03, 0.1, 400);
+  sndWaterSplash();
+}
+
+/* ── ANNOUNCER ── */
+const PERSONALITIES = [
+  { name: 'MAD MILLWRIGHT', color: '#ff6b35' },
+  { name: 'CONFUSED PLUMBER', color: '#4ecdc4' },
+  { name: 'GAME SHOW HOST', color: '#ffe66d' },
+  { name: 'DAM INSPECTOR', color: '#95e1d3' },
+  { name: 'TALKING WATERWHEEL', color: '#c792ea' },
+];
+
+const SPIN_PHRASES = [
+  "SOMEBODY CALL A PLUMBER!",
+  "THE RESERVOIR HAS ENTERED THE CHAT!",
+  "WE'RE LOSING PRESSURE!",
+  "WHO GAVE THIS WHEEL PERMISSION?",
+  "HOLD ON TO YOUR WATER METER!",
+  "THE DAM HAS SPOKEN!",
+  "I DON'T THINK THE ENGINEER APPROVED THIS!",
+  "SOMEONE STOP THAT WHEEL!",
+  "WE HAVE A HYDRAULIC SITUATION!",
+  "YOUR ANCESTORS ARE WATCHING THIS SPIN!",
+  "PRESSURE IS BUILDING!",
+  "THIS IS NOT COVERED BY THE WARRANTY!",
+  "THE PIPES ARE JUDGING YOU!",
+  "WATER PRESSURE AT MAXIMUM DRAMA!",
+  "CENTRIFUGAL FORCE HAS LEFT THE CHAT!",
+  "THIS WHEEL HAS SEEN THINGS!",
+  "MY BEARINGS! MY BEAUTIFUL BEARINGS!",
+  "TELL MY AXLE I LOVED HER!",
+  "DISPATCH SAYS THE PLUMBER IS ON BREAK!",
+  "SOMEBODY FORGOT TO FILE A PERMIT!",
+  "THE METER IS SPINNING FASTER THAN THE WHEEL!",
+  "THIS IS WHAT PEAK HYDRAULICS LOOKS LIKE!",
+];
+
+const SURGE_PHRASES = [
+  "ALERT: UNAUTHORIZED PRESSURE SURGE DETECTED!",
+  "THE WATER MAIN HAS OPINIONS TODAY!",
+  "SOMEONE OPENED THE UPSTREAM DAM!",
+  "PRESSURE ANOMALY! ALL HANDS ON DECK!",
+  "THE AQUIFER SENDS ITS REGARDS!",
+];
+
+function announce(phrase, personalityIdx) {
+  let pi = personalityIdx;
+  if (pi === undefined || pi === null) {
+    do { pi = Math.floor(Math.random() * PERSONALITIES.length); } while (pi === lastPersonalityIdx && PERSONALITIES.length > 1);
+    lastPersonalityIdx = pi;
+  }
+  const p = PERSONALITIES[pi];
+  announcerNameEl.textContent = p.name;
+  announcerNameEl.style.color = p.color;
+  announcerPhraseEl.textContent = '';
+  announcerEl.classList.add('active');
+  let i = 0;
+  const typeTimer = setInterval(() => {
+    if (i < phrase.length) {
+      announcerPhraseEl.textContent += phrase[i]; i++;
+    } else {
+      clearInterval(typeTimer);
+      setTimeout(() => announcerEl.classList.remove('active'), 2000);
+    }
+  }, 30);
+}
+
+function announceSpinPhrase() {
+  let idx;
+  do { idx = Math.floor(Math.random() * SPIN_PHRASES.length); } while (idx === lastPhraseIdx && SPIN_PHRASES.length > 1);
+  lastPhraseIdx = idx;
+  announce(SPIN_PHRASES[idx]);
+}
+
+function announceSurge() {
+  announce(SURGE_PHRASES[Math.floor(Math.random() * SURGE_PHRASES.length)], 3);
+}
+
+/* ── RANDOM ── */
+function secureRandom(max) {
+  const arr = new Uint32Array(1);
+  crypto.getRandomValues(arr);
+  return arr[0] % max;
+}
+
+/* ── HISTORY ── */
+let history = [];
+try { history = JSON.parse(localStorage.getItem('wof-history') || '[]'); } catch(e) { history = []; }
+
+function saveHistory() {
+  try { localStorage.setItem('wof-history', JSON.stringify(history)); } catch(e) {}
+}
+
+function renderHistory() {
+  if (history.length === 0) {
+    historyList.innerHTML = '<span class="history-empty">No spins yet</span>';
+    return;
+  }
+  historyList.innerHTML = history.map(h =>
+    `<span class="history-item"><span class="num">#${h.num}</span>${h.name}</span>`
+  ).join('');
+}
+
+historyClear.addEventListener('click', () => {
+  if (history.length === 0) return;
+  if (confirm('Clear all spin history?')) {
+    history = [];
+    saveHistory();
+    renderHistory();
+  }
+});
+
+renderHistory();
+
+/* ── WATER PARTICLES ── */
+const waterParticles = [];
+const MAX_PARTICLES = 80;
+function initWaterParticles() {
+  for (let i = 0; i < MAX_PARTICLES; i++) {
+    waterParticles.push({
+      x: Math.random(), y: Math.random(),
+      vx: (Math.random() - 0.5) * 0.002,
+      vy: Math.random() * 0.003 + 0.001,
+      r: Math.random() * 3 + 1,
+      alpha: Math.random() * 0.4 + 0.1,
+    });
+  }
+}
+initWaterParticles();
+
+function updateWaterParticles(flow) {
+  for (const p of waterParticles) {
+    p.x += p.vx * flow;
+    p.y += p.vy * flow;
+    if (p.y > 1.1) { p.y = -0.1; p.x = Math.random(); }
+    if (p.x < -0.1) p.x = 1.1;
+    if (p.x > 1.1) p.x = -0.1;
+  }
+}
+
+/* ── DRAW WHEEL ── */
+let animTime = 0;
+let highlightSlot = -1;
+let highlightAlpha = 0;
+
+function drawWheel() {
+  const w = parseInt(wheelCanvas.style.width) || wheelCanvas.width;
+  const h = parseInt(wheelCanvas.style.height) || wheelCanvas.height;
+  const cx = w / 2;
+  const cy = h / 2;
+  const outerR = w * 0.44;
+  const innerR = w * 0.16;
+  const paddleR = w * 0.47;
+  const ctx = wheelCtx;
+
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
+  ctx.restore();
+
+  /* Water background */
+  const flow = Math.max(pressure, gateOpenness * 0.3);
+  updateWaterParticles(flow + 0.3);
+  ctx.save();
+  for (const p of waterParticles) {
+    const px = p.x * w;
+    const py = p.y * h;
+    const dist = Math.sqrt((px - cx) ** 2 + (py - cy) ** 2);
+    if (dist < outerR + 20 && dist > outerR - 30) {
+      ctx.beginPath();
+      ctx.arc(px, py, p.r * (1 + flow), 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(47,210,255,${p.alpha * (0.3 + flow * 0.7)})`;
+      ctx.fill();
+    }
+  }
+  ctx.restore();
+
+  /* Wheel body */
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(wheelAngle);
+
+  /* Segments */
+  for (let i = 0; i < N; i++) {
+    const startAngle = i * SLICE - Math.PI / 2;
+    const endAngle = startAngle + SLICE;
+
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.arc(0, 0, outerR, startAngle, endAngle);
+    ctx.closePath();
+
+    const grad = ctx.createRadialGradient(0, 0, innerR, 0, 0, outerR);
+    grad.addColorStop(0, WOOD_HIGHLIGHTS[i]);
+    grad.addColorStop(0.5, WOOD_COLORS[i]);
+    grad.addColorStop(1, WOOD_COLORS[i]);
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    ctx.strokeStyle = 'rgba(0,0,0,0.4)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    /* Wood grain lines */
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.arc(0, 0, outerR, startAngle, endAngle);
+    ctx.closePath();
+    ctx.clip();
+    const midAngle = startAngle + SLICE / 2;
+    const grainCount = 3;
+    for (let g = 0; g < grainCount; g++) {
+      const frac = (g + 1) / (grainCount + 1);
+      const a = startAngle + SLICE * frac;
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(a) * innerR, Math.sin(a) * innerR);
+      ctx.lineTo(Math.cos(a) * outerR, Math.sin(a) * outerR);
+      ctx.strokeStyle = `rgba(0,0,0,0.08)`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    /* Highlight selected */
+    if (i === highlightSlot && highlightAlpha > 0) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.arc(0, 0, outerR, startAngle, endAngle);
+      ctx.closePath();
+      ctx.fillStyle = `rgba(255,215,0,${highlightAlpha * 0.4})`;
+      ctx.fill();
+      ctx.restore();
+    }
+
+    /* Paddles */
+    const pa = startAngle + SLICE / 2;
+    const px = Math.cos(pa) * paddleR;
+    const py = Math.sin(pa) * paddleR;
+    ctx.save();
+    ctx.translate(px, py);
+    ctx.rotate(pa + Math.PI / 2);
+    ctx.fillStyle = '#5a3a1a';
+    ctx.fillRect(-8, -3, 16, 6);
+    ctx.strokeStyle = '#3a2510';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(-8, -3, 16, 6);
+    ctx.restore();
+
+    /* Name text */
+    ctx.save();
+    ctx.rotate(midAngle);
+    ctx.translate(outerR * 0.67, 0);
+    ctx.rotate(Math.PI / 2);
+    const name = NAMES[i];
+    const fontSize = name.length > 18 ? w * 0.024 : name.length > 12 ? w * 0.028 : w * 0.033;
+    ctx.font = `800 ${fontSize}px 'Plus Jakarta Sans', sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#fff';
+    ctx.strokeStyle = 'rgba(0,0,0,0.85)';
+    ctx.lineWidth = 2.5;
+    ctx.lineJoin = 'round';
+    ctx.strokeText(name, 0, 0);
+    ctx.fillText(name, 0, 0);
+    ctx.restore();
+  }
+
+  /* Iron outer ring */
+  ctx.beginPath();
+  ctx.arc(0, 0, outerR, 0, Math.PI * 2);
+  ctx.strokeStyle = '#555';
+  ctx.lineWidth = 5;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, 0, outerR + 3, 0, Math.PI * 2);
+  ctx.strokeStyle = '#3a3a44';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  /* Bolts on outer ring */
+  for (let i = 0; i < N; i++) {
+    const a = i * SLICE;
+    const bx = Math.cos(a) * (outerR + 1);
+    const by = Math.sin(a) * (outerR + 1);
+    ctx.beginPath();
+    ctx.arc(bx, by, 3.5, 0, Math.PI * 2);
+    ctx.fillStyle = '#6a6a78';
+    ctx.fill();
+    ctx.strokeStyle = '#444';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  /* Inner ring */
+  ctx.beginPath();
+  ctx.arc(0, 0, innerR, 0, Math.PI * 2);
+  ctx.strokeStyle = '#555';
+  ctx.lineWidth = 4;
+  ctx.stroke();
+
+  /* Spokes */
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(Math.cos(a) * innerR, Math.sin(a) * innerR);
+    ctx.lineTo(Math.cos(a) * (outerR - 5), Math.sin(a) * (outerR - 5));
+    ctx.strokeStyle = 'rgba(90,70,40,0.3)';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  }
+
+  /* Axle */
+  const axleGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, innerR);
+  axleGrad.addColorStop(0, '#888');
+  axleGrad.addColorStop(0.3, '#666');
+  axleGrad.addColorStop(0.7, '#555');
+  axleGrad.addColorStop(1, '#444');
+  ctx.beginPath();
+  ctx.arc(0, 0, innerR - 2, 0, Math.PI * 2);
+  ctx.fillStyle = axleGrad;
+  ctx.fill();
+
+  /* Axle center bolt */
+  ctx.beginPath();
+  ctx.arc(0, 0, 12, 0, Math.PI * 2);
+  ctx.fillStyle = '#777';
+  ctx.fill();
+  ctx.strokeStyle = '#555';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  /* Cross on bolt */
+  ctx.beginPath();
+  ctx.moveTo(-7, 0); ctx.lineTo(7, 0);
+  ctx.moveTo(0, -7); ctx.lineTo(0, 7);
+  ctx.strokeStyle = '#444';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.restore();
+
+  /* Pointer (fixed, at top) */
+  const ptrX = cx;
+  const ptrY = cy - outerR - 8;
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(ptrX, ptrY + 30);
+  ctx.lineTo(ptrX - 14, ptrY);
+  ctx.lineTo(ptrX + 14, ptrY);
+  ctx.closePath();
+  const ptrGrad = ctx.createLinearGradient(ptrX - 14, ptrY, ptrX + 14, ptrY + 30);
+  ptrGrad.addColorStop(0, '#ff3366');
+  ptrGrad.addColorStop(1, '#cc0033');
+  ctx.fillStyle = ptrGrad;
+  ctx.fill();
+  ctx.strokeStyle = '#fff';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  /* Pointer glow */
+  ctx.shadowColor = 'rgba(255,51,102,0.6)';
+  ctx.shadowBlur = 12;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.restore();
+}
+
+/* ── DRAW VALVE ── */
+function drawValve() {
+  const w = valveCanvas.width;
+  const h = valveCanvas.height;
+  const cx = w / 2;
+  const cy = h / 2;
+  const ctx = valveCtx;
+
+  ctx.clearRect(0, 0, w, h);
+
+  /* Background circle */
+  ctx.beginPath();
+  ctx.arc(cx, cy, 80, 0, Math.PI * 2);
+  const bgGrad = ctx.createRadialGradient(cx, cy, 20, cx, cy, 80);
+  bgGrad.addColorStop(0, '#1a1d28');
+  bgGrad.addColorStop(1, '#0d1017');
+  ctx.fillStyle = bgGrad;
+  ctx.fill();
+  ctx.strokeStyle = '#3a3a44';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+
+  /* Markings */
+  for (let i = 0; i < 12; i++) {
+    const a = (i / 12) * Math.PI * 2 - Math.PI / 2;
+    const r1 = 68; const r2 = 76;
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1);
+    ctx.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2);
+    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+    ctx.lineWidth = i % 3 === 0 ? 2 : 1;
+    ctx.stroke();
+  }
+
+  /* T-handle */
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(valveAngle);
+
+  /* Stem */
+  const stemGrad = ctx.createLinearGradient(-6, 0, 6, 0);
+  stemGrad.addColorStop(0, '#777');
+  stemGrad.addColorStop(0.5, '#aaa');
+  stemGrad.addColorStop(1, '#777');
+  ctx.fillStyle = stemGrad;
+  ctx.fillRect(-6, -50, 12, 50);
+  ctx.strokeStyle = '#555';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(-6, -50, 12, 50);
+
+  /* Cross bar */
+  const barGrad = ctx.createLinearGradient(0, -56, 0, -42);
+  barGrad.addColorStop(0, '#999');
+  barGrad.addColorStop(0.5, '#ccc');
+  barGrad.addColorStop(1, '#999');
+  ctx.fillStyle = barGrad;
+  ctx.beginPath();
+  ctx.roundRect(-34, -56, 68, 14, 5);
+  ctx.fill();
+  ctx.strokeStyle = '#666';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  /* Grip dots */
+  for (let i = -2; i <= 2; i++) {
+    ctx.beginPath();
+    ctx.arc(i * 10, -49, 2, 0, Math.PI * 2);
+    ctx.fillStyle = '#666';
+    ctx.fill();
+  }
+
+  /* Center nut */
+  ctx.beginPath();
+  ctx.arc(0, 0, 10, 0, Math.PI * 2);
+  const nutGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, 10);
+  nutGrad.addColorStop(0, '#aaa');
+  nutGrad.addColorStop(1, '#666');
+  ctx.fillStyle = nutGrad;
+  ctx.fill();
+  ctx.strokeStyle = '#555';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.restore();
+
+  /* Open/Close labels */
+  ctx.font = '600 11px Plus Jakarta Sans, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillStyle = 'rgba(47,210,255,0.5)';
+  ctx.fillText('OPEN', cx + 55, cy + 4);
+  ctx.fillStyle = 'rgba(243,16,186,0.5)';
+  ctx.fillText('CLOSE', cx - 55, cy + 4);
+}
+
+/* ── VALVE INTERACTION ── */
+function getAngleFromCenter(canvas, clientX, clientY) {
+  const rect = canvas.getBoundingClientRect();
+  const x = clientX - rect.left - rect.width / 2;
+  const y = clientY - rect.top - rect.height / 2;
+  return Math.atan2(y, x);
+}
+
+function handleValveStart(e) {
+  if (gameState !== STATE.READY && gameState !== STATE.OPENING && gameState !== STATE.SPINNING) return;
+  e.preventDefault();
+  valveDragging = true;
+  const touch = e.touches ? e.touches[0] : e;
+  valveLastAngle = getAngleFromCenter(valveCanvas, touch.clientX, touch.clientY);
+}
+
+function handleValveMove(e) {
+  if (!valveDragging) return;
+  e.preventDefault();
+  const touch = e.touches ? e.touches[0] : e;
+  const currentAngle = getAngleFromCenter(valveCanvas, touch.clientX, touch.clientY);
+  let delta = currentAngle - valveLastAngle;
+  if (delta > Math.PI) delta -= Math.PI * 2;
+  if (delta < -Math.PI) delta += Math.PI * 2;
+  valveLastAngle = currentAngle;
+  valveAngle += delta;
+  applyValveDelta(delta);
+}
+
+function handleValveEnd() {
+  valveDragging = false;
+}
+
+valveCanvas.addEventListener('mousedown', handleValveStart);
+valveCanvas.addEventListener('touchstart', handleValveStart, { passive: false });
+window.addEventListener('mousemove', handleValveMove);
+window.addEventListener('touchmove', handleValveMove, { passive: false });
+window.addEventListener('mouseup', handleValveEnd);
+window.addEventListener('touchend', handleValveEnd);
+
+function applyValveDelta(delta) {
+  if (delta > 0.02) {
+    openGate(delta * 8);
+  } else if (delta < -0.02) {
+    closeGate(-delta * 8);
+  }
+}
+
+/* Button controls */
+let cwInterval = null, ccwInterval = null;
+
+function startCW() {
+  if (gameState !== STATE.READY && gameState !== STATE.OPENING && gameState !== STATE.SPINNING) return;
+  ensureAudio();
+  openGate(0.12);
+  valveAngle += 0.12;
+  cwInterval = setInterval(() => {
+    openGate(0.08);
+    valveAngle += 0.1;
+  }, 50);
+}
+function stopCW() { clearInterval(cwInterval); cwInterval = null; }
+
+function startCCW() {
+  if (gameState !== STATE.OPENING && gameState !== STATE.SPINNING) return;
+  ensureAudio();
+  closeGate(0.04);
+  valveAngle -= 0.08;
+  ccwInterval = setInterval(() => {
+    closeGate(0.04);
+    valveAngle -= 0.08;
+  }, 50);
+}
+function stopCCW() { clearInterval(ccwInterval); ccwInterval = null; }
+
+btnCW.addEventListener('mousedown', startCW);
+btnCW.addEventListener('touchstart', (e) => { e.preventDefault(); startCW(); }, { passive: false });
+btnCW.addEventListener('mouseup', stopCW);
+btnCW.addEventListener('mouseleave', stopCW);
+btnCW.addEventListener('touchend', stopCW);
+btnCW.addEventListener('touchcancel', stopCW);
+
+btnCCW.addEventListener('mousedown', startCCW);
+btnCCW.addEventListener('touchstart', (e) => { e.preventDefault(); startCCW(); }, { passive: false });
+btnCCW.addEventListener('mouseup', stopCCW);
+btnCCW.addEventListener('mouseleave', stopCCW);
+btnCCW.addEventListener('touchend', stopCCW);
+btnCCW.addEventListener('touchcancel', stopCCW);
+
+/* ── GATE CONTROL ── */
+function openGate(amount) {
+  ensureAudio();
+  if (gameState === STATE.READY) {
+    gameState = STATE.OPENING;
+    selectedIndex = secureRandom(N);
+    surgeTriggered = false;
+    spinTimer = 0;
+    startWaterNoise();
+    sndValveOpen();
+    instructionEl.textContent = 'Water flowing! The wheel is spinning...';
+    setTimeout(announceSpinPhrase, 800);
+  }
+  gateOpenness = Math.min(1, gateOpenness + amount);
+}
+
+function closeGate(amount) {
+  if (gameState !== STATE.OPENING && gameState !== STATE.SPINNING) return;
+  gateOpenness = Math.max(0, gateOpenness - amount);
+  if (gateOpenness <= 0 && gameState !== STATE.CLOSING && gameState !== STATE.LANDING) {
+    gameState = STATE.CLOSING;
+    sndValveClose();
+    instructionEl.textContent = 'Gate closing... wheel slowing down...';
+    computeTargetAngle();
+  }
+}
+
+let closingStartAngle = 0;
+let closingStartTime = 0;
+const CLOSING_DURATION = 5;
+
+function computeTargetAngle() {
+  const slotCenter = selectedIndex * SLICE + SLICE / 2;
+  const targetSlotAngle = (Math.PI * 2) - slotCenter;
+  const extraRotations = 2;
+  targetAngle = wheelAngle + extraRotations * Math.PI * 2;
+  const currentNorm = ((targetAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+  let diff = targetSlotAngle - currentNorm;
+  if (diff < 0) diff += Math.PI * 2;
+  targetAngle += diff;
+  closingStartAngle = wheelAngle;
+  closingStartTime = animTime;
+}
+
+/* ── PHYSICS UPDATE ── */
+let lastFrameTime = 0;
+let tickAccum = 0;
+let lastTickSlot = -1;
+let phraseTimer = 0;
+
+function update(dt) {
+  if (dt > 0.1) dt = 0.1;
+  animTime += dt;
+
+  switch (gameState) {
+    case STATE.OPENING:
+    case STATE.SPINNING: {
+      pressure = Math.min(1, pressure + gateOpenness * dt * 2);
+      const maxSpeed = 4 + pressure * 6;
+      wheelSpeed += gateOpenness * dt * 8;
+      if (wheelSpeed > maxSpeed) wheelSpeed = maxSpeed;
+      wheelAngle += wheelSpeed * dt;
+      spinTimer += dt;
+
+      /* Auto-transition to SPINNING */
+      if (gameState === STATE.OPENING && wheelSpeed > 2) {
+        gameState = STATE.SPINNING;
+      }
+
+      /* Auto-close after some time spinning at speed */
+      if (gameState === STATE.SPINNING && spinTimer > 3.5 && gateOpenness > 0) {
+        gateOpenness = Math.max(0, gateOpenness - dt * 0.8);
+        if (gateOpenness <= 0) {
+          gameState = STATE.CLOSING;
+          sndValveClose();
+          instructionEl.textContent = 'Gate closing... wheel slowing down...';
+          computeTargetAngle();
+        }
+      }
+
+      /* Rare surge event */
+      if (!surgeTriggered && spinTimer > 1.5 && spinTimer < 2.5 && Math.random() < 0.002) {
+        if (secureRandom(10) === 0) {
+          surgeTriggered = true;
+          surgeOverlay.classList.add('visible');
+          sndSurge();
+          announceSurge();
+          setTimeout(() => surgeOverlay.classList.remove('visible'), 1200);
+        }
+      }
+
+      /* Phrase timer */
+      phraseTimer += dt;
+      if (phraseTimer > 4 && gameState === STATE.SPINNING) {
+        phraseTimer = 0;
+        if (Math.random() < 0.6) announceSpinPhrase();
+      }
+
+      /* Gear tick sounds */
+      tickAccum += wheelSpeed * dt;
+      const currentSlot = Math.floor(((wheelAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2) / SLICE);
+      if (currentSlot !== lastTickSlot) {
+        lastTickSlot = currentSlot;
+        if (wheelSpeed > 0.5) sndGearTick();
+      }
+
+      setWaterLevel(pressure);
+      break;
+    }
+
+    case STATE.CLOSING:
+    case STATE.LANDING: {
+      pressure = Math.max(0, pressure - dt * 1.2);
+      const elapsed = animTime - closingStartTime;
+      const totalDist = targetAngle - closingStartAngle;
+      const t = Math.min(elapsed / CLOSING_DURATION, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const newAngle = closingStartAngle + totalDist * eased;
+      wheelSpeed = Math.max(0, (newAngle - wheelAngle) / Math.max(dt, 0.001));
+      wheelAngle = newAngle;
+
+      if (t > 0.7 && gameState === STATE.CLOSING) {
+        gameState = STATE.LANDING;
+        sndDecelWhoosh();
+      }
+
+      if (t >= 1) {
+        wheelAngle = targetAngle;
+        wheelSpeed = 0;
+        gameState = STATE.LANDED;
+        setWaterLevel(0);
+        stopWaterNoise();
+        onLanded();
+      }
+
+      const currentSlotC = Math.floor(((wheelAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2) / SLICE);
+      if (currentSlotC !== lastTickSlot) {
+        lastTickSlot = currentSlotC;
+        if (wheelSpeed > 0.3) sndGearTick();
+      }
+
+      setWaterLevel(pressure);
+      break;
+    }
+
+    default:
+      break;
+  }
+
+  /* Update highlight animation */
+  if (gameState === STATE.LANDED || gameState === STATE.REPLAY) {
+    highlightSlot = selectedIndex;
+    highlightAlpha = Math.min(1, highlightAlpha + dt * 3);
+  } else {
+    highlightAlpha = Math.max(0, highlightAlpha - dt * 3);
+    if (highlightAlpha <= 0) highlightSlot = -1;
+  }
+
+  /* UI updates */
+  gateFill.style.width = (gateOpenness * 100) + '%';
+  gateStatus.textContent = gateOpenness <= 0 ? 'CLOSED' : gateOpenness >= 1 ? 'FULL OPEN' : Math.round(gateOpenness * 100) + '%';
+  pressureFill.style.width = (pressure * 100) + '%';
+}
+
+/* ── LANDING EFFECTS ── */
+const EFFECTS = ['gold', 'blue', 'red', 'magenta', 'shake', 'confetti'];
+
+function onLanded() {
+  spinCount++;
+  const winner = NAMES[selectedIndex];
+
+  history.unshift({ num: spinCount, name: winner });
+  if (history.length > 10) history.pop();
+  saveHistory();
+  renderHistory();
+
+  /* Dramatic pause then effects */
+  setTimeout(() => {
+    sndGameShowLose();
+
+    /* Random effect */
+    let effectIdx;
+    do { effectIdx = Math.floor(Math.random() * EFFECTS.length); } while (effectIdx === lastEffectIdx && EFFECTS.length > 1);
+    lastEffectIdx = effectIdx;
+    const effect = EFFECTS[effectIdx];
+
+    if (effect === 'shake') {
+      document.body.classList.add('shake');
+      setTimeout(() => document.body.classList.remove('shake'), 400);
+      sndMetalClank();
+    } else if (effect === 'confetti') {
+      spawnConfetti();
+    } else {
+      landingFlash.className = 'landing-flash ' + effect + ' visible';
+      setTimeout(() => landingFlash.classList.remove('visible'), 600);
+    }
+
+    sndWaterSplash();
+
+    /* Announce winner */
+    setTimeout(() => {
+      announce(`THE WHEEL HAS CHOSEN: ${winner.toUpperCase()}!`, 2);
+      sndFanfare();
+
+      /* Show prize after fanfare */
+      setTimeout(() => {
+        showPrize(winner);
+        replayBtn.classList.add('visible');
+        instructionEl.textContent = 'Spin again or bask in glory!';
+        gameState = STATE.REPLAY;
+      }, 1800);
+    }, 600);
+  }, 500);
+}
+
+function spawnConfetti() {
+  const colors = ['#2fd2ff', '#f310ba', '#ffd700', '#3d3dea', '#ff9df2', '#ff3366'];
+  for (let i = 0; i < 60; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+    piece.style.animationDelay = (Math.random() * 0.5) + 's';
+    piece.style.width = (Math.random() * 6 + 4) + 'px';
+    piece.style.height = (Math.random() * 8 + 6) + 'px';
+    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    confettiContainer.appendChild(piece);
+    setTimeout(() => piece.remove(), 4000);
+  }
+}
+
+function showPrize(winner) {
+  prizeWinnerName.textContent = winner;
+  prizeOverlay.classList.add('visible');
+}
+
+prizeClose.addEventListener('click', () => {
+  prizeOverlay.classList.remove('visible');
+});
+
+/* ── REPLAY ── */
+replayBtn.addEventListener('click', () => {
+  gameState = STATE.READY;
+  gateOpenness = 0;
+  pressure = 0;
+  wheelSpeed = 0;
+  selectedIndex = -1;
+  highlightSlot = -1;
+  highlightAlpha = 0;
+  surgeTriggered = false;
+  spinTimer = 0;
+  phraseTimer = 0;
+  lastTickSlot = -1;
+  tickAccum = 0;
+  replayBtn.classList.remove('visible');
+  prizeOverlay.classList.remove('visible');
+  stopWaterNoise();
+  instructionEl.textContent = 'Drag the T-valve clockwise or tap ↻ to open the sluice gate';
+  announcerPhraseEl.textContent = 'Turn the valve to release the water!';
+  announcerNameEl.textContent = ' ';
+  announcerEl.classList.remove('active');
+  btnCW.disabled = false;
+  btnCCW.disabled = false;
+});
+
+/* ── AUDIO CONTROLS ── */
+muteBtn.addEventListener('click', () => {
+  ensureAudio();
+  toggleMute();
+});
+
+volumeSlider.addEventListener('input', () => {
+  ensureAudio();
+  setVolume(volumeSlider.value / 100);
+});
+
+/* ── CANVAS RESIZE ── */
+function resizeCanvases() {
+  const area = document.getElementById('wheelArea');
+  const size = Math.min(area.clientWidth - 16, window.innerHeight * 0.6, 700);
+  wheelCanvas.style.width = size + 'px';
+  wheelCanvas.style.height = size + 'px';
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  wheelCanvas.width = size * dpr;
+  wheelCanvas.height = size * dpr;
+  wheelCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+resizeCanvases();
+window.addEventListener('resize', resizeCanvases);
+
+/* ── MAIN LOOP ── */
+function gameLoop(timestamp) {
+  if (!lastFrameTime) lastFrameTime = timestamp;
+  const dt = (timestamp - lastFrameTime) / 1000;
+  lastFrameTime = timestamp;
+
+  update(dt);
+  drawWheel();
+  drawValve();
+
+  requestAnimationFrame(gameLoop);
+}
+
+requestAnimationFrame(gameLoop);
+
+/* ── PREVENT SCROLL ON CANVAS TOUCH ── */
+wheelCanvas.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+
+/* ── INITIAL STATE ── */
+btnCW.disabled = false;
+btnCCW.disabled = false;
+
+})();
+</script>
+</body>
+</html>

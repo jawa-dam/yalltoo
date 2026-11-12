@@ -3,340 +3,277 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<meta name="theme-color" content="#06070d">
+<meta name="theme-color" content="#0a1628">
 <title>Wheel of Fantasites — YallToo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════════
-   WHEEL OF FANTASITES — YallToo
-   Complete standalone CSS
-   ═══════════════════════════════════════════════════ */
-
 :root {
   --cyan: #2fd2ff;
   --indigo: #3d3dea;
   --magenta: #f310ba;
   --pink: #ff9df2;
-  --dark: #06070d;
-  --dark2: #0d1017;
-  --dark3: #141822;
+  --bg1: #0a1628;
+  --bg2: #0f1d35;
+  --bg3: #162544;
   --wood1: #8B6914;
   --wood2: #A0762C;
-  --iron: #4a4a5a;
+  --iron: #5a5a6e;
   --gold: #ffd700;
+  --yellow: #ffe44d;
   --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html, body {
-  width: 100%; min-height: 100vh; min-height: 100dvh;
-  overflow-x: hidden;
+html {
+  width: 100%; height: 100vh; height: 100dvh;
+  overflow: hidden;
+}
+body {
+  width: 100%; height: 100vh; height: 100dvh;
+  overflow: hidden;
   font-family: var(--font);
-  background: var(--dark);
+  background: var(--bg1);
+  background-image: radial-gradient(ellipse at 50% 40%, rgba(47,210,255,0.07), rgba(243,16,186,0.04) 40%, transparent 70%);
   color: #e8ecf2;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
-}
-
-body {
   display: flex; flex-direction: column; align-items: center;
   padding: 0 0 env(safe-area-inset-bottom, 0);
 }
 
-/* ── TITLE ── */
-.game-title {
-  width: 100%; text-align: center;
-  padding: 12px 16px 4px;
-  background: linear-gradient(180deg, var(--dark) 0%, transparent 100%);
-  position: relative; z-index: 10;
+/* ── TOP BAR ── */
+.top-bar {
+  display: flex; align-items: center; justify-content: center;
+  padding: 4px 12px;
+  position: relative; width: 100%; flex-shrink: 0;
 }
-.game-title h1 {
-  font-size: clamp(1.3rem, 4.5vw, 2.2rem);
+.top-bar h1 {
+  font-size: clamp(0.9rem, 3.2vw, 1.4rem);
   font-weight: 900; letter-spacing: .04em;
-  background: linear-gradient(100deg, var(--cyan), var(--magenta), var(--cyan));
+  background: linear-gradient(100deg, var(--cyan), var(--magenta), var(--yellow));
   background-size: 200% 100%;
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: titleShimmer 4s ease infinite;
 }
-.game-title .subtitle {
-  font-size: .7rem; font-weight: 600;
-  letter-spacing: .18em; text-transform: uppercase;
-  color: var(--cyan); opacity: .6; margin-top: 2px;
+.top-bar .audio-icon {
+  position: absolute; right: 12px; top: 50%;
+  transform: translateY(-50%);
 }
 @keyframes titleShimmer {
   0%,100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
 
-/* ── WHEEL CONTAINER ── */
+/* ── WHEEL AREA ── */
 .wheel-area {
+  flex: 1 1 0; min-height: 0;
   width: 100%; max-width: 700px;
   position: relative;
   display: flex; justify-content: center; align-items: center;
-  padding: 4px 8px;
+  padding: 0;
+  overflow: hidden;
+}
+.wheel-area::before {
+  content: ''; position: absolute;
+  width: 80%; height: 80%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(47,210,255,0.06), rgba(243,16,186,0.03), transparent 70%);
+  pointer-events: none;
 }
 .wheel-area canvas {
-  width: 100%; height: auto;
-  display: block;
-  border-radius: 12px;
+  display: block; border-radius: 12px;
 }
 
-/* ── POINTER ── */
-.pointer-container {
-  position: absolute;
-  top: 4px; left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
-  filter: drop-shadow(0 4px 12px rgba(47,210,255,.5));
+/* ── CONTROLS STRIP ── */
+.controls-strip {
+  display: flex; gap: 10px;
+  padding: 4px 12px;
+  width: 100%; max-width: 660px;
+  align-items: stretch;
+  flex-shrink: 0;
+  border-top: 1px solid rgba(47,210,255,0.15);
 }
-
-/* ── ANNOUNCER BUBBLE ── */
-.announcer {
-  width: calc(100% - 32px); max-width: 660px;
-  min-height: 52px;
-  margin: 4px auto;
-  padding: 10px 16px;
-  background: var(--dark3);
-  border: 1px solid rgba(47,210,255,.2);
-  border-radius: 14px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  transition: border-color .3s;
-}
-.announcer.active { border-color: var(--cyan); }
-.announcer .personality {
-  font-size: .65rem; font-weight: 800;
-  letter-spacing: .12em; text-transform: uppercase;
-  color: var(--magenta); margin-bottom: 3px;
-}
-.announcer .phrase {
-  font-size: clamp(.85rem, 2.5vw, 1.05rem);
-  font-weight: 700; line-height: 1.3;
-  color: #fff;
-  min-height: 1.3em;
-}
-
-/* ── CONTROLS AREA ── */
-.controls {
-  width: calc(100% - 32px); max-width: 660px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 12px;
-  padding: 8px 0;
-  align-items: center;
-}
-
-/* ── T-VALVE ── */
-.valve-wrapper {
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
+.valve-col {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
 }
 .valve-canvas {
-  width: 90px; height: 90px;
-  cursor: grab;
-  touch-action: none;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--dark3), var(--dark));
-  border: 2px solid var(--iron);
+  width: 80px; height: 110px;
+  cursor: grab; touch-action: none;
+  border-radius: 14px;
+  background: radial-gradient(ellipse at 50% 45%, var(--bg3), var(--bg1));
+  border: 1.5px solid rgba(47,210,255,0.2);
 }
 .valve-canvas:active { cursor: grabbing; }
 .valve-buttons {
-  display: flex; gap: 6px;
+  display: flex; gap: 4px;
 }
 .valve-btn {
-  width: 44px; height: 44px;
-  border: 2px solid var(--iron);
-  border-radius: 10px;
-  background: var(--dark3);
+  width: 38px; height: 34px;
+  border: 1.5px solid rgba(47,210,255,0.3);
+  border-radius: 8px;
+  background: linear-gradient(180deg, var(--bg3), var(--bg2));
   color: var(--cyan);
-  font-size: 1.2rem; font-weight: 900;
+  font-size: 1.1rem; font-weight: 900;
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: background .15s, border-color .15s;
   -webkit-user-select: none; user-select: none;
 }
 .valve-btn:hover, .valve-btn:active {
-  background: rgba(47,210,255,.12);
+  background: rgba(47,210,255,.15);
   border-color: var(--cyan);
 }
 .valve-btn:disabled { opacity: .3; cursor: default; }
 
-/* ── RIGHT PANEL ── */
-.right-panel {
-  display: flex; flex-direction: column; gap: 8px;
+.info-col {
+  flex: 1; display: flex; flex-direction: column;
+  gap: 5px; min-width: 0;
+  justify-content: center;
 }
 
-/* Gate meter */
-.gate-meter {
-  display: flex; align-items: center; gap: 8px;
+/* ── ANNOUNCER ── */
+.announcer {
+  padding: 6px 10px;
+  background: rgba(22,37,68,0.7);
+  border: 1px solid rgba(47,210,255,0.2);
+  border-radius: 10px;
+  text-align: center;
+  transition: border-color .3s, box-shadow .3s;
 }
-.gate-label {
-  font-size: .7rem; font-weight: 700;
+.announcer.active {
+  border-color: var(--cyan);
+  box-shadow: 0 0 12px rgba(47,210,255,0.15);
+}
+.announcer .personality {
+  font-size: .55rem; font-weight: 800;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--magenta); margin-bottom: 1px;
+}
+.announcer .phrase {
+  font-size: clamp(.72rem, 2.2vw, .88rem);
+  font-weight: 700; line-height: 1.25;
+  color: #fff; min-height: 1.2em;
+}
+
+/* ── METERS ── */
+.meters { display: flex; flex-direction: column; gap: 4px; }
+.gate-meter, .pressure-gauge {
+  display: flex; align-items: center; gap: 6px;
+}
+.gate-label, .pressure-label {
+  font-size: .6rem; font-weight: 700;
   letter-spacing: .08em; text-transform: uppercase;
-  color: rgba(255,255,255,.5);
-  white-space: nowrap;
+  color: rgba(255,255,255,.55);
+  white-space: nowrap; min-width: 28px;
 }
-.gate-bar-track {
-  flex: 1; height: 14px;
-  background: var(--dark3);
-  border-radius: 7px;
-  border: 1px solid var(--iron);
+.gate-bar-track, .pressure-bar-track {
+  flex: 1; height: 10px;
+  background: var(--bg1);
+  border-radius: 5px;
+  border: 1px solid rgba(47,210,255,0.15);
   overflow: hidden;
-  position: relative;
 }
 .gate-bar-fill {
-  height: 100%;
-  border-radius: 7px;
-  background: linear-gradient(90deg, var(--indigo), var(--cyan));
+  height: 100%; border-radius: 5px;
+  background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--yellow));
   width: 0%; transition: width .15s;
 }
 .gate-status {
-  font-size: .65rem; font-weight: 700;
-  color: var(--cyan); min-width: 52px; text-align: right;
-}
-
-/* Pressure gauge */
-.pressure-gauge {
-  display: flex; align-items: center; gap: 8px;
-}
-.pressure-label {
-  font-size: .7rem; font-weight: 700;
-  letter-spacing: .08em; text-transform: uppercase;
-  color: rgba(255,255,255,.5);
-  white-space: nowrap;
-}
-.pressure-bar-track {
-  flex: 1; height: 14px;
-  background: var(--dark3);
-  border-radius: 7px;
-  border: 1px solid var(--iron);
-  overflow: hidden;
+  font-size: .55rem; font-weight: 700;
+  color: var(--cyan); min-width: 44px; text-align: right;
 }
 .pressure-bar-fill {
-  height: 100%; border-radius: 7px;
+  height: 100%; border-radius: 5px;
   background: linear-gradient(90deg, var(--cyan), var(--magenta));
   width: 0%; transition: width .1s;
 }
 
-/* ── INSTRUCTION ── */
-.instruction {
-  width: calc(100% - 32px); max-width: 660px;
-  text-align: center;
-  font-size: .78rem; font-weight: 600;
-  color: rgba(255,255,255,.45);
-  padding: 2px 0;
-  min-height: 1.3em;
-}
-
-/* ── AUDIO CONTROLS ── */
-.audio-controls {
-  width: calc(100% - 32px); max-width: 660px;
-  display: flex; align-items: center; gap: 10px;
-  padding: 4px 0;
-}
+/* ── AUDIO ICON ── */
 .audio-icon {
-  width: 32px; height: 32px;
-  border: none; border-radius: 8px;
-  background: var(--dark3);
+  width: 30px; height: 30px;
+  border: 1px solid rgba(47,210,255,0.2); border-radius: 8px;
+  background: rgba(22,37,68,0.6);
   color: var(--cyan);
-  font-size: 1.1rem;
+  font-size: 1rem;
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
 }
-.audio-icon:hover { background: rgba(47,210,255,.12); }
-.volume-slider {
-  flex: 1; height: 6px;
-  -webkit-appearance: none; appearance: none;
-  background: var(--dark3);
-  border-radius: 3px;
-  outline: none;
-}
-.volume-slider::-webkit-slider-thumb {
-  -webkit-appearance: none; appearance: none;
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  background: var(--cyan);
-  cursor: pointer;
-}
-.volume-slider::-moz-range-thumb {
-  width: 18px; height: 18px;
-  border-radius: 50%; border: none;
-  background: var(--cyan);
-  cursor: pointer;
-}
-
-/* ── HISTORY PANEL ── */
-.history-panel {
-  width: calc(100% - 32px); max-width: 660px;
-  padding: 8px 0;
-}
-.history-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 6px;
-}
-.history-title {
-  font-size: .72rem; font-weight: 800;
-  letter-spacing: .1em; text-transform: uppercase;
-  color: rgba(255,255,255,.45);
-}
-.history-clear {
-  font-size: .65rem; font-weight: 700;
-  color: var(--magenta);
-  background: none; border: none;
-  cursor: pointer; text-decoration: underline;
-  padding: 4px 8px;
-}
-.history-clear:hover { color: var(--pink); }
-.history-list {
-  display: flex; flex-wrap: wrap; gap: 4px;
-}
-.history-item {
-  padding: 4px 10px;
-  background: var(--dark3);
-  border: 1px solid rgba(47,210,255,.1);
-  border-radius: 8px;
-  font-size: .7rem; font-weight: 600;
-  color: rgba(255,255,255,.7);
-  white-space: nowrap;
-}
-.history-item .num {
-  color: var(--cyan); margin-right: 4px; font-weight: 800;
-}
-.history-empty {
-  font-size: .7rem; color: rgba(255,255,255,.25);
-  font-style: italic;
-}
+.audio-icon:hover { background: rgba(47,210,255,.15); }
 
 /* ── REPLAY BUTTON ── */
 .replay-btn {
-  width: calc(100% - 32px); max-width: 660px;
-  padding: 14px 20px;
+  position: fixed;
+  bottom: 44px; left: 50%; transform: translateX(-50%);
+  z-index: 100;
+  padding: 10px 28px;
   border: 2px solid var(--cyan);
   border-radius: 14px;
-  background: linear-gradient(135deg, rgba(47,210,255,.12), rgba(61,61,234,.12));
+  background: linear-gradient(135deg, rgba(47,210,255,.2), rgba(61,61,234,.2));
   color: var(--cyan);
   font-family: var(--font);
-  font-size: 1rem; font-weight: 900;
+  font-size: .9rem; font-weight: 900;
   letter-spacing: .06em;
   cursor: pointer;
   display: none;
-  margin: 4px 0 12px;
   transition: background .2s, transform .15s;
+  box-shadow: 0 4px 20px rgba(47,210,255,.2);
 }
 .replay-btn:hover {
-  background: linear-gradient(135deg, rgba(47,210,255,.22), rgba(61,61,234,.22));
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, rgba(47,210,255,.3), rgba(61,61,234,.3));
 }
 .replay-btn.visible { display: block; }
+
+/* ── HISTORY STRIP ── */
+.history-strip {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 12px 6px;
+  width: 100%; max-width: 660px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  flex-shrink: 0;
+}
+.history-strip::-webkit-scrollbar { display: none; }
+.history-strip { scrollbar-width: none; }
+.history-list {
+  display: flex; gap: 4px; flex: 1; min-width: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.history-list::-webkit-scrollbar { display: none; }
+.history-list { scrollbar-width: none; }
+.history-item {
+  padding: 3px 8px;
+  background: rgba(22,37,68,0.6);
+  border: 1px solid rgba(47,210,255,0.2);
+  border-radius: 999px;
+  font-size: .6rem; font-weight: 600;
+  color: rgba(255,255,255,.75);
+  white-space: nowrap; flex-shrink: 0;
+}
+.history-item .num {
+  color: var(--cyan); margin-right: 3px; font-weight: 800;
+}
+.history-empty {
+  font-size: .6rem; color: rgba(255,255,255,.3);
+  font-style: italic; white-space: nowrap;
+}
+.history-clear {
+  font-size: .7rem; font-weight: 700;
+  color: var(--magenta);
+  background: none; border: none;
+  cursor: pointer; padding: 4px;
+  flex-shrink: 0; line-height: 1;
+}
+.history-clear:hover { color: var(--pink); }
 
 /* ── PRIZE MODAL ── */
 .prize-overlay {
   position: fixed; inset: 0;
-  background: rgba(6,7,13,.92);
+  background: rgba(10,22,40,.92);
   z-index: 1000;
   display: none; align-items: center; justify-content: center;
   padding: 16px;
@@ -346,25 +283,24 @@ body {
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .prize-card {
-  width: 100%; max-width: 480px;
-  background: linear-gradient(160deg, var(--dark2), var(--dark3));
+  width: 100%; max-width: 440px;
+  background: linear-gradient(160deg, var(--bg2), var(--bg3));
   border: 2px solid var(--gold);
-  border-radius: 22px;
-  padding: clamp(20px, 4vw, 32px);
+  border-radius: 20px;
+  padding: clamp(16px, 3.5vw, 28px);
   text-align: center;
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
   animation: prizeSlideUp .5s ease;
-  box-shadow: 0 0 60px rgba(255,215,0,.15), 0 0 120px rgba(47,210,255,.1);
+  box-shadow: 0 0 50px rgba(255,215,0,.15), 0 0 100px rgba(47,210,255,.08);
 }
 @keyframes prizeSlideUp {
-  from { transform: translateY(40px); opacity: 0; }
+  from { transform: translateY(30px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
 .prize-card::before {
   content: ''; position: absolute; inset: -2px;
   background: conic-gradient(var(--gold), var(--cyan), var(--magenta), var(--gold));
-  border-radius: 24px; z-index: -1;
+  border-radius: 22px; z-index: -1;
   animation: prizeGlow 3s linear infinite;
 }
 @keyframes prizeGlow {
@@ -373,64 +309,57 @@ body {
 }
 .prize-free-tag {
   display: inline-block;
-  padding: 6px 22px;
+  padding: 5px 18px;
   background: linear-gradient(135deg, var(--gold), #ffaa00);
-  color: var(--dark);
-  font-size: clamp(.85rem, 2.5vw, 1.1rem);
+  color: var(--bg1);
+  font-size: clamp(.8rem, 2.5vw, 1rem);
   font-weight: 900; letter-spacing: .08em;
-  border-radius: 999px;
-  margin-bottom: 10px;
-  box-shadow: 0 4px 16px rgba(255,215,0,.3);
+  border-radius: 999px; margin-bottom: 8px;
+  box-shadow: 0 4px 14px rgba(255,215,0,.3);
 }
 .prize-winner-name {
-  font-size: clamp(1.3rem, 4vw, 2rem);
-  font-weight: 900; line-height: 1.2;
-  color: #fff;
-  margin: 8px 0;
-  text-shadow: 0 0 20px rgba(47,210,255,.4);
+  font-size: clamp(1.2rem, 3.8vw, 1.8rem);
+  font-weight: 900; line-height: 1.2; color: #fff;
+  margin: 6px 0;
+  text-shadow: 0 0 16px rgba(47,210,255,.4);
 }
 .prize-congrats {
-  font-size: clamp(.8rem, 2.2vw, .95rem);
-  font-weight: 700; line-height: 1.5;
+  font-size: clamp(.75rem, 2vw, .9rem);
+  font-weight: 700; line-height: 1.45;
   color: rgba(255,255,255,.85);
-  margin: 8px 0 14px;
+  margin: 6px 0 10px;
 }
-.prize-congrats .value {
-  color: var(--gold); font-weight: 900;
-}
+.prize-congrats .value { color: var(--gold); font-weight: 900; }
 .prize-images {
-  display: flex; gap: 8px;
-  justify-content: center;
-  margin: 14px 0;
+  display: flex; gap: 6px;
+  justify-content: center; margin: 10px 0;
 }
 .prize-images img {
-  width: 30%; max-width: 130px;
-  aspect-ratio: 1;
-  object-fit: cover;
-  border-radius: 12px;
+  width: 28%; max-width: 110px;
+  aspect-ratio: 1; object-fit: cover;
+  border-radius: 10px;
   border: 2px solid rgba(255,215,0,.3);
-  background: var(--dark);
+  background: var(--bg1);
 }
 .prize-close {
-  margin-top: 14px;
-  padding: 12px 28px;
+  margin-top: 10px;
+  padding: 10px 24px;
   border: 2px solid var(--cyan);
   border-radius: 12px;
-  background: rgba(47,210,255,.1);
+  background: rgba(47,210,255,.12);
   color: var(--cyan);
   font-family: var(--font);
-  font-size: .9rem; font-weight: 800;
+  font-size: .85rem; font-weight: 800;
   cursor: pointer;
   transition: background .2s;
 }
-.prize-close:hover { background: rgba(47,210,255,.2); }
+.prize-close:hover { background: rgba(47,210,255,.22); }
 
-/* ── LANDING EFFECTS ── */
+/* ── EFFECTS ── */
 .landing-flash {
   position: fixed; inset: 0;
   pointer-events: none; z-index: 900;
-  opacity: 0;
-  transition: opacity .15s;
+  opacity: 0; transition: opacity .15s;
 }
 .landing-flash.gold { background: radial-gradient(circle, rgba(255,215,0,.3), transparent 70%); }
 .landing-flash.blue { background: radial-gradient(circle, rgba(47,210,255,.3), transparent 70%); }
@@ -438,24 +367,19 @@ body {
 .landing-flash.magenta { background: radial-gradient(circle, rgba(243,16,186,.25), transparent 70%); }
 .landing-flash.visible { opacity: 1; }
 
-/* ── CONFETTI ── */
 .confetti-container {
   position: fixed; inset: 0;
-  pointer-events: none; z-index: 950;
-  overflow: hidden;
+  pointer-events: none; z-index: 950; overflow: hidden;
 }
 .confetti-piece {
-  position: absolute;
-  width: 8px; height: 12px;
-  top: -20px;
-  animation: confettiFall linear forwards;
+  position: absolute; width: 8px; height: 12px;
+  top: -20px; animation: confettiFall linear forwards;
 }
 @keyframes confettiFall {
   0% { transform: translateY(0) rotate(0deg); opacity: 1; }
   100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
 }
 
-/* ── SCREEN SHAKE ── */
 @keyframes shake {
   0%, 100% { transform: translate(0); }
   10% { transform: translate(-3px, 2px); }
@@ -470,28 +394,24 @@ body {
 }
 .shake { animation: shake .4s ease; }
 
-/* ── SURGE OVERLAY ── */
 .surge-overlay {
   position: fixed; inset: 0;
   pointer-events: none; z-index: 800;
-  background: radial-gradient(ellipse at bottom, rgba(47,210,255,.15), transparent 60%);
-  opacity: 0;
-  transition: opacity .3s;
+  background: radial-gradient(ellipse at bottom, rgba(47,210,255,.18), transparent 60%);
+  opacity: 0; transition: opacity .3s;
 }
 .surge-overlay.visible { opacity: 1; }
 
-/* ── FOOTER ── */
-.game-footer {
-  padding: 16px;
-  text-align: center;
-  font-size: .65rem;
-  color: rgba(255,255,255,.2);
+/* ── POINTER GLOW PULSE ── */
+@keyframes ptrPulse {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(255,51,102,0.5)); }
+  50% { filter: drop-shadow(0 0 16px rgba(255,51,102,0.8)); }
 }
 
 /* ── DESKTOP ── */
 @media (min-width: 768px) {
-  .controls { grid-template-columns: auto 1fr; gap: 20px; }
   .wheel-area { max-width: 600px; }
+  .controls-strip { gap: 16px; }
 }
 @media (min-width: 1024px) {
   body { justify-content: center; }
@@ -509,10 +429,10 @@ body {
 </head>
 <body>
 
-<!-- TITLE -->
-<div class="game-title">
+<!-- TOP BAR -->
+<div class="top-bar">
   <h1>WHEEL OF FANTASITES</h1>
-  <div class="subtitle">A YallToo Original Attraction</div>
+  <button class="audio-icon" id="muteBtn" aria-label="Toggle sound">&#x1f50a;</button>
 </div>
 
 <!-- WATERWHEEL CANVAS -->
@@ -520,64 +440,48 @@ body {
   <canvas id="wheelCanvas" width="700" height="700"></canvas>
 </div>
 
-<!-- ANNOUNCER -->
-<div class="announcer" id="announcer">
-  <div class="personality" id="announcerName">&nbsp;</div>
-  <div class="phrase" id="announcerPhrase">Turn the valve to release the water!</div>
-</div>
-
-<!-- CONTROLS -->
-<div class="controls">
-  <div class="valve-wrapper">
-    <canvas class="valve-canvas" id="valveCanvas" width="180" height="180"></canvas>
+<!-- CONTROLS STRIP -->
+<div class="controls-strip">
+  <div class="valve-col">
+    <canvas class="valve-canvas" id="valveCanvas" width="160" height="220"></canvas>
     <div class="valve-buttons">
-      <button class="valve-btn" id="btnCCW" aria-label="Close valve (counterclockwise)" title="Close">&circlearrowleft;</button>
-      <button class="valve-btn" id="btnCW" aria-label="Open valve (clockwise)" title="Open">&circlearrowright;</button>
+      <button class="valve-btn" id="btnCCW" aria-label="Close valve (counterclockwise)" title="Close">&#x21BA;</button>
+      <button class="valve-btn" id="btnCW" aria-label="Open valve (clockwise)" title="Open">&#x21BB;</button>
     </div>
   </div>
-  <div class="right-panel">
-    <div class="gate-meter">
-      <span class="gate-label">Sluice Gate</span>
-      <div class="gate-bar-track"><div class="gate-bar-fill" id="gateFill"></div></div>
-      <span class="gate-status" id="gateStatus">CLOSED</span>
+  <div class="info-col">
+    <div class="announcer" id="announcer">
+      <div class="personality" id="announcerName">&nbsp;</div>
+      <div class="phrase" id="announcerPhrase">Drag the T-valve &#x21BB; to release the water!</div>
     </div>
-    <div class="pressure-gauge">
-      <span class="pressure-label">Pressure</span>
-      <div class="pressure-bar-track"><div class="pressure-bar-fill" id="pressureFill"></div></div>
+    <div class="meters">
+      <div class="gate-meter">
+        <span class="gate-label">Gate</span>
+        <div class="gate-bar-track"><div class="gate-bar-fill" id="gateFill"></div></div>
+        <span class="gate-status" id="gateStatus">CLOSED</span>
+      </div>
+      <div class="pressure-gauge">
+        <span class="pressure-label">PSI</span>
+        <div class="pressure-bar-track"><div class="pressure-bar-fill" id="pressureFill"></div></div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- INSTRUCTION -->
-<div class="instruction" id="instruction">Drag the T-valve clockwise or tap &#x21bb; to open the sluice gate</div>
-
-<!-- AUDIO CONTROLS -->
-<div class="audio-controls">
-  <button class="audio-icon" id="muteBtn" aria-label="Toggle sound">&#x1f50a;</button>
-  <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="60" aria-label="Volume">
-</div>
-
-<!-- REPLAY -->
+<!-- REPLAY (floating) -->
 <button class="replay-btn" id="replayBtn">SPIN AGAIN</button>
 
-<!-- HISTORY -->
-<div class="history-panel" id="historyPanel">
-  <div class="history-header">
-    <span class="history-title">Last 10 Spins</span>
-    <button class="history-clear" id="historyClear">Clear</button>
-  </div>
+<!-- HISTORY STRIP -->
+<div class="history-strip" id="historyPanel">
   <div class="history-list" id="historyList">
     <span class="history-empty">No spins yet</span>
   </div>
+  <button class="history-clear" id="historyClear">&#x2715;</button>
 </div>
 
-<!-- LANDING FLASH -->
+<!-- EFFECTS OVERLAYS -->
 <div class="landing-flash" id="landingFlash"></div>
-
-<!-- CONFETTI -->
 <div class="confetti-container" id="confettiContainer"></div>
-
-<!-- SURGE -->
 <div class="surge-overlay" id="surgeOverlay"></div>
 
 <!-- PRIZE MODAL -->
@@ -602,13 +506,7 @@ body {
   </div>
 </div>
 
-<!-- FOOTER -->
-<div class="game-footer">WHEEL OF FANTASITES &mdash; A YallToo Original</div>
-
 <script>
-/* ═══════════════════════════════════════════════════
-   WHEEL OF FANTASITES — Complete Game Engine
-   ═══════════════════════════════════════════════════ */
 (function() {
 "use strict";
 
@@ -651,10 +549,8 @@ const announcerPhraseEl = document.getElementById('announcerPhrase');
 const gateFill = document.getElementById('gateFill');
 const gateStatus = document.getElementById('gateStatus');
 const pressureFill = document.getElementById('pressureFill');
-const instructionEl = document.getElementById('instruction');
 const replayBtn = document.getElementById('replayBtn');
 const muteBtn = document.getElementById('muteBtn');
-const volumeSlider = document.getElementById('volumeSlider');
 const historyList = document.getElementById('historyList');
 const historyClear = document.getElementById('historyClear');
 const prizeOverlay = document.getElementById('prizeOverlay');
@@ -755,7 +651,6 @@ function playNoise(dur, gain, delay, freqCenter, q) {
   src.start(t); src.stop(t + dur + 0.02);
 }
 
-/* Water flowing continuous noise */
 function startWaterNoise() {
   const c = ensureAudio(); if (!c || waterNoiseNode) return;
   const bufLen = c.sampleRate * 2;
@@ -783,7 +678,6 @@ function stopWaterNoise() {
   if (waterNoiseNode) { try { waterNoiseNode.stop(); } catch(e){} waterNoiseNode = null; waterNoiseGain = null; }
 }
 
-/* Sound effects */
 function sndValveOpen() {
   playTone(180, 0.3, 'sawtooth', 0.04, 0, 90);
   playNoise(0.2, 0.025, 0.02, 600, 2);
@@ -999,8 +893,8 @@ function drawWheel() {
   const h = parseInt(wheelCanvas.style.height) || wheelCanvas.height;
   const cx = w / 2;
   const cy = h / 2;
-  const outerR = w * 0.44;
-  const innerR = w * 0.16;
+  const outerR = w * 0.46;
+  const innerR = w * 0.14;
   const paddleR = w * 0.47;
   const ctx = wheelCtx;
 
@@ -1031,7 +925,6 @@ function drawWheel() {
   ctx.translate(cx, cy);
   ctx.rotate(wheelAngle);
 
-  /* Segments */
   for (let i = 0; i < N; i++) {
     const startAngle = i * SLICE - Math.PI / 2;
     const endAngle = startAngle + SLICE;
@@ -1047,7 +940,6 @@ function drawWheel() {
     grad.addColorStop(1, WOOD_COLORS[i]);
     ctx.fillStyle = grad;
     ctx.fill();
-
     ctx.strokeStyle = 'rgba(0,0,0,0.4)';
     ctx.lineWidth = 1.5;
     ctx.stroke();
@@ -1060,14 +952,13 @@ function drawWheel() {
     ctx.closePath();
     ctx.clip();
     const midAngle = startAngle + SLICE / 2;
-    const grainCount = 3;
-    for (let g = 0; g < grainCount; g++) {
-      const frac = (g + 1) / (grainCount + 1);
+    for (let g = 0; g < 3; g++) {
+      const frac = (g + 1) / 4;
       const a = startAngle + SLICE * frac;
       ctx.beginPath();
       ctx.moveTo(Math.cos(a) * innerR, Math.sin(a) * innerR);
       ctx.lineTo(Math.cos(a) * outerR, Math.sin(a) * outerR);
-      ctx.strokeStyle = `rgba(0,0,0,0.08)`;
+      ctx.strokeStyle = 'rgba(0,0,0,0.08)';
       ctx.lineWidth = 1;
       ctx.stroke();
     }
@@ -1102,44 +993,45 @@ function drawWheel() {
     /* Name text */
     ctx.save();
     ctx.rotate(midAngle);
-    ctx.translate(outerR * 0.67, 0);
+    ctx.translate(outerR * 0.73, 0);
     ctx.rotate(Math.PI / 2);
     const name = NAMES[i];
-    const fontSize = name.length > 18 ? w * 0.024 : name.length > 12 ? w * 0.028 : w * 0.033;
+    const fontSize = name.length > 18 ? w * 0.028 : name.length > 12 ? w * 0.034 : name.length > 6 ? w * 0.040 : w * 0.048;
     ctx.font = `800 ${fontSize}px 'Plus Jakarta Sans', sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = '#fff';
-    ctx.strokeStyle = 'rgba(0,0,0,0.85)';
-    ctx.lineWidth = 2.5;
+    ctx.strokeStyle = 'rgba(0,0,0,0.95)';
+    ctx.lineWidth = 3.5;
     ctx.lineJoin = 'round';
-    ctx.strokeText(name, 0, 0);
-    ctx.fillText(name, 0, 0);
+    const maxW = outerR * 0.55;
+    ctx.strokeText(name, 0, 0, maxW);
+    ctx.fillText(name, 0, 0, maxW);
     ctx.restore();
   }
 
-  /* Iron outer ring */
+  /* Iron outer ring — shinier */
   ctx.beginPath();
   ctx.arc(0, 0, outerR, 0, Math.PI * 2);
-  ctx.strokeStyle = '#555';
+  ctx.strokeStyle = '#6a6a7a';
   ctx.lineWidth = 5;
   ctx.stroke();
   ctx.beginPath();
   ctx.arc(0, 0, outerR + 3, 0, Math.PI * 2);
-  ctx.strokeStyle = '#3a3a44';
+  ctx.strokeStyle = '#4a4a58';
   ctx.lineWidth = 2;
   ctx.stroke();
 
-  /* Bolts on outer ring */
+  /* Bolts */
   for (let i = 0; i < N; i++) {
     const a = i * SLICE;
     const bx = Math.cos(a) * (outerR + 1);
     const by = Math.sin(a) * (outerR + 1);
     ctx.beginPath();
     ctx.arc(bx, by, 3.5, 0, Math.PI * 2);
-    ctx.fillStyle = '#6a6a78';
+    ctx.fillStyle = '#7a7a8a';
     ctx.fill();
-    ctx.strokeStyle = '#444';
+    ctx.strokeStyle = '#4a4a58';
     ctx.lineWidth = 1;
     ctx.stroke();
   }
@@ -1147,7 +1039,7 @@ function drawWheel() {
   /* Inner ring */
   ctx.beginPath();
   ctx.arc(0, 0, innerR, 0, Math.PI * 2);
-  ctx.strokeStyle = '#555';
+  ctx.strokeStyle = '#6a6a7a';
   ctx.lineWidth = 4;
   ctx.stroke();
 
@@ -1164,151 +1056,143 @@ function drawWheel() {
 
   /* Axle */
   const axleGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, innerR);
-  axleGrad.addColorStop(0, '#888');
-  axleGrad.addColorStop(0.3, '#666');
-  axleGrad.addColorStop(0.7, '#555');
-  axleGrad.addColorStop(1, '#444');
+  axleGrad.addColorStop(0, '#999');
+  axleGrad.addColorStop(0.3, '#777');
+  axleGrad.addColorStop(0.7, '#666');
+  axleGrad.addColorStop(1, '#555');
   ctx.beginPath();
   ctx.arc(0, 0, innerR - 2, 0, Math.PI * 2);
   ctx.fillStyle = axleGrad;
   ctx.fill();
 
-  /* Axle center bolt */
   ctx.beginPath();
   ctx.arc(0, 0, 12, 0, Math.PI * 2);
-  ctx.fillStyle = '#777';
+  ctx.fillStyle = '#888';
   ctx.fill();
-  ctx.strokeStyle = '#555';
+  ctx.strokeStyle = '#666';
   ctx.lineWidth = 2;
   ctx.stroke();
-  /* Cross on bolt */
   ctx.beginPath();
   ctx.moveTo(-7, 0); ctx.lineTo(7, 0);
   ctx.moveTo(0, -7); ctx.lineTo(0, 7);
-  ctx.strokeStyle = '#444';
+  ctx.strokeStyle = '#555';
   ctx.lineWidth = 2;
   ctx.stroke();
 
   ctx.restore();
 
-  /* Pointer (fixed, at top) */
+  /* Pointer (fixed, at top) — larger, brighter, pulsing */
   const ptrX = cx;
-  const ptrY = cy - outerR - 8;
+  const ptrY = cy - outerR - 10;
   ctx.save();
+  const pulse = 0.7 + 0.3 * Math.sin(animTime * 3);
+  ctx.shadowColor = `rgba(255,51,102,${pulse * 0.7})`;
+  ctx.shadowBlur = 14 + pulse * 6;
   ctx.beginPath();
-  ctx.moveTo(ptrX, ptrY + 30);
-  ctx.lineTo(ptrX - 14, ptrY);
-  ctx.lineTo(ptrX + 14, ptrY);
+  ctx.moveTo(ptrX, ptrY + 34);
+  ctx.lineTo(ptrX - 16, ptrY);
+  ctx.lineTo(ptrX + 16, ptrY);
   ctx.closePath();
-  const ptrGrad = ctx.createLinearGradient(ptrX - 14, ptrY, ptrX + 14, ptrY + 30);
-  ptrGrad.addColorStop(0, '#ff3366');
-  ptrGrad.addColorStop(1, '#cc0033');
+  const ptrGrad = ctx.createLinearGradient(ptrX - 16, ptrY, ptrX + 16, ptrY + 34);
+  ptrGrad.addColorStop(0, '#ff4477');
+  ptrGrad.addColorStop(1, '#cc0044');
   ctx.fillStyle = ptrGrad;
   ctx.fill();
+  ctx.shadowBlur = 0;
   ctx.strokeStyle = '#fff';
   ctx.lineWidth = 2;
   ctx.stroke();
-
-  /* Pointer glow */
-  ctx.shadowColor = 'rgba(255,51,102,0.6)';
-  ctx.shadowBlur = 12;
-  ctx.fill();
-  ctx.shadowBlur = 0;
   ctx.restore();
 }
 
-/* ── DRAW VALVE ── */
+/* ── DRAW VALVE (Plumber T-Wrench) ── */
 function drawValve() {
   const w = valveCanvas.width;
   const h = valveCanvas.height;
   const cx = w / 2;
   const cy = h / 2;
   const ctx = valveCtx;
+  const scale = Math.min(w, h) / 200;
 
   ctx.clearRect(0, 0, w, h);
 
-  /* Background circle */
-  ctx.beginPath();
-  ctx.arc(cx, cy, 80, 0, Math.PI * 2);
-  const bgGrad = ctx.createRadialGradient(cx, cy, 20, cx, cy, 80);
-  bgGrad.addColorStop(0, '#1a1d28');
-  bgGrad.addColorStop(1, '#0d1017');
-  ctx.fillStyle = bgGrad;
-  ctx.fill();
-  ctx.strokeStyle = '#3a3a44';
-  ctx.lineWidth = 3;
-  ctx.stroke();
-
-  /* Markings */
-  for (let i = 0; i < 12; i++) {
-    const a = (i / 12) * Math.PI * 2 - Math.PI / 2;
-    const r1 = 68; const r2 = 76;
-    ctx.beginPath();
-    ctx.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1);
-    ctx.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2);
-    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-    ctx.lineWidth = i % 3 === 0 ? 2 : 1;
-    ctx.stroke();
-  }
-
-  /* T-handle */
   ctx.save();
   ctx.translate(cx, cy);
   ctx.rotate(valveAngle);
 
-  /* Stem */
-  const stemGrad = ctx.createLinearGradient(-6, 0, 6, 0);
-  stemGrad.addColorStop(0, '#777');
-  stemGrad.addColorStop(0.5, '#aaa');
-  stemGrad.addColorStop(1, '#777');
-  ctx.fillStyle = stemGrad;
-  ctx.fillRect(-6, -50, 12, 50);
-  ctx.strokeStyle = '#555';
-  ctx.lineWidth = 1;
-  ctx.strokeRect(-6, -50, 12, 50);
-
-  /* Cross bar */
-  const barGrad = ctx.createLinearGradient(0, -56, 0, -42);
-  barGrad.addColorStop(0, '#999');
-  barGrad.addColorStop(0.5, '#ccc');
-  barGrad.addColorStop(1, '#999');
-  ctx.fillStyle = barGrad;
+  /* Yellow T-handle crossbar */
+  const barW = 70 * scale, barH = 16 * scale;
+  const barGrad = ctx.createLinearGradient(0, -70 * scale - barH, 0, -70 * scale);
+  barGrad.addColorStop(0, '#ffe44d');
+  barGrad.addColorStop(0.3, '#ffd700');
+  barGrad.addColorStop(0.7, '#f0c000');
+  barGrad.addColorStop(1, '#d4a800');
   ctx.beginPath();
-  ctx.roundRect(-34, -56, 68, 14, 5);
+  ctx.roundRect(-barW / 2, -70 * scale, barW, barH, 6 * scale);
+  ctx.fillStyle = barGrad;
   ctx.fill();
-  ctx.strokeStyle = '#666';
-  ctx.lineWidth = 1;
+  ctx.strokeStyle = '#b8960a';
+  ctx.lineWidth = 1.5 * scale;
   ctx.stroke();
 
-  /* Grip dots */
-  for (let i = -2; i <= 2; i++) {
+  /* Yellow grip texture */
+  ctx.fillStyle = '#c8a200';
+  for (let i = -3; i <= 3; i++) {
     ctx.beginPath();
-    ctx.arc(i * 10, -49, 2, 0, Math.PI * 2);
-    ctx.fillStyle = '#666';
+    ctx.arc(i * 8 * scale, -62 * scale, 1.5 * scale, 0, Math.PI * 2);
     ctx.fill();
   }
 
-  /* Center nut */
-  ctx.beginPath();
-  ctx.arc(0, 0, 10, 0, Math.PI * 2);
-  const nutGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, 10);
-  nutGrad.addColorStop(0, '#aaa');
-  nutGrad.addColorStop(1, '#666');
-  ctx.fillStyle = nutGrad;
-  ctx.fill();
-  ctx.strokeStyle = '#555';
-  ctx.lineWidth = 2;
-  ctx.stroke();
+  /* Dark metal stem */
+  const stemW = 10 * scale;
+  const stemTop = -58 * scale;
+  const stemBot = 50 * scale;
+  const stemGrad = ctx.createLinearGradient(-stemW / 2, 0, stemW / 2, 0);
+  stemGrad.addColorStop(0, '#3a3a3a');
+  stemGrad.addColorStop(0.3, '#6a6a6a');
+  stemGrad.addColorStop(0.5, '#888');
+  stemGrad.addColorStop(0.7, '#6a6a6a');
+  stemGrad.addColorStop(1, '#3a3a3a');
+  ctx.fillStyle = stemGrad;
+  ctx.fillRect(-stemW / 2, stemTop, stemW, stemBot - stemTop);
+  ctx.strokeStyle = '#2a2a2a';
+  ctx.lineWidth = 0.8 * scale;
+  ctx.strokeRect(-stemW / 2, stemTop, stemW, stemBot - stemTop);
+
+  /* Ridged texture */
+  ctx.strokeStyle = 'rgba(0,0,0,0.25)';
+  ctx.lineWidth = 0.7 * scale;
+  for (let y = stemTop + 4 * scale; y < stemBot - 4 * scale; y += 4 * scale) {
+    ctx.beginPath();
+    ctx.moveTo(-stemW / 2 + 1, y);
+    ctx.lineTo(stemW / 2 - 1, y);
+    ctx.stroke();
+  }
+
+  /* Fork tip */
+  const forkY = stemBot;
+  const forkSpread = 12 * scale;
+  const forkLen = 16 * scale;
+  const prongW = 4 * scale;
+
+  ctx.fillStyle = stemGrad;
+  ctx.fillRect(-forkSpread - prongW / 2, forkY, prongW, forkLen);
+  ctx.strokeStyle = '#2a2a2a';
+  ctx.lineWidth = 0.8 * scale;
+  ctx.strokeRect(-forkSpread - prongW / 2, forkY, prongW, forkLen);
+  ctx.fillRect(forkSpread - prongW / 2, forkY, prongW, forkLen);
+  ctx.strokeRect(forkSpread - prongW / 2, forkY, prongW, forkLen);
+  ctx.fillRect(-forkSpread - prongW / 2, forkY - 2 * scale, forkSpread * 2 + prongW, 4 * scale);
 
   ctx.restore();
 
-  /* Open/Close labels */
-  ctx.font = '600 11px Plus Jakarta Sans, sans-serif';
+  /* OPEN/CLOSE labels outside rotation */
+  ctx.font = `600 ${9 * scale}px Plus Jakarta Sans, sans-serif`;
   ctx.textAlign = 'center';
-  ctx.fillStyle = 'rgba(47,210,255,0.5)';
-  ctx.fillText('OPEN', cx + 55, cy + 4);
-  ctx.fillStyle = 'rgba(243,16,186,0.5)';
-  ctx.fillText('CLOSE', cx - 55, cy + 4);
+  ctx.fillStyle = 'rgba(47,210,255,0.6)';
+  ctx.fillText('↻ OPEN', cx + 40 * scale, cy);
+  ctx.fillStyle = 'rgba(243,16,186,0.6)';
+  ctx.fillText('↺ CLOSE', cx - 40 * scale, cy);
 }
 
 /* ── VALVE INTERACTION ── */
@@ -1410,7 +1294,7 @@ function openGate(amount) {
     spinTimer = 0;
     startWaterNoise();
     sndValveOpen();
-    instructionEl.textContent = 'Water flowing! The wheel is spinning...';
+    announcerPhraseEl.textContent = 'Water flowing! The wheel is spinning...';
     setTimeout(announceSpinPhrase, 800);
   }
   gateOpenness = Math.min(1, gateOpenness + amount);
@@ -1422,7 +1306,7 @@ function closeGate(amount) {
   if (gateOpenness <= 0 && gameState !== STATE.CLOSING && gameState !== STATE.LANDING) {
     gameState = STATE.CLOSING;
     sndValveClose();
-    instructionEl.textContent = 'Gate closing... wheel slowing down...';
+    announcerPhraseEl.textContent = 'Gate closing… wheel slowing down…';
     computeTargetAngle();
   }
 }
@@ -1464,23 +1348,20 @@ function update(dt) {
       wheelAngle += wheelSpeed * dt;
       spinTimer += dt;
 
-      /* Auto-transition to SPINNING */
       if (gameState === STATE.OPENING && wheelSpeed > 2) {
         gameState = STATE.SPINNING;
       }
 
-      /* Auto-close after some time spinning at speed */
       if (gameState === STATE.SPINNING && spinTimer > 3.5 && gateOpenness > 0) {
         gateOpenness = Math.max(0, gateOpenness - dt * 0.8);
         if (gateOpenness <= 0) {
           gameState = STATE.CLOSING;
           sndValveClose();
-          instructionEl.textContent = 'Gate closing... wheel slowing down...';
+          announcerPhraseEl.textContent = 'Gate closing… wheel slowing down…';
           computeTargetAngle();
         }
       }
 
-      /* Rare surge event */
       if (!surgeTriggered && spinTimer > 1.5 && spinTimer < 2.5 && Math.random() < 0.002) {
         if (secureRandom(10) === 0) {
           surgeTriggered = true;
@@ -1491,14 +1372,12 @@ function update(dt) {
         }
       }
 
-      /* Phrase timer */
       phraseTimer += dt;
       if (phraseTimer > 4 && gameState === STATE.SPINNING) {
         phraseTimer = 0;
         if (Math.random() < 0.6) announceSpinPhrase();
       }
 
-      /* Gear tick sounds */
       tickAccum += wheelSpeed * dt;
       const currentSlot = Math.floor(((wheelAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2) / SLICE);
       if (currentSlot !== lastTickSlot) {
@@ -1549,7 +1428,6 @@ function update(dt) {
       break;
   }
 
-  /* Update highlight animation */
   if (gameState === STATE.LANDED || gameState === STATE.REPLAY) {
     highlightSlot = selectedIndex;
     highlightAlpha = Math.min(1, highlightAlpha + dt * 3);
@@ -1558,7 +1436,6 @@ function update(dt) {
     if (highlightAlpha <= 0) highlightSlot = -1;
   }
 
-  /* UI updates */
   gateFill.style.width = (gateOpenness * 100) + '%';
   gateStatus.textContent = gateOpenness <= 0 ? 'CLOSED' : gateOpenness >= 1 ? 'FULL OPEN' : Math.round(gateOpenness * 100) + '%';
   pressureFill.style.width = (pressure * 100) + '%';
@@ -1576,11 +1453,9 @@ function onLanded() {
   saveHistory();
   renderHistory();
 
-  /* Dramatic pause then effects */
   setTimeout(() => {
     sndGameShowLose();
 
-    /* Random effect */
     let effectIdx;
     do { effectIdx = Math.floor(Math.random() * EFFECTS.length); } while (effectIdx === lastEffectIdx && EFFECTS.length > 1);
     lastEffectIdx = effectIdx;
@@ -1599,16 +1474,13 @@ function onLanded() {
 
     sndWaterSplash();
 
-    /* Announce winner */
     setTimeout(() => {
       announce(`THE WHEEL HAS CHOSEN: ${winner.toUpperCase()}!`, 2);
       sndFanfare();
 
-      /* Show prize after fanfare */
       setTimeout(() => {
         showPrize(winner);
         replayBtn.classList.add('visible');
-        instructionEl.textContent = 'Spin again or bask in glory!';
         gameState = STATE.REPLAY;
       }, 1800);
     }, 600);
@@ -1658,8 +1530,7 @@ replayBtn.addEventListener('click', () => {
   replayBtn.classList.remove('visible');
   prizeOverlay.classList.remove('visible');
   stopWaterNoise();
-  instructionEl.textContent = 'Drag the T-valve clockwise or tap ↻ to open the sluice gate';
-  announcerPhraseEl.textContent = 'Turn the valve to release the water!';
+  announcerPhraseEl.textContent = 'Drag the T-valve ↻ to release the water!';
   announcerNameEl.textContent = ' ';
   announcerEl.classList.remove('active');
   btnCW.disabled = false;
@@ -1672,15 +1543,11 @@ muteBtn.addEventListener('click', () => {
   toggleMute();
 });
 
-volumeSlider.addEventListener('input', () => {
-  ensureAudio();
-  setVolume(volumeSlider.value / 100);
-});
-
 /* ── CANVAS RESIZE ── */
 function resizeCanvases() {
   const area = document.getElementById('wheelArea');
-  const size = Math.min(area.clientWidth - 16, window.innerHeight * 0.6, 700);
+  const aW = area.clientWidth, aH = area.clientHeight;
+  const size = Math.min(Math.max(aW, aH), 700);
   wheelCanvas.style.width = size + 'px';
   wheelCanvas.style.height = size + 'px';
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -1707,10 +1574,8 @@ function gameLoop(timestamp) {
 
 requestAnimationFrame(gameLoop);
 
-/* ── PREVENT SCROLL ON CANVAS TOUCH ── */
 wheelCanvas.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
 
-/* ── INITIAL STATE ── */
 btnCW.disabled = false;
 btnCCW.disabled = false;
 

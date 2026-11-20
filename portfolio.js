@@ -36,6 +36,15 @@
         <img class="portfolio-logo" src="${GEI_LOGO_URL}" alt="G.E.I. logo" decoding="async">
       </header>
 
+      <a class="gei-portfolio-store-card" href="before-you-go-to-heaven.html" aria-label="Before You Go to Heaven — ebook by Wilbert Bouie Jr.">
+        <div class="gei-portfolio-store-copy">
+          <span class="screen-kicker">NEW EBOOK · $14.99</span>
+          <h2>Before You Go to Heaven</h2>
+          <p>What does Genesis actually reveal about heaven? A new ebook from the GEI research framework.</p>
+          <span class="gei-portfolio-store-action">GET THE BOOK →</span>
+        </div>
+      </a>
+
       <a class="gei-portfolio-store-card" href="https://www.yalltoo.com/gei-discovery-guide-" target="_blank" rel="noopener noreferrer" aria-label="Open the GEI Discovery Guide store page">
         <div class="gei-portfolio-store-art">
           <img src="https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/inshot_20260808_192709068-u7bYAfdJRGRfnEfC.gif" alt="GEI Discovery Guide" class="gei-portfolio-store-gif" decoding="async">

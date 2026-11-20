@@ -301,6 +301,9 @@
     "before-you-go-to-heaven.html": [
       "redesign.css"
     ],
+    "before-you-go-to-heaven-preview.html": [
+      "redesign.css"
+    ],
     "simulator.html": [
       "v1-63-29-gei-simulator-wall.css",
       "v1-63-30-gei-genesis-game-engine.css",
@@ -320,7 +323,8 @@
     "simulator.html",
     "simulator.html?level=1",
     "simulator.html?level=2",
-    "before-you-go-to-heaven.html"
+    "before-you-go-to-heaven.html",
+    "before-you-go-to-heaven-preview.html"
   ],
   "externalUrls": [
     "https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/adam-dam-guide-qtx78bnE5ITfwakV.png",
@@ -422,10 +426,13 @@
     "https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yalltoo-gei-G8MnWLUJs9kGKc5Q.png",
     "https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/yalltoo-mascot-animated-UgmkGIe3sJES4tKm.gif",
     "https://cash.app/$1oh1",
+    "https://doi.org/10.5281/zenodo.17316846",
     "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+    "https://github.com/jawa-dam/GEI-Open-Research-Initiative",
     "https://gofund.me/927c07d75",
     "https://payhip.com/b/5Vy6L",
     "https://payhip.com/buy?link=5Vy6L",
+    "https://orcid.org/0009-0008-1147-5913",
     "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5622371",
     "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789102",
     "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789263",

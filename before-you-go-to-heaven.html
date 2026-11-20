@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f5fbff">
-<meta name="description" content="Before You Go to Heaven — an ebook by Wilbert Bouie Jr. exploring what Genesis actually reveals about heaven through the lens of Genesis Engineered Interpretation (GEI) and the Adam A-DAM hydraulic hypothesis.">
-<meta name="keywords" content="Before You Go to Heaven, ebook, Wilbert Bouie Jr, Genesis Engineered Interpretation, GEI, Adam is a Dam, heaven in Genesis, biblical research, hydraulic interpretation, YallToo">
+<meta name="description" content="Before You Go to Heaven by Wilbert Bouie Jr. — a Day One investigation of Genesis through language, literary design, textual structure, and the GEI hypothesis. Digital ebook $14.99.">
+<meta name="keywords" content="Before You Go to Heaven, ebook, Wilbert Bouie Jr, Genesis Engineered Interpretation, GEI, Adam is a Dam, Genesis 1, Day One, biblical research, hydraulic interpretation, YallToo">
 <meta name="author" content="Wilbert Bouie Jr.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://jawa-dam.github.io/yalltoo/before-you-go-to-heaven.html">
 <meta property="og:type" content="book">
 <meta property="og:title" content="Before You Go to Heaven — Ebook by Wilbert Bouie Jr.">
-<meta property="og:description" content="What does Genesis actually reveal about heaven? Explore the GEI framework and the Adam A-DAM hypothesis in this new ebook.">
+<meta property="og:description" content="A Day One investigation of Genesis through language, literary design, and the GEI hypothesis. Digital ebook by Wilbert Bouie Jr. — $14.99.">
 <meta property="og:url" content="https://jawa-dam.github.io/yalltoo/before-you-go-to-heaven.html">
 <meta property="og:site_name" content="Y'all Too — Genesis Engineered Interpretation">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Before You Go to Heaven — Ebook | GEI Research">
-<meta name="twitter:description" content="What does Genesis actually reveal about heaven? A new ebook from Wilbert Bouie Jr., the independent researcher behind Genesis Engineered Interpretation.">
+<meta name="twitter:description" content="A Day One investigation of Genesis through language, literary design, and the GEI hypothesis. By Wilbert Bouie Jr. — $14.99 digital ebook.">
 <title>Before You Go to Heaven — Ebook by Wilbert Bouie Jr. | GEI Research</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -118,12 +118,96 @@
 }
 .book-footer strong { color: #10233f; }
 
+.book-research-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+.book-research-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #cfe3ef;
+  background: #f8fcff;
+  text-decoration: none;
+  color: #10233f;
+  font-weight: 600;
+  font-size: .92rem;
+  transition: border-color .15s, box-shadow .15s;
+}
+.book-research-link:hover {
+  border-color: #2fd2ff;
+  box-shadow: 0 2px 8px rgba(47, 210, 255, .15);
+}
+.book-research-link .link-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  color: #fff;
+}
+.book-research-link .link-icon.orcid { background: #a6ce39; }
+.book-research-link .link-icon.zenodo { background: #2a6ebb; }
+.book-research-link .link-icon.ssrn { background: #1a1a2e; }
+.book-research-link .link-icon.github { background: #24292e; }
+.book-research-link .link-label { display: flex; flex-direction: column; gap: 2px; }
+.book-research-link .link-label small { font-weight: 400; color: #5d7088; font-size: .78rem; }
+
+.book-follow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 18px 0;
+}
+.book-follow-card {
+  display: block;
+  padding: 22px 20px;
+  border-radius: 14px;
+  border: 1px solid #cfe3ef;
+  background: #fff;
+  text-decoration: none;
+  color: #10233f;
+  transition: border-color .15s, box-shadow .15s;
+}
+.book-follow-card:hover {
+  border-color: #2fd2ff;
+  box-shadow: 0 2px 10px rgba(47, 210, 255, .12);
+}
+.book-follow-card h3 {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+}
+.book-follow-card p {
+  margin: 0;
+  font-size: .88rem;
+  line-height: 1.6;
+  color: #5d7088;
+}
+.book-follow-card .follow-arrow {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: .82rem;
+  font-weight: 700;
+  color: #3d3dea;
+}
+
 @media (max-width: 520px) {
   .book-section, .book-cta-box { padding: 20px; }
   .book-top { align-items: flex-start; flex-direction: column; }
+  .book-research-links { grid-template-columns: 1fr; }
+  .book-follow-grid { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .btn-primary, .btn-outline, .gei-guide-cta-link { transition: none; }
+  .btn-primary, .btn-outline, .book-research-link, .book-follow-card { transition: none; }
 }
 </style>
 <script type="application/ld+json">
@@ -134,7 +218,14 @@
       "@type": "Person",
       "@id": "https://orcid.org/0009-0008-1147-5913",
       "name": "Wilbert Bouie Jr.",
-      "url": "https://orcid.org/0009-0008-1147-5913"
+      "url": "https://orcid.org/0009-0008-1147-5913",
+      "sameAs": [
+        "https://orcid.org/0009-0008-1147-5913",
+        "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5622371",
+        "https://zenodo.org/records/17316846",
+        "https://doi.org/10.5281/zenodo.17316846",
+        "https://github.com/jawa-dam/GEI-Open-Research-Initiative"
+      ]
     },
     {
       "@type": "Book",
@@ -142,7 +233,7 @@
       "author": { "@id": "https://orcid.org/0009-0008-1147-5913" },
       "bookFormat": "https://schema.org/EBook",
       "url": "https://jawa-dam.github.io/yalltoo/before-you-go-to-heaven.html",
-      "description": "An ebook exploring what Genesis actually reveals about heaven through the Genesis Engineered Interpretation framework and the Adam A-DAM hydraulic hypothesis.",
+      "description": "A Day One investigation of Genesis through language, literary design, textual structure, and the GEI hypothesis by Wilbert Bouie Jr.",
       "offers": {
         "@type": "Offer",
         "price": "14.99",
@@ -186,6 +277,7 @@
   <span class="book-price-badge">$14.99 &mdash; Digital Ebook</span>
   <div class="book-hero-actions">
     <a class="btn-primary" href="https://payhip.com/buy?link=5Vy6L">GET THE BOOK</a>
+    <a class="btn-outline" href="before-you-go-to-heaven-preview.html">READ A FREE PREVIEW</a>
     <a class="btn-outline" href="https://payhip.com/b/5Vy6L" target="_blank" rel="noopener noreferrer">View Product Details</a>
   </div>
   <p class="book-reassurance">
@@ -213,21 +305,61 @@
 </section>
 
 <section class="book-section" aria-labelledby="book-author">
-  <span class="kicker">THE AUTHOR</span>
+  <span class="kicker">MEET THE RESEARCHER BEHIND THE BOOK</span>
   <h2 id="book-author">Wilbert Bouie Jr.</h2>
-  <p>Wilbert Bouie Jr. is an independent researcher and the creator of Genesis Engineered Interpretation (GEI). His work proposes a hydraulic and engineering-based reading of Genesis 1&ndash;6, examining Adam as a dam, the firmament as a partition, and the six days as stages of a water-control system.</p>
-  <p>His research is published on <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5622371" target="_blank" rel="noopener noreferrer">SSRN</a> and <a href="https://zenodo.org/records/17316846" target="_blank" rel="noopener noreferrer">Zenodo</a>, and he maintains an <a href="https://orcid.org/0009-0008-1147-5913" target="_blank" rel="noopener noreferrer">ORCID profile</a> for research attribution.</p>
+  <p>Wilbert Bouie Jr. is an independent researcher and the creator of Genesis Engineered Interpretation (GEI). His work proposes that the opening chapters of Genesis encode a hydraulic and engineering blueprint &mdash; reading Adam as a dam, the firmament as a partition wall, and the six days as stages of an antediluvian water-control system.</p>
+  <p>His research has been deposited in multiple open-access repositories with permanent identifiers. Every claim in this ebook can be traced back to a citable, publicly available source.</p>
+
+  <h3>Verify the Research</h3>
+  <div class="book-research-links">
+    <a class="book-research-link" href="https://orcid.org/0009-0008-1147-5913" target="_blank" rel="noopener noreferrer">
+      <span class="link-icon orcid">ID</span>
+      <span class="link-label">ORCID<small>Researcher identifier</small></span>
+    </a>
+    <a class="book-research-link" href="https://zenodo.org/records/17316846" target="_blank" rel="noopener noreferrer">
+      <span class="link-icon zenodo">Z</span>
+      <span class="link-label">Zenodo Record<small>Open-access archive</small></span>
+    </a>
+    <a class="book-research-link" href="https://doi.org/10.5281/zenodo.17316846" target="_blank" rel="noopener noreferrer">
+      <span class="link-icon zenodo">DOI</span>
+      <span class="link-label">Zenodo DOI<small>Permanent identifier</small></span>
+    </a>
+    <a class="book-research-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5622371" target="_blank" rel="noopener noreferrer">
+      <span class="link-icon ssrn">S</span>
+      <span class="link-label">SSRN<small>Preprint server</small></span>
+    </a>
+    <a class="book-research-link" href="https://github.com/jawa-dam/GEI-Open-Research-Initiative" target="_blank" rel="noopener noreferrer">
+      <span class="link-icon github">GH</span>
+      <span class="link-label">GitHub<small>GEI Open Research Initiative</small></span>
+    </a>
+  </div>
+
+  <div class="book-note">
+    <strong>Research transparency.</strong> GEI research is published under open-access terms with permanent DOI identifiers. The author maintains indexed profiles on ORCID, SSRN, and Zenodo so that every claim can be independently located and evaluated.
+  </div>
 </section>
 
-<section class="book-section" aria-labelledby="book-gei">
-  <span class="kicker">THE GEI FRAMEWORK</span>
-  <h2 id="book-gei">Genesis Engineered Interpretation</h2>
-  <p>GEI is an independent research framework that reads Genesis 1&ndash;6 through the lens of water systems, hydraulic engineering, and figurative language. The core hypothesis &mdash; that Adam functions as a dam within an engineered water system &mdash; forms the backbone of this ebook's exploration of heaven.</p>
-  <p>If you're new to GEI, you can explore the free learning resources on this site:</p>
-  <ul>
-    <li><a href="adam-a-dam.html">Is Adam a Dam? &mdash; The Adam A-DAM Hypothesis</a></li>
-    <li><a href="index.html#academy">The GEI Academy &mdash; Six-Day Learning Journey</a></li>
-  </ul>
+<section class="book-section" aria-labelledby="book-follow">
+  <span class="kicker">FOLLOW THE RESEARCH BEYOND THE BOOK</span>
+  <h2 id="book-follow">Continue the Investigation</h2>
+  <p>The ebook is one entry point. The GEI research framework spans published papers, an interactive learning academy, and open-source materials you can explore for free.</p>
+  <div class="book-follow-grid">
+    <a class="book-follow-card" href="index.html#academy">
+      <h3>Explore GEI</h3>
+      <p>Start the six-day GEI Academy &mdash; a free, interactive learning journey through the hydraulic reading of Genesis.</p>
+      <span class="follow-arrow">Open the Academy &rarr;</span>
+    </a>
+    <a class="book-follow-card" href="adam-a-dam.html">
+      <h3>Examine Adam A-DAM</h3>
+      <p>Read the foundational hypothesis: what happens when you read &ldquo;Adam&rdquo; as &ldquo;a dam&rdquo; in the Genesis narrative?</p>
+      <span class="follow-arrow">Read the Hypothesis &rarr;</span>
+    </a>
+    <a class="book-follow-card" href="https://github.com/jawa-dam/GEI-Open-Research-Initiative" target="_blank" rel="noopener noreferrer">
+      <h3>Join the Research</h3>
+      <p>Access open-source GEI research materials, data, and documentation on GitHub.</p>
+      <span class="follow-arrow">View on GitHub &rarr;</span>
+    </a>
+  </div>
 </section>
 
 <section class="book-cta-box" aria-labelledby="book-cta">

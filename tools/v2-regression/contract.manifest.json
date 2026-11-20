@@ -298,6 +298,9 @@
       "v1-63-27-gei-six-day-completion-gate.js",
       "v1-63-28-gei-dam-gate-ceremony.js"
     ],
+    "before-you-go-to-heaven.html": [
+      "redesign.css"
+    ],
     "simulator.html": [
       "v1-63-29-gei-simulator-wall.css",
       "v1-63-30-gei-genesis-game-engine.css",
@@ -316,7 +319,8 @@
     "index.html#academy",
     "simulator.html",
     "simulator.html?level=1",
-    "simulator.html?level=2"
+    "simulator.html?level=2",
+    "before-you-go-to-heaven.html"
   ],
   "externalUrls": [
     "https://assets.zyrosite.com/YZ9jg46Bljs5wOZR/adam-dam-guide-qtx78bnE5ITfwakV.png",
@@ -420,6 +424,8 @@
     "https://cash.app/$1oh1",
     "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
     "https://gofund.me/927c07d75",
+    "https://payhip.com/b/5Vy6L",
+    "https://payhip.com/buy?link=5Vy6L",
     "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5622371",
     "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789102",
     "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5789263",
